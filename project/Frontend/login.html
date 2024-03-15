@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="login">
+    <h2>Login</h2>
+    <form id="loginForm" method="post" action="http://localhost:3000/login">
+        <div class="login-camp">
+            <label>Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter Your Username" required="">
+        </div>
+        <div class="login-camp">
+            <label>Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter Your Password" required>
+        </div>
+        <ul class="tab-group">
+            <li class="tab active"><a href="register">Register</a></li>
+            <li class="tab"><a href="login">Login</a></li>
+        </ul>
+        <button type="submit" name="submit" class="btn submit" >LogIn</button>
+    </form>
+</div>
+
+<script>
+
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        // event.preventDefault(); // Previne trimiterea formularului prin metoda implicită
+
+        fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+             },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+
+         }).then(response => response.json())
+            .then(data => {
+                // Verifică dacă răspunsul conține token-urile
+                if (data.success && data.data && data.data.tokens) {
+                    const accessToken = data.data.tokens.accessToken;
+                    const refreshToken = data.data.tokens.refreshToken;
+
+                    // Salvează token-urile în localStorage sau sessionStorage
+                    // localStorage.setItem('accessToken', accessToken);
+                    // localStorage.setItem('refreshToken', refreshToken);
+                    localStorage.setItem('https://localhost:3000.accessToken', accessToken);
+                    localStorage.setItem('https://localhost:3000.refreshToken', refreshToken);
+                    // Sau poți folosi sessionStorage
+                    // sessionStorage.setItem('accessToken', accessToken);
+                    // sessionStorage.setItem('refreshToken', refreshToken);
+
+                    // Afisează token-urile în consolă
+                    console.log('Access Token:', accessToken);
+                    console.log('Refresh Token:', refreshToken);
+                } else {
+                    console.error('Răspunsul de la server nu conține token-urile necesare.');
+                    if (!data.success) {
+                        throw new Error('Network response was not ok');
+                    }
+                    console.log(data.json())
+                    return data.json();
+                }
+            })
+            .catch(error => console.error('Eroare:', error));
+    });
+
+</script>
+</body>
+</html>

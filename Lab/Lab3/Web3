@@ -1,0 +1,56 @@
+Avem display block(div) - elementul ocupa tot randul pe care sta,inline(creste dupa dim elementului),
+inline-block(mixt) - pot sta mai multe el pe acelasi rand dar aici pot seta inaltimea si latimea daca nu-i loc.
+
+	
+   alte tipruri:
+	-grid
+	-flex
+
+-vedem cu grid/mediaflexbox/cssanimations mby
+
+!!!!!! Vezi cheasheet-ul de pe pagina cursului/lab
+
+la responsivnes cu @media(max-width: ) and (){} - pt dimensiune maxima de acolada ;
+ In proiect ma intereseaza pt 480(maxim),481-1200(tablete) si > 1201(pc) ~ s-ar putea sa le combinam cu flex(mediaquery-urile) sau cu grid.
+ 
+ 
+ ex: la micsorare ca sa le mut de pe cloloana(block) - pun display:inline-block (asta imi da flexibilitatea aia la micsorare)
+ 
+ 
+ ex2 : ca sa introduc repsonsivnes - pot sa pun la container 
+ .flex-container{display: flex; ~ asta ma ajuta
+ 		 gap: 10px;
+ 		}
+ elementele din container :    ~ele datorita lui flex vor creste/scade proportional (impreuna -> relative) 
+ .card{
+ .....
+ flex:1;
+ }
+ .first{
+ flex:2;
+ }
+ .second{
+ flex:0.5;
+ }
+ 		
+ 		
+flex-directions : column ~ mi le da pe toate pe coloane 
+insa mai am corss-axis
+
+
+Am elemente cu clase individuale : pot in fiecare sa fac flex-basis =>  3 metode{
+1.o clasa ce le are pe toate
+2.toti copii container-ului primesc un flex-basis mai mare
+3.
+}
+
+
+Vreau responsivnes care sa se adapteze si la text :
+
+
+-flex-layout (daca adaug intr-un container ele vor iesi dn pagina) - din cauza proprietatii flex wrap (pentru acest efect se foloseste wrap) - se duce dedesup
+
+justify-content : ca sa le pun pe aceasi linie de exemplu (pot pe centru/spatii inte ele/la inceput/la final rand)
+
+la wrap trebie folosit align-content
+

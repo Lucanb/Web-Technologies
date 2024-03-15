@@ -1,0 +1,37 @@
+la transport mai jos udp ,dar mai sus TCP (securitatea e integrata)
+
+
+
+chat gpt "explica-mi te rog legatura socket- cu protocolul quick la HTTP 3.0
+
+ChatGPT
+Sigur, să explicăm relația între socket-uri și protocolul HTTP/3 (sau HTTP-over-QUIC).
+
+Socket-uri:
+
+Un socket este un concept fundamental în comunicarea în rețea, permițând proceselor de pe două sau mai multe calculatoare să comunice între ele.
+Un socket este definit printr-un IP și un port, care reprezintă adresa la care poate fi accesat.
+În general, un socket este asociat cu un anumit protocol de transport, cum ar fi TCP sau UDP.
+HTTP/3 și QUIC:
+
+HTTP/3 este următoarea versiune majoră a protocolului HTTP, proiectată să fie mai rapidă și mai eficientă decât versiunile anterioare.
+HTTP/3 este construit pe protocolul QUIC (Quick UDP Internet Connections), care este un protocol de transport dezvoltat de Google.
+QUIC funcționează la nivelul protocolului de transport și utilizează UDP (User Datagram Protocol) în loc de TCP (Transmission Control Protocol) utilizat în mod tradițional de HTTP/1.1 și HTTP/2.
+Unul dintre avantajele majore ale QUIC este că este conceput să reducă latența și să îmbunătățească performanța conexiunilor web prin optimizări precum multiplexarea datelor și handshake-ul de securitate redus.
+Cum se leagă socket-urile de HTTP/3 și QUIC:
+
+Atunci când un client HTTP/3 și un server se conectează, creează un canal de comunicație. Acest canal este gestionat de socket-uri la nivelul sistemului de operare.
+Socket-urile sunt folosite pentru a transmite și a primi date între client și server, indiferent de protocolul subiacent (TCP pentru HTTP/1.1 și HTTP/2, UDP pentru HTTP/3 peste QUIC).
+În cazul HTTP/3 peste QUIC, datele sunt împachetate în pachete QUIC și trimise între client și server prin intermediul socket-urilor.
+Deci, socket-urile sunt esențiale pentru implementarea protocolului HTTP/3 peste QUIC, deoarece facilitează comunicația între client și server la nivelul protocolului de transport.
+User
+acum eu stiu ca mai nou se face acel socket cu cererea dupa http-ul si la final se transmite?
+ChatGPT
+Da, în HTTP/3, comunicarea între client și server se realizează prin intermediul unui singur socket. Acest lucru este diferit față de HTTP/1.1 și HTTP/2, unde mai multe cereri și răspunsuri HTTP pot fi multiplexate printr-o singură conexiune TCP.
+
+În HTTP/3, care utilizează protocolul QUIC la nivelul transportului, fiecare cerere HTTP este împachetată într-un cadru QUIC și trimisă către server printr-un canal de comunicație unic. Acest canal este gestionat de socket-ul asociat conexiunii QUIC între client și server.
+
+Un aspect important al HTTP/3 este că multiplexarea este realizată la nivelul protocolului QUIC, ceea ce înseamnă că multiple cereri HTTP pot fi trimise în paralel pe același canal de comunicație, fără a fi necesară așteptarea finalizării răspunsului pentru o cerere înainte de a trimite alta. Aceasta poate contribui la îmbunătățirea performanței și a latenței în comparație cu modelele mai vechi de multiplexare, care se bazează pe conexiuni TCP separate pentru fiecare cerere.
+
+Prin urmare, în HTTP/3, clientul poate trimite cereri HTTP către server prin intermediul aceluiași socket și poate primi răspunsuri de la server în același mod, totul gestionat de protocolul QUIC și de implementarea sa la nivelul socket-urilor.
+"

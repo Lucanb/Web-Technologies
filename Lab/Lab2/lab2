@@ -1,0 +1,5 @@
+
+Raspuns intrebari :
+- conex http , dupa cer upgrade la websocket
+
+- la 3 a schimbat QUIC in loc de TCP ,dar exista si un specific care zice cum sa upgradeaza protocolul lawebSocket(doar borwser-ul implementeaza)

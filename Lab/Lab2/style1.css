@@ -1,0 +1,30 @@
+.first{
+ width : 300px;
+ height : 300px;
+ background-color: cadetblue;
+ border: 7px black solid;
+ padding: 10px;
+}
+
+.second{
+    width : 200px;
+    height : 200px;
+    background-color: gold;
+    border-left: 7px black solid;
+    border-top: 4px black solid;
+    border-right: 6px black solid;
+    border-bottom: 4px black solid;
+    margin-left: 334px ;
+}
+
+.third{
+    width : 200px;
+    height : 200px;
+    background-color: red;
+    border-left: 7px black solid;
+    border-top: 4px black solid;
+    border-right: 6px black solid;
+    border-bottom: 4px black solid;
+    margin-left: 122px;
+
+}

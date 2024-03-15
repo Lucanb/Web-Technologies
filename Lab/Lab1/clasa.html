@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>My test page</title>
+  </head>
+  <body>
+    <h1>YouTube</h1>
+    <ul>
+        <li>first item</li>
+        <li>
+          second item
+          <!-- Look, the closing </li> tag is not placed here! -->
+          <ul>
+            <li>second item first subitem</li>
+            <li>
+              second item second subitem
+              <!-- Same for the second nested unordered list! -->
+              <ul>
+                <li>second item second subitem first sub-subitem</li>
+                <li>second item second subitem second sub-subitem</li>
+                <li>second item second subitem third sub-subitem</li>
+              </ul>
+            </li>
+            <!-- Closing </li> tag for the li that
+                        contains the third unordered list -->
+            <li>second item third subitem</li>
+          </ul>
+          <!-- Here is the closing </li> tag -->
+        </li>
+        <li>third item</li>
+      </ul>
+      
+    <img src="https://fastly.picsum.photos/id/967/200/300.jpg?grayscale&hmac=Fuf2S8XI2cmQdNwIzQCC8sgYOk-YT-3BqG3hNgz1eU8" alt="My test image" />
+    <p>
+        I'm creating a link to
+        <a
+          href="https://www.mozilla.org/en-US/"
+          title="The best place to find more information about Mozilla's
+                mission and how to contribute">
+          the Mozilla homepage</a>.
+      </p>
+  </body>
+</html>
