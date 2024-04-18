@@ -6,8 +6,8 @@ const config = {
     DATABASE: 'Web',
     PASSWORD: 'UFDHGEQS0727156236321',
     DBPORT: 5432,
-    JWT_PRIVATE_KEY : '/home/lolluckestar/Desktop/Anul III/Sem II/Web/project/Services/Authentification/configuration/privateKey.key',
-    JWT_PUBLIC_KEY : '/home/lolluckestar/Desktop/Anul III/Sem II/Web/project/Services/Authentification/configuration/publicKey.key'
+    JWT_PRIVATE_KEY :'/home/lolluckestar/Desktop/Anul III/Sem II/Web-Technologies/project/Services/Authentification/configuration/privateKey.key',
+    JWT_PUBLIC_KEY : '/home/lolluckestar/Desktop/Anul III/Sem II/Web-Technologies/project/Services/Authentification/configuration/publicKey.key'
 };
 
 module.exports = config;
