@@ -82,27 +82,64 @@ class UserModel
     //         throw error;
     //     }
     // }
-    async updateUsername(id, newUsername) {
-        const values = [newUsername, id];
-
+    async updateUsername() {
+        const values = [this.username];
         try {
-            await pool.query(userSQL.updateUsername, values);
-            console.log('Numele de utilizator a fost actualizat cu succes.');
+            const result = await pool.query(userSQL.getUserIDAfterEmail, values);
+            if (result.rowCount === 0) {
+                console.error('Nu există un utilizator cu acest username.');
+                throw new Error('Nu există un utilizator cu acest username.');
+            }
+            const rows = result.rows;
+            console.log(JSON.stringify(rows[0]))
+            const userId = rows[0].id;
+            const values2 = [this.username, rows.rows[0].id];
+            try {
+                await pool.query(userSQL.updateUsername, values2);
+                console.log('Numele de utilizator a fost actualizat cu succes.');
+            } catch (error) {
+                console.error('Eroare la actualizarea numelui de utilizator:', error);
+                throw error;
+            }
         } catch (error) {
-            console.error('Eroare la actualizarea numelui de utilizator:', error);
+            console.error('Eroare la get ID after username:', error);
             throw error;
         }
     }
 
-    async updatePassword(id, newPassword) {
-        const values = [newPassword, id];
-
-        try {
-            await pool.query(userSQL.updatePassword, values);
-            console.log('Parola a fost actualizată cu succes.');
-        } catch (error) {
-            console.error('Eroare la actualizarea parolei:', error);
-            throw error;
+    async updatePassword() {
+        const values = [this.email];
+        if(this.email === undefined)
+        {
+            console.error('Eroare la parametru:');
+            return false
+        }
+        else
+        {
+            console.log('this email : ', this.email)
+            try {
+                const result = await pool.query(userSQL.getUserIDAfterEmail, values);
+                if (result.rowCount === 0) {
+                    console.error('Nu există un utilizator cu acest email.');
+                    throw new Error('Nu există un utilizator cu acest email.');
+                }
+                const rows = result.rows
+                console.log(JSON.stringify(rows))
+                const userId = rows[0].id;
+                console.log('id : ',userId)
+                const values2 = [this.password, userId];
+                try {
+                    await pool.query(userSQL.updatePassword, values2);
+                    console.log('Parola a fost actualizată cu succes.');
+                    return true;
+                } catch (error) {
+                    console.error('Eroare la actualizarea parolei:', error);
+                    throw error;
+                }
+            } catch (error) {
+                console.error('Eroare la get Id after email:', error);
+                throw error;
+            }
         }
     }
 }

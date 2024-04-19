@@ -85,30 +85,18 @@ class authController {
             }));
         }
     }
-     async changePassword(res){
+    async changePassword(req, res){
          try {
              const changePass = new userService()
-             const newpass = changePass.updatePassword();
+             const newpass = await changePass.updatePassword(req,res);
              if (newpass) {
-                 return res.statusMessage(200).json({
-                     success: true,
-                     message: 'Successfully registered',
-                     data: {
-                         toke: "asda"
-                         // tokens: {
-                         //     accessToken,
-                         //     refreshToken
-                         // }
-                     }
-                 })
+                console.log('Schimbat parola cu success!')
              } else {
-
+                console.log('Parola nu a fost schimbata cu success!')
              }
          }catch (error){
-             return res.status(error?.statusCode || 500).json({
-                 success: false,
-                 message: 'Failed to login user. Error: ' + error?.message || 'Internal server error',
-             });
+             console.error(error)
+             console.log('Parola nu a fost schimbata cu success!')
          }
      }
 

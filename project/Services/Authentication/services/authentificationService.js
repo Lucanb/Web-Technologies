@@ -208,10 +208,10 @@ class UserService {
     //     }
     // }
 
-    async updateUsername(id, newUsername) {
+    async updateUsername() { /////asta mai tarziu
         try {
             this.userModel = new userModel();
-            await this.userModel.updateUsername(id, newUsername);
+            await this.userModel.updateUsername();
             console.log('Numele de utilizator a fost actualizat cu succes.');
         } catch (error) {
             console.error('Eroare la actualizarea numelui de utilizator:', error);
@@ -219,15 +219,55 @@ class UserService {
         }
     }
 
-    async updatePassword(id, newPassword) {
+    async updatePassword(req,res) {
         try {
-            this.userModel = new userModel();
-            await this.userModel.updatePassword(id, newPassword);
-            console.log('Parola a fost actualizată cu succes.');
+            console.log(req.url)
+            const userEmail = req.url.split('/')[2];
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+
+            const data = await new Promise((resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            });
+
+            try {
+                const encryptedPassword = await Password.crypt(data.password)
+                this.userModel = new userModel('username', encryptedPassword, userEmail);
+                const verif  = await this.userModel.updatePassword();
+                if(verif) {
+                    console.log('Parola a fost actualizata cu succes.');
+                    // res.writeHead(200, {'Content-Type': 'text/plain'});
+                    res.end('Parola a fost actualizata cu succes.');
+                    return true
+                }else {
+                    console.log('Parola nu a fost actualizata cu succes.');
+                    // res.writeHead(200, {'Content-Type': 'text/plain'});
+                    res.end('Parola nu a fost actualizata cu succes.');
+                    return false
+                }
+            } catch (error) {
+                console.error('Eroare la actualizarea parolei:', error);
+                // res.writeHead(500, {'Content-Type': 'text/plain'});
+                res.end('Eroare la actualizarea parolei.');
+                throw error;
+            }
         } catch (error) {
-            console.error('Eroare la actualizarea parolei:', error);
+            console.error('Eroare interna la actualizare parolei:', error);
+            // res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end('Eroare interna la actualizare parolei.');
             throw error;
         }
+
+        return false
+
     }
 
     async verifyEmail(req, res){
@@ -284,7 +324,7 @@ class UserService {
                 }
             });
 
-            const resetLink = "http://localhost:3000/update-password";
+            const resetLink = `http://localhost:3000/update-password/:${emailAddress}`;
             const mailOptions = {
                 from:  config.EMAIL,
                 to: emailAddress,

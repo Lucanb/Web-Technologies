@@ -121,4 +121,31 @@ routerController.addRoute(new Router("POST","/forgot",async (req,res)=>{
     })
 )
 
+routerController.addRoute(new Router("GET","/update-password/:",async (req,res)=>{
+        fs.readFile("../../Frontend/views/auth/update-password.html",(err, data)=>{
+            if(err){
+                res.writeHead(404, {'Content-Type': 'text/html'});
+                return res.end('404 Not Found');
+            }
+            res.writeHead(200, {'Content-Type' : 'text/html'});
+            res.write(data);
+            res.end();
+        })
+    })
+)
+
+routerController.addRoute(new Router("POST","/update-password/:",async (req, res)=>{
+        try {
+            const controller = new authController();
+            const updatePassword = await controller.changePassword(req,res);
+            return updatePassword;
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            // res.writeHead(500, {'Content-Type': 'text/plain'});
+            // res.end("Internal Error");
+        }
+    })
+)
+
 module.exports = { routerController };
