@@ -107,7 +107,7 @@ routerController.addRoute(new Router("GET", "/home", async (req, res, next) => {
             if (!decoded) {
                 res.writeHead(401, {'Content-Type': 'text/html'});
                 return res.end('Invalid token');
-            }
+            } ///aici o sa fac si cu refresh
 
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.end(html);
