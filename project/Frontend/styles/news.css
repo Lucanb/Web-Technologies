@@ -1,0 +1,130 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f2;
+  font-family: "Arial", sans-serif;
+}
+
+.tab {
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  justify-content: space-between;
+  height: 60px;
+  z-index: 10;
+}
+@media (max-width: 700px) {
+  .tab {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+  }
+}
+
+.tabs, .menu-toggle {
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.tabs:hover, .menu-toggle:hover {
+  background-color: #ffd700;
+}
+
+.search-bar {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  position: relative;
+}
+.search-bar input[type=text] {
+  border: 1px solid #ccc;
+  width: calc(100% - 20px);
+  padding: 10px 10px 10px 40px;
+}
+.search-bar input[type=text]:hover {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.main-content {
+  padding: 60px 20px 20px 20px;
+  margin: auto;
+  max-width: 800px;
+}
+.main-content .news {
+  font-family: "Georgia", serif;
+  color: black;
+}
+.main-content .today-date {
+  text-align: right;
+  color: #666666;
+  margin-top: -10px;
+}
+@media (max-width: 700px) {
+  .main-content {
+    margin-top: 160px;
+  }
+}
+.main-content h1, .main-content h2 {
+  font-family: "Georgia", serif;
+  color: black;
+}
+.main-content h1 {
+  color: black;
+}
+
+.news-container {
+  margin-top: 20px;
+}
+.news-container .new-details {
+  background-color: #fff;
+  border: 1px solid #000;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.news-container .new-details .Title, .news-container .new-details .Topic, .news-container .new-details .Author {
+  margin-bottom: 10px;
+}
+.news-container .new-details .movie-picture img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+.news-container .new-details .news-content {
+  font-size: 16px;
+}
+
+.low-bar {
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.low-bar .references {
+  display: flex;
+  justify-content: center;
+}
+.low-bar .references .references-element {
+  margin: 0 15px;
+  cursor: pointer;
+}
+.low-bar .references .references-element:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=news.css.map */

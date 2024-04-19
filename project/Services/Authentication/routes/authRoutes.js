@@ -13,61 +13,9 @@ indexRouterController.routes.forEach(route => {
 
 module.exports = { routerController };
 
-
-// routerController.addRoute(new Router("GET", "/home", async (req, res, next) => {
-//     fs.readFile("../../Frontend/home.html", async (err, data) => {
-//         if (err) {
-//             res.writeHead(404, {'Content-Type': 'text/html'});
-//             console.log(err);
-//             return res.end('404 Not Found');
-//         }
-//
-//     // const dataa = localStorage.getItem('accessToken')
-//     const headers = req.headers;
-//     // const [type,token] =  req.headers['authorization'].split(' ');
-//     const [type, token] = req.headers.authorization.split(' ');
-//     console.log('headers : ', headers);
-//     console.log(type,token);
-//     res.writeHead(200, {'Content-Type' : 'text/html'});
-//     res.end(JSON.stringify(headers));
-//        // if (!token) {
-//        //      res.statusCode = 401
-//        //      res.write(JSON.stringify({ success: false, message: 'Token missing' }));
-//        //      res.end();
-//        //  }else {
-//        //
-//        //      try {
-//        //          const [dataJwt, isValid] = await JWToken.validate(token);
-//        //          if (!isValid) {
-//        //              res.statusCode = 401
-//        //              res.write(JSON.stringify({success: false, message: 'Invalid token'}));
-//        //              res.end();
-//        //          }
-//        //
-//        //          req.user = dataJwt; ///
-//        //          res.writeHead(200, {'Content-Type' : 'text/html'});
-//        //          // res.write(JSON.stringify({success: true, message: 'Valid token'}));
-//        //          res.write(data);
-//        //          res.end();
-//        //          // next();
-//        //      } catch (error) {
-//        //          console.error('Error validating token:', error);
-//        //          res.statusCode = 401
-//        //          res.write(JSON.stringify({success: false, message: 'Internal server error'}));
-//        //          res.end();
-//        //      }
-//        //  } ---->
-//     // res.writeHead(200, {'Content-Type': 'application/json'});
-//     // res.end(JSON.stringify(headers));
-//     //     res.writeHead(200, {'Content-Type' : 'text/html'});
-//     //     res.write(data);
-//
-//     });
-// }));
-
 routerController.addRoute(new Router("GET", "/home", async (req, res, next) => {
 
-    fs.readFile("../../Frontend/home.html", 'utf-8', async (err, html) => {
+    fs.readFile("../../Frontend/views/home.html", 'utf-8', async (err, html) => {
         if (err) {
             console.error('Error reading file:', err);
             res.writeHead(404, {'Content-Type': 'text/html'});
@@ -120,8 +68,8 @@ routerController.addRoute(new Router("GET", "/home", async (req, res, next) => {
 }));
 
 routerController.addRoute(
-    new Router("GET", "/assets/css/style.css", async (req, res) => {
-        fs.readFile("../../Frontend/assets/css/style.css", (err, data) => {
+    new Router("GET", "/styles/authentification.css", async (req, res) => {
+        fs.readFile("../../Frontend/styles/authentification.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');
@@ -133,8 +81,36 @@ routerController.addRoute(
     })
 );
 
+routerController.addRoute(
+    new Router("GET", "/styles/home.css", async (req, res) => {
+        fs.readFile("../../Frontend/styles/home.css", (err, data) => {
+            if (err) {
+                res.writeHead(404, {'Content-Type': 'text/css'});
+                return res.end('404 Not Found');
+            }
+            res.writeHead(200, {'Content-Type': 'text/css'});
+            res.write(data);
+            res.end();
+        });
+    })
+);
+
+// routerController.addRoute(
+//     new Router("GET", "/assets/css/style.css", async (req, res) => {
+//         fs.readFile("../../Frontend/assets/css/style.css", (err, data) => {
+//             if (err) {
+//                 res.writeHead(404, {'Content-Type': 'text/css'});
+//                 return res.end('404 Not Found');
+//             }
+//             res.writeHead(200, {'Content-Type': 'text/css'});
+//             res.write(data);
+//             res.end();
+//         });
+//     })
+// );
+
 routerController.addRoute(new Router("GET","/login",async (req,res)=>{
-    fs.readFile("../../Frontend/login.html",(err, data)=>{
+    fs.readFile("../../Frontend/views/auth/login.html",(err, data)=>{
         if(err){
             res.writeHead(404, {'Content-Type': 'text/html'});
             // console.log(err)
@@ -161,7 +137,7 @@ routerController.addRoute(new Router("POST","/login",async (req,res,next)=>{
 }));
 
 routerController.addRoute(new Router("GET","/register",async (req,res)=>{
-        fs.readFile("../../Frontend/register.html",(err, data)=>{
+        fs.readFile("../../Frontend/views/auth/register.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');

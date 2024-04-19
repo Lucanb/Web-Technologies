@@ -1,0 +1,133 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.tab {
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  justify-content: space-between;
+  height: 60px;
+  z-index: 10;
+}
+@media (max-width: 700px) {
+  .tab {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+  }
+}
+
+.tabs, .menu-toggle {
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.tabs:hover, .menu-toggle:hover {
+  background-color: #ffd700;
+}
+
+.search-bar {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  position: relative;
+}
+.search-bar input[type=text] {
+  border: 1px solid #ccc;
+  width: calc(100% - 20px);
+  padding: 10px 10px 10px 40px;
+}
+.search-bar input[type=text]:hover {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.admin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .admin {
+    padding: 10px;
+  }
+}
+
+.title {
+  margin-top: 150px;
+}
+
+.admin-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.admin-column h2 {
+  margin-bottom: 10px;
+}
+.admin-column button {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+.admin-column button:hover {
+  background-color: #ffd700;
+}
+
+.references {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  left: 0;
+}
+@media (max-width: 700px) {
+  .references {
+    position: fixed;
+  }
+}
+
+.references-element {
+  margin: 5px 10px;
+  cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+}
+.references-element:hover {
+  text-decoration: underline;
+  background-color: #ffd700;
+}
+
+/*# sourceMappingURL=admin.css.map */

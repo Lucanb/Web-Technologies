@@ -1,0 +1,205 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+}
+
+.tab {
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  justify-content: space-between;
+  height: 60px;
+  z-index: 10;
+}
+@media (max-width: 700px) {
+  .tab {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+  }
+}
+
+.tabs, .menu-toggle {
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.tabs:hover, .menu-toggle:hover {
+  background-color: #ffd700;
+}
+
+.search-bar {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  position: relative;
+}
+.search-bar input[type=text] {
+  border: 1px solid #ccc;
+  width: calc(100% - 20px);
+  padding: 10px 10px 10px 40px;
+}
+.search-bar input[type=text]:hover {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.your-favourites-actors, .your-favourites-movies {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+.your-favourites-actors h2, .your-favourites-movies h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.your-favourites-actors .movies-categories, .your-favourites-movies .movies-categories {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.your-favourites-actors .movies-categories:hover, .your-favourites-movies .movies-categories:hover {
+  background-color: #ffd700;
+  color: #000;
+}
+
+.actor-element, .your-favourites-actors .actor-element, .your-favourites-movies .actor-element {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.actor-element img, .your-favourites-actors .actor-element img, .your-favourites-movies .actor-element img {
+  margin: 5px;
+  width: 100%;
+  max-width: 200px;
+}
+@media (max-width: 600px) {
+  .actor-element, .your-favourites-actors .actor-element, .your-favourites-movies .actor-element {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+.your-favourites-actors {
+  margin: 20px 0;
+}
+.your-favourites-actors h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.your-favourites-movies {
+  margin: 20px 0;
+}
+.your-favourites-movies h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.your-favourites-movies .movies-categories {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.your-favourites-movies .movies-categories:hover {
+  background-color: #ffd700;
+  color: #000;
+}
+
+.movie-details, .actor-details {
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 200px;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.movie-details .movie-picture img, .movie-details .actor-picture img, .actor-details .movie-picture img, .actor-details .actor-picture img {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+.movie-details h2, .movie-details h3, .actor-details h2, .actor-details h3 {
+  margin: 10px 0;
+}
+
+.low-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  box-sizing: border-box;
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .low-bar {
+    padding: 10px;
+  }
+}
+.low-bar > div {
+  margin: 10px 0;
+}
+.low-bar button {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.low-bar button:hover {
+  background-color: #ffd700;
+}
+.low-bar .references {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.low-bar .references .references-element {
+  margin: 5px 10px;
+  cursor: pointer;
+}
+.low-bar .references .references-element:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=favourites.css.map */
