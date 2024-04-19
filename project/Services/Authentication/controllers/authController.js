@@ -32,11 +32,10 @@ class authController {
                 }));
 
             } else {
-                res.writeHead(302, {
+                res.writeHead(200, {
                     'Content-Type': 'application/json',
-                    'Location': '/login'  // Redirecționează utilizatorul înapoi la pagina de login
                 });
-                res.end(JSON.stringify({ success: false, message: 'Authentication failed' }));
+                res.end(JSON.stringify({ success: false, message: 'Authentication failed', redirectUrl: '/login' }));
             }
         } catch (error) {
             console.error('Error during login:', error);

@@ -48,7 +48,7 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                // console.log('Raw Response:', response);
+                console.log('Raw Response:', response);
                 return response.json();
             })
             .then(data => {
@@ -70,7 +70,8 @@
                     alert('Login successful! Tokens are stored and authorization header is set.');
                     window.location.href = data.data.redirectUrl;
                 } else {
-                    console.error('Server response does not contain the required tokens.');
+                    // console.error('Server response does not contain the required tokens.');
+                    window.location.href = data.redirectUrl;
                     alert('Login failed: ');
                 }
             })
