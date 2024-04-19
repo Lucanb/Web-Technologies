@@ -116,11 +116,8 @@ class authController {
         try {
             const sendEmail = new userService();
             const verify = await sendEmail.verifyEmail(req, res)
-            console.log(verify)
             if (verify.success) {
-                console.log('oke a intrat')
               try {
-                    console.log('Se trimite...')
                     const emailSent = await sendEmail.sendResetPasswordEmail(verify.email)
                     if (emailSent.success) {
                         console.log('S-a trimis cu succes')
