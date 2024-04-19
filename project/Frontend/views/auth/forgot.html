@@ -16,11 +16,11 @@
 </div>
 <div class="forget">
     <h2>Forget password</h2>
-    <form>
-        <input type="text" placeholder="Username or Email">
+    <form method="post" action="http://localhost:3000/forgot">
+        <input type="text" id="email" name="email" placeholder="Email" required>
         <button type="submit">Submit</button>
     </form>
-    <p>Remembered your password? <a href="./login.html">Sign In</a></p>
+    <p>Remembered your password? <a href="/login">Sign In</a></p>
 </div>
 <div class="low-bar">
     <div class="references">

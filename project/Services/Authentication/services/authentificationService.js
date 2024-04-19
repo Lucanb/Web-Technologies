@@ -4,6 +4,8 @@ const querystring = require('querystring');
 const Token = require('../modules/token');
 // const StatusCodeException = require('shared').exceptions.StatusCodeException;
 const Password = require('../modules/password');
+const nodemailer = require('nodemailer');
+const config = require('../configuration/config')
 class UserService {
     constructor() {
     }
@@ -227,6 +229,78 @@ class UserService {
             throw error;
         }
     }
+
+    async verifyEmail(req, res){
+        try {
+                let body= '';
+                req.on('data', chunk => {
+                    body += chunk.toString();
+                });
+                const data = await new Promise((resolve, reject) => {
+                    req.on('end', () => {
+                        try {
+                            resolve(querystring.parse(body));
+                        } catch (error) {
+                            reject(error);
+                        }
+                    });
+                });
+                try{
+                    this.userModel = new userModel('default', 'default', data.email);
+                    const exist = await this.userModel.emailExists()
+                    return {success:exist,email:data.email};
+                }catch (error){
+                    console.error('Eroare la actualizarea parolei:', error);
+                    throw error;
+                }
+        }
+        catch (error)
+        {
+            console.error('Eroare la verificarea email-ului', error);
+            throw error;
+        }
+    }
+
+    async sendResetPasswordEmail(emailAddress) {
+        try {
+            const emailDomain = emailAddress.split('@')[1];
+            let smtpServer = 'smtp.gmail.com'; // Default to Gmail
+
+            if (emailDomain.includes('yahoo')) {
+                smtpServer = 'smtp.mail.yahoo.com';
+            } else if (emailDomain.includes('gmail')) {
+                smtpServer = 'smtp.gmail.com';
+            } else {
+                console.log('Unsupported email provider. Defaulting to Gmail.');
+            }
+
+            const transporter = nodemailer.createTransport({
+                host: smtpServer,
+                port: 465,
+                secure: true,
+                auth: {
+                    user: config.EMAIL,
+                    pass: config.APP_PASSWORD
+                }
+            });
+
+            const resetLink = "http://localhost:3000/update-password";
+            const mailOptions = {
+                from:  config.EMAIL,
+                to: emailAddress,
+                subject: 'Reset Your Password',
+                html: `<p>You requested a password reset. Click <a href="${resetLink}">here</a> to set a new password.</p>`
+            };
+
+            const result = await transporter.sendMail(mailOptions);
+            console.log('Email sent:', result);
+            return { success: true, message: "Email sent successfully." };
+        } catch (error) {
+            console.error('Failed to send email:', error);
+            return { success: false, message: "Failed to send email.", error: error.toString() };
+        }
+    }
+
 }
 
 module.exports = UserService;

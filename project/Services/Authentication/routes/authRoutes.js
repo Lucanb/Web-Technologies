@@ -107,4 +107,18 @@ routerController.addRoute(new Router("GET","/forgot",async (req,res)=>{
     })
 )
 
+routerController.addRoute(new Router("POST","/forgot",async (req,res)=>{
+        try {
+            const controller = new authController();
+            const sendEmail = await controller.sendEmail(req,res);
+            return sendEmail;
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    })
+)
+
 module.exports = { routerController };

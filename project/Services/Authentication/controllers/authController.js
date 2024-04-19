@@ -111,6 +111,56 @@ class authController {
              });
          }
      }
+
+     async sendEmail(req, res){
+        try {
+            const sendEmail = new userService();
+            const verify = await sendEmail.verifyEmail(req, res)
+            console.log(verify)
+            if (verify.success) {
+                console.log('oke a intrat')
+              try {
+                    console.log('Se trimite...')
+                    const emailSent = await sendEmail.sendResetPasswordEmail(verify.email)
+                    if (emailSent.success) {
+                        console.log('S-a trimis cu succes')
+                        res.writeHead(200, {
+                            'Content-Type': 'application/json',
+                        });
+                        res.end(JSON.stringify({success: true, message: 'Enter email link for change password'}));
+                    }else {
+                        res.writeHead(200, {
+                            'Content-Type': 'application/json',
+                        });
+                        res.end(JSON.stringify({success: false, message: 'Email not sended '}));
+                    }
+              }catch (error){
+                  console.error('Error forgot email sending:', error);
+                  res.writeHead(500, { 'Content-Type': 'application/json' });
+                  res.end(JSON.stringify({
+                      success: false,
+                      message: 'Error forgot email sending:',
+                      error: error.toString()
+                  }));
+              }
+            } else {
+                res.writeHead(200, {
+                    'Content-Type': 'application/json',
+                });
+                res.end(JSON.stringify({success: false, message: 'email not found'}));
+            }
+        }catch (error){
+            console.error('Error at forgot:', error);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+                success: false,
+                message: 'Internal server error',
+                error: error.toString()
+            }));
+        }
+
+    }
+
      refreshToken(){
 
      }
