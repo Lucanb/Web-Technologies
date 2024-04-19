@@ -26,51 +26,58 @@
 </div>
 
 <script>
-
     document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();  // Previne reîncărcarea paginii posibil sa imi faca pb
+
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-        // event.preventDefault(); // Previne trimiterea formularului prin metoda implicită
+
+        let formData = new URLSearchParams();
+        formData.append('username', username);
+        formData.append('password', password);
 
         fetch('http://localhost:3000/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-             },
-            body: JSON.stringify({
-                username: username,
-                password: password
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData
+        })
+            .then(response => {
+                // console.log('Raw Response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // console.log('Raw Response:', response);
+                return response.json();
             })
-
-         }).then(response => response.json())
             .then(data => {
-                // Verifică dacă răspunsul conține token-urile
+                // console.log('Response:', data);
                 if (data.success && data.data && data.data.tokens) {
                     const accessToken = data.data.tokens.accessToken;
                     const refreshToken = data.data.tokens.refreshToken;
 
-                    // Salvează token-urile în localStorage sau sessionStorage
-                    // localStorage.setItem('accessToken', accessToken);
-                    // localStorage.setItem('refreshToken', refreshToken);
-                    localStorage.setItem('https://localhost:3000.accessToken', accessToken);
-                    localStorage.setItem('https://localhost:3000.refreshToken', refreshToken);
-                    // Sau poți folosi sessionStorage
-                    // sessionStorage.setItem('accessToken', accessToken);
-                    // sessionStorage.setItem('refreshToken', refreshToken);
+                    // Store tokens in localStorage
+                    localStorage.setItem('accessToken', accessToken);
+                    localStorage.setItem('refreshToken', refreshToken);
 
-                    // Afisează token-urile în consolă
+                    // Optionally store the access token in sessionStorage if more appropriate
+                    sessionStorage.setItem('accessToken', accessToken);
+
                     console.log('Access Token:', accessToken);
                     console.log('Refresh Token:', refreshToken);
+
+                    alert('Login successful! Tokens are stored and authorization header is set.');
+                    window.location.href = data.data.redirectUrl;
                 } else {
-                    console.error('Răspunsul de la server nu conține token-urile necesare.');
-                    if (!data.success) {
-                        throw new Error('Network response was not ok');
-                    }
-                    console.log(data.json())
-                    return data.json();
+                    console.error('Server response does not contain the required tokens.');
+                    alert('Login failed: ');
                 }
             })
-            .catch(error => console.error('Eroare:', error));
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
     });
 
 </script>

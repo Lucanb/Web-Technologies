@@ -132,6 +132,79 @@ class UserService {
         }
     }
 
+////aici e pentru un json
+
+    // async loginUser(req, res) {
+    //     try {
+    //         let body = '';
+    //         req.on('data', chunk => {
+    //             body += chunk.toString();
+    //         });
+    //
+    //         const data = await new Promise((resolve, reject) => {
+    //             req.on('end', () => {
+    //                 try {
+    //                     resolve(JSON.parse(body)); // Folosește JSON.parse dacă clientul trimite JSON
+    //                 } catch (error) {
+    //                     reject(error);
+    //                 }
+    //             });
+    //         });
+    //
+    //         if (!data.username || !data.password) {
+    //             console.error("Nu s-au găsit date de conectare valide.");
+    //             return null;  // Întoarce null pentru a indica o eroare de autentificare
+    //         }
+    //
+    //         const { username, password } = data;
+    //         console.log("Username:", username);
+    //         console.log("Password:", password);
+    //
+    //         this.userModel = new userModel(username, password, '');
+    //         const usernameExists = await this.userModel.usernameExists();
+    //         console.log('username : ', usernameExists);
+    //
+    //         if (!usernameExists) {
+    //             console.error("Nu s-au găsit date de conectare valide.");
+    //             return null;
+    //         }
+    //
+    //         const [userId, storedPassword] = await this.userModel.passwordMatch();
+    //
+    //         if (!storedPassword) {
+    //             console.error('Try again!');
+    //             return null;
+    //         }
+    //
+    //         const verifyPass = await Password.verify(password, storedPassword);
+    //         console.log('Password verification result:', verifyPass);
+    //
+    //         if (!verifyPass) {
+    //             console.error('Try again!');
+    //             return null;
+    //         }
+    //
+    //         console.log('User logged successfully!');
+    //         const accessToken = await Token.generateKey({
+    //             userId: userId,
+    //             username: username,
+    //             fresh: true,
+    //             type: 'access'
+    //         }, { expiresIn: '1h' });
+    //
+    //         const refreshToken = await Token.generateKey({
+    //             userId: userId,
+    //             username: username,
+    //             type: 'refresh',
+    //         }, { expiresIn: '24h' });
+    //
+    //         return [accessToken, refreshToken];
+    //
+    //     } catch (error) {
+    //         console.error('Error during login:', error);
+    //         throw error;  // Propagă eroarea pentru a o putea gestiona mai sus dacă este necesar
+    //     }
+    // }
 
     async updateUsername(id, newUsername) {
         try {

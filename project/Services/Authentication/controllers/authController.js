@@ -5,48 +5,50 @@ class authController {
             const loginService = new userService();
             const result = await loginService.loginUser(req, res);
             if (result) {
-                const accessToken= result[0];
+                const accessToken = result[0];
                 const refreshToken = result[1];
-                res.statusCode = 302
-                // res.write(JSON.stringify({
-                //             success: true,
-                //             message: 'Login success!.',
-                //             data:{
-                //                     tokens: {
-                //                         accessToken : accessToken,
-                //                         refreshToken : refreshToken
-                //                     }
-                //                 }
-                //         }));
-                // res.redirect('/home');
-                res.writeHead(302, {
-                    'Location': '/home'
-                });
-                res.end()
+
+                // Setează cookie-uri sau header-uri necesare aici dacă este necesar
+                // De exemplu, setarea unui cookie pentru token-ul de acces
+                // res.setHeader('Set-Cookie', `accessToken=${accessToken}; HttpOnly`);
+                res.setHeader('Set-Cookie', [
+                    `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict`,
+                    `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict`
+                ]);
+
+                    res.writeHead(200, {
+                        'Content-Type': 'application/json',
+                    });
+                res.end(JSON.stringify({
+                    success: true,
+                    message: 'Login success!',
+                    data: {
+                        tokens: {
+                            accessToken: accessToken,
+                            refreshToken: refreshToken
+                        },
+                        redirectUrl: '/home'
+                    }
+                }));
 
             } else {
-                res.statusCode = 404
-                // res.end(JSON.stringify({
-                //         success: false,
-                //         message: 'Login failed. Please try again.'
-                //     }))
                 res.writeHead(302, {
-                    'Location': '/login'
+                    'Content-Type': 'application/json',
+                    'Location': '/login'  // Redirecționează utilizatorul înapoi la pagina de login
                 });
-                res.end();
-                //res.redirect('/login')
+                res.end(JSON.stringify({ success: false, message: 'Authentication failed' }));
             }
         } catch (error) {
             console.error('Error during login:', error);
-            res.statusCode = 500
+            res.writeHead(500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({
-                    success: false,
-                    message: 'Internal server error',
-                    error : error
-            }))
-            console.error('Error during login:', error);
+                success: false,
+                message: 'Internal server error',
+                error: error.toString()  // Este mai sigur să trimiți doar mesajul erorii
+            }));
         }
     }
+
     async register(req, res, next){
         try {
             const registerService = new userService();

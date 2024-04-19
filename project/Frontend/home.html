@@ -3,41 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
-<!--    <script>-->
-<!--        window.onload = function exampleFunction() {-->
-<!--        const accessToken = localStorage.getItem('accessToken');-->
-
-
-<!--        console.log(localStorage.getItem('accessToken'))-->
-
-<!--        fetch('http://localhost:3000/home', {-->
-<!--            method: 'POST',-->
-<!--            headers: {-->
-<!--                'Content-Type': 'application/json',-->
-<!--                'Authorization': 'Bearer ' + accessToken-->
-<!--            }-->
-<!--        }).then(response => response.json())-->
-<!--            .then(data => {-->
-<!--                if (!data.success){-->
-<!--                    console.log('Unauthorized');-->
-<!--                    throw new Error('Unauthorized');-->
-<!--                } else {-->
-<!--                    console.log(data);-->
-<!--                    console.log('Authorized access to /home');-->
-<!--                }-->
-<!--            })-->
-<!--            .catch(error => {-->
-<!--                console.error('Unauthorized access:', error);-->
-<!--            });-->
-<!--    }</script>-->
 </head>
 <body>
 <h1>Welcome to the Home Page!</h1>
 <p>Here you can put any content you want for your home page.</p>
 <p>Logged in successfully!</p>
 
-<script>
+<div id="content"></div>
 
+<script>
+    console.log('muie')
+    document.addEventListener('DOMContentLoaded', function() {
+        const accessToken = localStorage.getItem('accessToken');
+        console.log("accessToken:", accessToken);
+
+        if (!accessToken) {
+            window.location.href = '/login.html';
+            return;
+        }
+
+        fetch('http://localhost:3000/home', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'text/html'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the protected content. Status: ' + response.status);
+                }
+                return response.text();
+            })
+            .then(html => {
+                document.body.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+                window.location.href = '/login.html';
+            });
+    });
 </script>
 </body>
 </html>
