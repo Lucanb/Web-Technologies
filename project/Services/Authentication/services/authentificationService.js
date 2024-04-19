@@ -6,6 +6,7 @@ const Token = require('../modules/token');
 const Password = require('../modules/password');
 const nodemailer = require('nodemailer');
 const config = require('../configuration/config')
+const url = require('url');
 class UserService {
     constructor() {
     }
@@ -221,43 +222,56 @@ class UserService {
 
     async updatePassword(req,res) {
         try {
-            console.log(req.url)
-            const userEmail = req.url.split('/')[2];
-            let body = '';
-            req.on('data', chunk => {
-                body += chunk.toString();
-            });
-
-            const data = await new Promise((resolve, reject) => {
-                req.on('end', () => {
-                    try {
-                        resolve(querystring.parse(body));
-                    } catch (error) {
-                        reject(error);
-                    }
+            // console.log(req.url)
+            // console.log(req.params)
+            const parsedUrl = url.parse(req.url, true);
+            console.log(parsedUrl)
+            const path = parsedUrl.pathname;
+            console.log(path)
+            const segments = path.split('/');
+            console.log(segments)
+            if (segments.length === 3 && segments[1] === "update-password") {
+                var userEmail = segments[2];
+                // const userEmail = req.url.split('/')[2];
+                let body = '';
+                req.on('data', chunk => {
+                    body += chunk.toString();
                 });
-            });
 
-            try {
-                const encryptedPassword = await Password.crypt(data.password)
-                this.userModel = new userModel('username', encryptedPassword, userEmail);
-                const verif  = await this.userModel.updatePassword();
-                if(verif) {
-                    console.log('Parola a fost actualizata cu succes.');
-                    // res.writeHead(200, {'Content-Type': 'text/plain'});
-                    res.end('Parola a fost actualizata cu succes.');
-                    return true
-                }else {
-                    console.log('Parola nu a fost actualizata cu succes.');
-                    // res.writeHead(200, {'Content-Type': 'text/plain'});
-                    res.end('Parola nu a fost actualizata cu succes.');
-                    return false
+                const data = await new Promise((resolve, reject) => {
+                    req.on('end', () => {
+                        try {
+                            resolve(querystring.parse(body));
+                        } catch (error) {
+                            reject(error);
+                        }
+                    });
+                });
+
+                try {
+                    const encryptedPassword = await Password.crypt(data.password)
+                    this.userModel = new userModel('username', encryptedPassword, userEmail);
+                    const verif = await this.userModel.updatePassword();
+                    if (verif) {
+                        console.log('Parola a fost actualizata cu succes.');
+                        // res.writeHead(200, {'Content-Type': 'text/plain'});
+                        res.end('Parola a fost actualizata cu succes.');
+                        return true
+                    } else {
+                        console.log('Parola nu a fost actualizata cu succes.');
+                        // res.writeHead(200, {'Content-Type': 'text/plain'});
+                        res.end('Parola nu a fost actualizata cu succes.');
+                        return false
+                    }
+                } catch (error) {
+                    console.error('Eroare la actualizarea parolei:', error);
+                    // res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Eroare la actualizarea parolei.');
+                    throw error;
                 }
-            } catch (error) {
-                console.error('Eroare la actualizarea parolei:', error);
-                // res.writeHead(500, {'Content-Type': 'text/plain'});
-                res.end('Eroare la actualizarea parolei.');
-                throw error;
+            }else{
+                console.error('Eroare interna la ruta - ales nasol');
+                res.end('Eroare interna la actualizare parolei.');
             }
         } catch (error) {
             console.error('Eroare interna la actualizare parolei:', error);
@@ -324,7 +338,7 @@ class UserService {
                 }
             });
 
-            const resetLink = `http://localhost:3000/update-password/:${emailAddress}`;
+            const resetLink = `http://localhost:3000/update-password/${emailAddress}`;
             const mailOptions = {
                 from:  config.EMAIL,
                 to: emailAddress,
