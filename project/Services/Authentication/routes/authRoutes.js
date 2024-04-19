@@ -109,7 +109,6 @@ routerController.addRoute(new Router("GET", "/home", async (req, res, next) => {
                 return res.end('Invalid token');
             }
 
-            // User is authenticated, send the HTML page
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.end(html);
         } catch (error) {
