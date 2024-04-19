@@ -66,18 +66,6 @@ routerController.addRoute(new Router("POST","/login",async (req,res,next)=>{
 
 }));
 
-routerController.addRoute(new Router("GET","/forgot",async (req,res)=>{
-        fs.readFile("../../Frontend/views/auth/forgot.html",(err, data)=>{
-            if(err){
-                res.writeHead(404, {'Content-Type': 'text/html'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type' : 'text/html'});
-            res.write(data);
-            res.end();
-        })
-    })
-)
 
 routerController.addRoute(new Router("GET","/register",async (req,res)=>{
         fs.readFile("../../Frontend/views/auth/register.html",(err, data)=>{
@@ -106,5 +94,17 @@ routerController.addRoute(new Router("POST","/register",async (req,res,next)=>{
     })
 )
 
+routerController.addRoute(new Router("GET","/forgot",async (req,res)=>{
+        fs.readFile("../../Frontend/views/auth/forgot.html",(err, data)=>{
+            if(err){
+                res.writeHead(404, {'Content-Type': 'text/html'});
+                return res.end('404 Not Found');
+            }
+            res.writeHead(200, {'Content-Type' : 'text/html'});
+            res.write(data);
+            res.end();
+        })
+    })
+)
 
 module.exports = { routerController };
