@@ -222,8 +222,6 @@ class UserService {
 
     async updatePassword(req,res) {
         try {
-            // console.log(req.url)
-            // console.log(req.params)
             const parsedUrl = url.parse(req.url, true);
             console.log(parsedUrl)
             const path = parsedUrl.pathname;
@@ -236,12 +234,10 @@ class UserService {
                 if (!decode[1])
                 {
                     console.error('Eroare interna la ruta - prost token-ul');
-                    res.end('Eroare interna token.');
                 }else {
                     console.log(decode)
                     const userEmail = decode[0].email
 
-                    // const userEmail = req.url.split('/')[2];
                     let body = '';
                     req.on('data', chunk => {
                         body += chunk.toString();
@@ -264,30 +260,21 @@ class UserService {
                         const verif = await this.userModel.updatePassword();
                         if (verif) {
                             console.log('Parola a fost actualizata cu succes.');
-                            // res.writeHead(200, {'Content-Type': 'text/plain'});
-                            res.end('Parola a fost actualizata cu succes.');
                             return true
                         } else {
                             console.log('Parola nu a fost actualizata cu succes.');
-                            // res.writeHead(200, {'Content-Type': 'text/plain'});
-                            res.end('Parola nu a fost actualizata cu succes.');
                             return false
                         }
                     } catch (error) {
                         console.error('Eroare la actualizarea parolei:', error);
-                        // res.writeHead(500, {'Content-Type': 'text/plain'});
-                        res.end('Eroare la actualizarea parolei.');
                         throw error;
                     }
                 }
             }else{
                 console.error('Eroare interna la ruta - ales nasol');
-                res.end('Eroare interna la actualizare parolei.');
             }
         } catch (error) {
             console.error('Eroare interna la actualizare parolei:', error);
-            // res.writeHead(500, {'Content-Type': 'text/plain'});
-            res.end('Eroare interna la actualizare parolei.');
             throw error;
         }
 

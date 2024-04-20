@@ -15,7 +15,7 @@
 </div>
 <div class="register">
     <h2>Sign Up</h2>
-    <form method="post" action="http://localhost:3000/register">
+    <form id="registerForm" method="post" action="http://localhost:3000/register">
         <label>
             <input type="text" id="email" name="email" placeholder="Email" required>
         </label>
@@ -40,11 +40,49 @@
     </div>
 </div>
 <script>
-    function authRegister(){
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-        console.log("Username: " + username + ", Password: " + password);
-    }
+        const password2 = document.getElementById("passwordCheck").value;
+
+        let formData = new URLSearchParams();
+        formData.append('email', email);
+        formData.append('username', username);
+        formData.append('password', password);
+        formData.append('passwordCheck', password2);
+
+        fetch('http://localhost:3000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData
+        })
+            .then(response => {
+                // console.log('Raw Response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                console.log('Raw Response:', response);
+                return response.json();
+            })
+            .then(data => {
+                // console.log('Response:', data);
+                if (data.success) {
+                    alert('Register successful! ');
+                    window.location.href = data.redirectUrl;
+                } else {
+                    alert('Register failed: ');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+    });
+
 </script>
 </body>
 </html>

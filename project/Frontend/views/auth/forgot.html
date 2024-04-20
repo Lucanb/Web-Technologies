@@ -16,7 +16,7 @@
 </div>
 <div class="forget">
     <h2>Forget password</h2>
-    <form method="post" action="http://localhost:3000/forgot">
+    <form id="forgetForm" method="post" action="http://localhost:3000/forgot">
         <input type="text" id="email" name="email" placeholder="Email" required>
         <button type="submit">Submit</button>
     </form>
@@ -29,5 +29,41 @@
         <label onclick="location.href='/index';" class="references-element">Site Index</label>
     </div>
 </div>
+<script>
+    document.getElementById('forgetForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+
+        let formData = new URLSearchParams();
+        formData.append('email', email);
+
+        fetch('http://localhost:3000/forgot', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData
+        })
+            .then(response => {
+                // console.log('Raw Response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                console.log('Raw Response:', response);
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Mail sent successful! ');
+                } else {
+                    alert('Mail not sent. Check if email exists ');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+    });
+</script>
 </body>
 </html>
