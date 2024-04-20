@@ -231,43 +231,54 @@ class UserService {
             const segments = path.split('/');
             console.log(segments)
             if (segments.length === 3 && segments[1] === "update-password") {
-                var userEmail = segments[2];
-                // const userEmail = req.url.split('/')[2];
-                let body = '';
-                req.on('data', chunk => {
-                    body += chunk.toString();
-                });
+                var userToken = segments[2];
+                var decode = await Token.validate(userToken);
+                if (!decode[1])
+                {
+                    console.error('Eroare interna la ruta - prost token-ul');
+                    res.end('Eroare interna token.');
+                }else {
+                    console.log(decode)
+                    const userEmail = decode[0].email
 
-                const data = await new Promise((resolve, reject) => {
-                    req.on('end', () => {
-                        try {
-                            resolve(querystring.parse(body));
-                        } catch (error) {
-                            reject(error);
-                        }
+                    // const userEmail = req.url.split('/')[2];
+                    let body = '';
+                    req.on('data', chunk => {
+                        body += chunk.toString();
                     });
-                });
 
-                try {
-                    const encryptedPassword = await Password.crypt(data.password)
-                    this.userModel = new userModel('username', encryptedPassword, userEmail);
-                    const verif = await this.userModel.updatePassword();
-                    if (verif) {
-                        console.log('Parola a fost actualizata cu succes.');
-                        // res.writeHead(200, {'Content-Type': 'text/plain'});
-                        res.end('Parola a fost actualizata cu succes.');
-                        return true
-                    } else {
-                        console.log('Parola nu a fost actualizata cu succes.');
-                        // res.writeHead(200, {'Content-Type': 'text/plain'});
-                        res.end('Parola nu a fost actualizata cu succes.');
-                        return false
+                    const data = await new Promise((resolve, reject) => {
+                        req.on('end', () => {
+                            try {
+                                resolve(querystring.parse(body));
+                            } catch (error) {
+                                reject(error);
+                            }
+                        });
+                    });
+
+                    try {
+                        const encryptedPassword = await Password.crypt(data.password)
+                        console.log('in model vine : ', userEmail)
+                        this.userModel = new userModel('username', encryptedPassword, userEmail);
+                        const verif = await this.userModel.updatePassword();
+                        if (verif) {
+                            console.log('Parola a fost actualizata cu succes.');
+                            // res.writeHead(200, {'Content-Type': 'text/plain'});
+                            res.end('Parola a fost actualizata cu succes.');
+                            return true
+                        } else {
+                            console.log('Parola nu a fost actualizata cu succes.');
+                            // res.writeHead(200, {'Content-Type': 'text/plain'});
+                            res.end('Parola nu a fost actualizata cu succes.');
+                            return false
+                        }
+                    } catch (error) {
+                        console.error('Eroare la actualizarea parolei:', error);
+                        // res.writeHead(500, {'Content-Type': 'text/plain'});
+                        res.end('Eroare la actualizarea parolei.');
+                        throw error;
                     }
-                } catch (error) {
-                    console.error('Eroare la actualizarea parolei:', error);
-                    // res.writeHead(500, {'Content-Type': 'text/plain'});
-                    res.end('Eroare la actualizarea parolei.');
-                    throw error;
                 }
             }else{
                 console.error('Eroare interna la ruta - ales nasol');
@@ -328,6 +339,16 @@ class UserService {
                 console.log('Unsupported email provider. Defaulting to Gmail.');
             }
 
+            ///aici facem un astfel de token care sa aiba acel email
+            const emailToken = await Token.generateKey({
+                email : emailAddress,
+                fresh: true,
+                type: 'update'
+            }, {
+                expiresIn: '1h'
+            })
+            console.log( emailToken)
+
             const transporter = nodemailer.createTransport({
                 host: smtpServer,
                 port: 465,
@@ -338,7 +359,7 @@ class UserService {
                 }
             });
 
-            const resetLink = `http://localhost:3000/update-password/${emailAddress}`;
+            const resetLink = `http://localhost:3000/update-password/${emailToken}`;
             const mailOptions = {
                 from:  config.EMAIL,
                 to: emailAddress,
