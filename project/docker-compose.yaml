@@ -1,0 +1,14 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    ports:
+      - 4321:5432
+    environment:
+      POSTGRES_PASSWORD: UFDHGEQS0727156236
+      POSTGRES_USER: postgres
+      POSTGRES_DB: Web
+  app:
+    image: luca/node-web-app:v1
+    ports:
+      - 3000:3000
