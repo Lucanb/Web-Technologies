@@ -13,7 +13,7 @@ indexRouterController.routes.forEach(route => {
 
 routerController.addRoute(
     new Router("GET", "/styles/authentification.css", async (req, res) => {
-        fs.readFile("../../Frontend/styles/authentification.css", (err, data) => {
+        fs.readFile("Frontend/styles/authentification.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');
@@ -40,7 +40,7 @@ routerController.addRoute(
 // );
 
 routerController.addRoute(new Router("GET","/login",async (req,res)=>{
-    fs.readFile("../../Frontend/views/auth/login.html",(err, data)=>{
+    fs.readFile("Frontend/views/auth/login.html",(err, data)=>{
         if(err){
             res.writeHead(404, {'Content-Type': 'text/html'});
             // console.log(err)
@@ -68,7 +68,7 @@ routerController.addRoute(new Router("POST","/login",async (req,res,next)=>{
 
 
 routerController.addRoute(new Router("GET","/register",async (req,res)=>{
-        fs.readFile("../../Frontend/views/auth/register.html",(err, data)=>{
+        fs.readFile("Frontend/views/auth/register.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
@@ -95,7 +95,7 @@ routerController.addRoute(new Router("POST","/register",async (req,res,next)=>{
 )
 
 routerController.addRoute(new Router("GET","/forgot",async (req,res)=>{
-        fs.readFile("../../Frontend/views/auth/forgot.html",(err, data)=>{
+        fs.readFile("Frontend/views/auth/forgot.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
@@ -122,7 +122,7 @@ routerController.addRoute(new Router("POST","/forgot",async (req,res)=>{
 )
 
 routerController.addRoute(new Router("GET","/update-password/:",async (req,res)=>{
-        fs.readFile("../../Frontend/views/auth/update-password.html",(err, data)=>{
+        fs.readFile("Frontend/views/auth/update-password.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');

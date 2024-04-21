@@ -16,7 +16,7 @@ const internalRoutes = [
     }),
     new Router("GET", "/home", async (req, res, next) => {
 
-        fs.readFile("../../Frontend/views/home.html", 'utf-8', async (err, html) => {
+        fs.readFile("Frontend/views/home.html", 'utf-8', async (err, html) => {
             if (err) {
                 console.error('Error reading file:', err);
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -69,7 +69,7 @@ const internalRoutes = [
     }),
     new Router("GET", "/favorites", async (req, res, next) => {
 
-        fs.readFile("../../Frontend/views/favorites.html", 'utf-8', async (err, html) => {
+        fs.readFile("Frontend/views/favorites.html", 'utf-8', async (err, html) => {
             if (err) {
                 console.error('Error reading file:', err);
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -122,7 +122,7 @@ const internalRoutes = [
     }),
     new Router("GET", "/actor-profile", async (req, res, next) => {
 
-        fs.readFile("../../Frontend/views/actor-profile.html", 'utf-8', async (err, html) => {
+        fs.readFile("Frontend/views/actor-profile.html", 'utf-8', async (err, html) => {
             if (err) {
                 console.error('Error reading file:', err);
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -176,7 +176,7 @@ const internalRoutes = [
     ,
     new Router("GET", "/news", async (req, res, next) => {
 
-        fs.readFile("../../Frontend/views/news.html", 'utf-8', async (err, html) => {
+        fs.readFile("Frontend/views/news.html", 'utf-8', async (err, html) => {
             if (err) {
                 console.error('Error reading file:', err);
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -229,7 +229,7 @@ const internalRoutes = [
     }),
     new Router("GET", "/admin", async (req, res, next) => {
 
-        fs.readFile("../../Frontend/views/admin.html", 'utf-8', async (err, html) => {
+        fs.readFile("Frontend/views/admin.html", 'utf-8', async (err, html) => {
             if (err) {
                 console.error('Error reading file:', err);
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -282,7 +282,7 @@ const internalRoutes = [
     })
     ,
     new Router("GET","/about",async (req,res)=>{
-        fs.readFile("../../Frontend/views/about.html",(err, data)=>{
+        fs.readFile("Frontend/views/about.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 // console.log(err)
@@ -294,7 +294,7 @@ const internalRoutes = [
         })
     }),
     new Router("GET","/help",async (req,res)=>{
-        fs.readFile("../../Frontend/views/help.html",(err, data)=>{
+        fs.readFile("Frontend/views/help.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 // console.log(err)
@@ -306,7 +306,7 @@ const internalRoutes = [
         })
     }),
     new Router("GET", "/styles/home.css", async (req, res) => {
-        fs.readFile("../../Frontend/styles/home.css", (err, data) => {
+        fs.readFile("Frontend/styles/home.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');
@@ -317,7 +317,7 @@ const internalRoutes = [
         });
     }),
     new Router("GET", "/styles/favourites.css", async (req, res) => {
-        fs.readFile("../../Frontend/styles/favourites.css", (err, data) => {
+        fs.readFile("Frontend/styles/favourites.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');
@@ -328,7 +328,7 @@ const internalRoutes = [
         });
     }),
     new Router("GET", "/styles/about.css", async (req, res) => {
-        fs.readFile("../../Frontend/styles/about.css", (err, data) => {
+        fs.readFile("Frontend/styles/about.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');
@@ -339,7 +339,7 @@ const internalRoutes = [
         });
     }),
     new Router("GET", "/styles/help.css", async (req, res) => {
-        fs.readFile("../../Frontend/styles/help.css", (err, data) => {
+        fs.readFile("Frontend/styles/help.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');
@@ -350,7 +350,7 @@ const internalRoutes = [
         });
     }),
     new Router("GET", "/styles/index.css", async (req, res) => {
-        fs.readFile("../../Frontend/styles/index.css", (err, data) => {
+        fs.readFile("Frontend/styles/index.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');
@@ -361,7 +361,7 @@ const internalRoutes = [
         });
     }),
     new Router("GET", "/styles/news.css", async (req, res) => {
-        fs.readFile("../../Frontend/styles/news.css", (err, data) => {
+        fs.readFile("Frontend/styles/news.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');
@@ -372,7 +372,7 @@ const internalRoutes = [
         });
     }),
     new Router("GET", "/styles/actor-profile.css", async (req, res) => {
-        fs.readFile("../../Frontend/styles/actor-profile.css", (err, data) => {
+        fs.readFile("Frontend/styles/actor-profile.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');
@@ -383,7 +383,7 @@ const internalRoutes = [
         });
     }),
     new Router("GET", "/styles/admin.css", async (req, res) => {
-        fs.readFile("../../Frontend/styles/admin.css", (err, data) => {
+        fs.readFile("Frontend/styles/admin.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');

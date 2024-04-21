@@ -2,7 +2,7 @@ const {RouterController,Router} = require("../../../modules/controllers/routerCo
 const fs = require("fs");
 const routerController = new RouterController([
     new Router("GET","/index",async (req,res)=>{
-        fs.readFile("../../Frontend/views/index.html",(err, data)=>{
+        fs.readFile("Frontend/views/index.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 // console.log(err)
