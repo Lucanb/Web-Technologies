@@ -20,5 +20,17 @@ class UserModel {
             throw error;
         }
     }
+
+    async getTopPicks(){
+        const values = []
+
+        try {
+            const {rows} = await pool.query(homeQuerries.topPicksQuery, values);
+            return rows
+        } catch (error) {
+            console.error('Eroare la returnearea datelor din getTopPicks', error);
+            throw error;
+        }
+    }
 }
 module.exports = UserModel

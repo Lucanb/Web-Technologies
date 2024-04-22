@@ -39,6 +39,34 @@ class homeService {
         res.end()
     }
 
+    async topPicks(req,res){
+        const feederModel = new homeFeederModel()
+        const results = await  feederModel.getTopPicks()
+        const resultsWithLinks = [];
+        console.log(results)
+        for (const result of results) {
+            try {
+                const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1`, {
+                    params: {
+                        api_key: '7a6d358a66d1a4659ce26e0a44d4895e',
+                        query: result.full_name,
+                    }
+                });
+                const profilePath = tmdbResponse.data.results[0].profile_path;
+                console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
+                resultsWithLinks.push({
+                    full_name: result.full_name,
+                    posterUrl: `https://image.tmdb.org/t/p/w500/${profilePath}`
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.write(JSON.stringify(resultsWithLinks))
+        res.end()
+    }
+
 }
 
 module.exports = homeService;

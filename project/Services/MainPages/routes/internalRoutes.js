@@ -84,45 +84,16 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
-    new Router("GET", '/toppicks', async (req, response) => {
-        const query = `
-                SELECT full_name
-                FROM guildawards
-                WHERE year IS NOT NULL
-                AND full_name IS NOT NULL
-                AND full_name IN (SELECT DISTINCT full_name FROM guildawards ORDER BY full_name ASC)
-                AND won = TRUE
-                ORDER BY RANDOM()
-                LIMIT 9;
-               `;
-            const values = []
-            const { rows } = await pool.query(query, values);
+    new Router("GET", '/toppicks', async (req, res) => {
+        try {
+            const controller = new feedController();
+            const feedDone = await controller.feedTopPicks(req,res);
 
-
-            const rezultate = rows;
-            const resultsWithLinks = [];
-
-            for (const result of rezultate) {
-                try {
-                    const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1`, {
-                        params: {
-                            api_key: '7a6d358a66d1a4659ce26e0a44d4895e',
-                            query: result.full_name,
-                        }
-                    });
-                    const profilePath = tmdbResponse.data.results[0].profile_path;
-                    console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
-                    resultsWithLinks.push({
-                        full_name: result.full_name,
-                        posterUrl: `https://image.tmdb.org/t/p/w500/${profilePath}`
-                    });
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-            response.writeHead(200, { 'Content-Type': 'application/json' });
-            response.write(JSON.stringify(resultsWithLinks))
-            response.end()
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
     }),
     new Router("GET", "/favorites", async (req, res, next) => {
 
