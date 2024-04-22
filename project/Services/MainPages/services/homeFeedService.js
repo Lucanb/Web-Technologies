@@ -4,6 +4,7 @@ const Token = require("../../Authentication/modules/token");
 const url = require("url");
 const axios = require("axios");
 const homeFeederModel = require('../model/homeFeederModel')
+const config = require('../configuration/config.js')
 
 class homeService {
     constructor() {
@@ -19,7 +20,7 @@ class homeService {
             try {
                 const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/multi`, {
                     params: {
-                        api_key: '7a6d358a66d1a4659ce26e0a44d4895e',
+                        api_key: config.api_key,
                         query: result.show,
                     }
                 });
@@ -48,7 +49,7 @@ class homeService {
             try {
                 const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1`, {
                     params: {
-                        api_key: '7a6d358a66d1a4659ce26e0a44d4895e',
+                        api_key: config.api_key,
                         query: result.full_name,
                     }
                 });
