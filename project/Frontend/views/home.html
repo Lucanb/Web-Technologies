@@ -158,6 +158,65 @@
             </div>
         </div>
     <script>
+        fetch('http://localhost:3001/announces', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('DATA : ', data);
+                if (data && Array.isArray(data)) {
+                    const announceElement = document.querySelector('.announce-element');
+                    data.forEach(item => {
+                        if (item && item.posterUrl) {
+                            const imgElement = document.createElement('img');
+                            imgElement.src = item.posterUrl;
+                            announceElement.appendChild(imgElement);
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+
+        fetch('http://localhost:3001/toppicks', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('DATA : ', data);
+                if (data && Array.isArray(data)) {
+                    const actorElement = document.querySelector('.related-actors .actor-element');
+                    data.forEach(item => {
+                        if (item && item.posterUrl) {
+                            const imgElement = document.createElement('img');
+                            imgElement.src = item.posterUrl;
+                            actorElement.appendChild(imgElement);
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
 
     </script>
     </body>

@@ -1,0 +1,24 @@
+
+const { config, pool } = require("../configuration/configApplication");
+const homeQuerries = require('./homeFeederQuery')
+const {JS} = require("follow/lib");
+class UserModel {
+    constructor(username, password, email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    async getAnnounces() {
+        const values = []
+
+        try {
+            const {rows} = await pool.query(homeQuerries.anouncesQuerry, values);
+            return rows
+        } catch (error) {
+            console.error('Eroare la returnearea datelor din homeFeederQuery', error);
+            throw error;
+        }
+    }
+}
+module.exports = UserModel
