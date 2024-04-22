@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node Services/Authentication/index.js"
+    "start": "node Services/Authentication/index.js & node Services/MainPages/index.js"
   },
   "keywords": [],
   "author": "",

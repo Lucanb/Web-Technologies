@@ -1,17 +1,19 @@
 version: "3"
 services:
+
   db:
-    container_name: postgres_container
     image: postgres
-    restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: UFDHGEQS0727156236321
       POSTGRES_USER: postgres
       POSTGRES_DB: Web
-    networks:
-      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   pgadmin:
     container_name: pgadmin4_container
@@ -21,27 +23,13 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
-      - 5050:80
+      - "5050:80"
     depends_on:
       - db
-    networks:
-      - app-network
-
   app:
     image: luca/node-web-app:v1
     ports:
-      - 3000:3000
+      - "3000:3000"
     depends_on:
       - db
-    environment:
-      DATABASE_HOST: db
-      DATABASE_USER: postgres
-      DATABASE_PASS: UFDHGEQS0727156236321
-      DATABASE_NAME: Web
-      DATABASE_PORT: 5432
-    networks:
-      - app-network
 
-networks:
-  app-network:
-    driver: bridge
