@@ -29,7 +29,6 @@ const internalRoutes = [
             // }
 
             const cookies = req.headers.cookie;
-            console.log('---------------------------------')
             let accessToken = null;
             if (cookies) {
                 const cookieObj = cookies.split(';').reduce((acc, cookie) => {
@@ -48,17 +47,16 @@ const internalRoutes = [
             //         return res.end('Invalid token');
             //     }
             if (!accessToken) {
-                res.writeHead(401, {'Content-Type': 'text/html'});
-                return res.end('Authorization cookie missing or invalid');
+                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                return res.end();
             }
 
             try {
                 const decoded = await JWToken.validate(accessToken);
                 if (!decoded) {
-                    res.writeHead(401, {'Content-Type': 'text/html'});
-                    return res.end('Invalid token');
-                } ///aici o sa fac si cu refresh
-
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    return res.end();
+                }
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             } catch (error) {
