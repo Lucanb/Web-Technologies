@@ -1,12 +1,6 @@
 const { Router } = require("../../../modules/controllers/routerController");
 const fs = require("fs");
 const JWToken = require("../modules/token");
-
-
-const axios = require('axios');
-const { config, pool } = require("../configuration/configApplication");
-const userSQL = require("../../Authentication/model/userQuery");
-const {authController} = require("../../Authentication/controllers/authController");
 const {feedController} = require("../controllers/feedController");
 
 const internalRoutes = [

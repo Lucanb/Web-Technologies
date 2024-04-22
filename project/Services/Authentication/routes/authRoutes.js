@@ -1,7 +1,6 @@
 const { RouterController } = require("../../../modules/controllers/routerController");
 const fs = require("fs");
 const { Router } = require("../../../modules/controllers/routerController");
-const JWToken = require('../modules/token');
 const { internalRoutes } = require('./internalRoutes');
 const routerController = new RouterController(internalRoutes);
 const { routerController: indexRouterController } = require('./index');
@@ -24,20 +23,6 @@ routerController.addRoute(
         });
     })
 );
-
-// routerController.addRoute(
-//     new Router("GET", "/assets/css/style.css", async (req, res) => {
-//         fs.readFile("../../Frontend/assets/css/style.css", (err, data) => {
-//             if (err) {
-//                 res.writeHead(404, {'Content-Type': 'text/css'});
-//                 return res.end('404 Not Found');
-//             }
-//             res.writeHead(200, {'Content-Type': 'text/css'});
-//             res.write(data);
-//             res.end();
-//         });
-//     })
-// );
 
 routerController.addRoute(new Router("GET","/login",async (req,res)=>{
     fs.readFile("Frontend/views/auth/login.html",(err, data)=>{
