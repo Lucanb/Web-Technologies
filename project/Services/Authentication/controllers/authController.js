@@ -11,11 +11,14 @@ class authController {
                 // Setează cookie-uri sau header-uri necesare aici dacă este necesar
                 // De exemplu, setarea unui cookie pentru token-ul de acces
                 // res.setHeader('Set-Cookie', `accessToken=${accessToken}; HttpOnly`);
+                // res.setHeader('Set-Cookie', [
+                //     `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict`,
+                //     `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict`
+                // ]);
                 res.setHeader('Set-Cookie', [
-                    `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict`,
-                    `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict`
+                    `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`,
+                    `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
                 ]);
-
                     res.writeHead(200, {
                         'Content-Type': 'application/json',
                     });
@@ -27,7 +30,7 @@ class authController {
                             accessToken: accessToken,
                             refreshToken: refreshToken
                         },
-                        redirectUrl: '/home'
+                        redirectUrl: 'http://localhost:3001/home'
                     }
                 }));
 

@@ -29,6 +29,7 @@ const internalRoutes = [
             // }
 
             const cookies = req.headers.cookie;
+            console.log('---------------------------------')
             let accessToken = null;
             if (cookies) {
                 const cookieObj = cookies.split(';').reduce((acc, cookie) => {
@@ -38,7 +39,7 @@ const internalRoutes = [
                 }, {});
                 accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
             }
-
+            console.log(accessToken)
             // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
             // try {
             //     const decoded = await JWToken.validate(token);

@@ -163,11 +163,11 @@
             console.log("accessToken:", accessToken);
 
             if (!accessToken) {
-                window.location.href = '/login';
+                window.location.href = 'http://localhost:3000/login';
                 return;
             }
 
-            fetch('http://localhost:3000/home', {
+            fetch('http://localhost:3001/home', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
@@ -186,7 +186,7 @@
                 .catch(error => {
                     console.error('Error:', error);
                     alert('Error: ' + error.message);
-                    window.location.href = '/login';
+                    window.location.href = 'http://localhost:3000/login';
                 });
         });
     </script>
