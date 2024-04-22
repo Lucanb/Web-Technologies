@@ -99,7 +99,7 @@ const internalRoutes = [
             //         return res.end('Invalid token');
             //     }
             if (!accessToken) {
-                res.writeHead(401, {'Content-Type': 'text/html'});
+                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
                 return res.end('Authorization cookie missing or invalid');
             }
 
@@ -152,7 +152,7 @@ const internalRoutes = [
             //         return res.end('Invalid token');
             //     }
             if (!accessToken) {
-                res.writeHead(401, {'Content-Type': 'text/html'});
+                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
                 return res.end('Authorization cookie missing or invalid');
             }
 
@@ -206,14 +206,14 @@ const internalRoutes = [
             //         return res.end('Invalid token');
             //     }
             if (!accessToken) {
-                res.writeHead(401, {'Content-Type': 'text/html'});
+                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
                 return res.end('Authorization cookie missing or invalid');
             }
 
             try {
                 const decoded = await JWToken.validate(accessToken);
                 if (!decoded) {
-                    res.writeHead(401, {'Content-Type': 'text/html'});
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
                     return res.end('Invalid token');
                 } ///aici o sa fac si cu refresh
 
@@ -259,14 +259,14 @@ const internalRoutes = [
             //         return res.end('Invalid token');
             //     }
             if (!accessToken) {
-                res.writeHead(401, {'Content-Type': 'text/html'});
+                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
                 return res.end('Authorization cookie missing or invalid');
             }
 
             try {
                 const decoded = await JWToken.validate(accessToken);
                 if (!decoded) {
-                    res.writeHead(401, {'Content-Type': 'text/html'});
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
                     return res.end('Invalid token');
                 } ///aici o sa fac si cu refresh
 
