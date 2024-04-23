@@ -238,5 +238,26 @@
     </div>
 </div>
 </div>
+<script>
+    fetch('http://localhost:3001/actor-profile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('DATA : ', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+</script>
 </body>
 </html>

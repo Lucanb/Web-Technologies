@@ -2,6 +2,7 @@ const { Router } = require("../../../modules/controllers/routerController");
 const fs = require("fs");
 const JWToken = require("../modules/token");
 const {feedController} = require("../controllers/feedController");
+const {authController} = require("../../Authentication/controllers/authController");
 
 const internalRoutes = [
     new Router("GET", "/altaRuta", async (req, res) => {
@@ -100,6 +101,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
+
     new Router("GET", '/commingSoon', async (req, res) => {
         try {
             const controller = new feedController();
@@ -111,6 +113,19 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
+
+    new Router("POST", '/actor-profile', async (req, res) => {
+        try {
+            const controller = new feedController();
+            const feedDone = await controller.feedInfo(req,res,id);
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
+
     new Router("GET", "/favorites", async (req, res, next) => {
 
         fs.readFile("Frontend/views/favorites.html", 'utf-8', async (err, html) => {
@@ -436,6 +451,19 @@ const internalRoutes = [
             res.write(data);
             res.end();
         });
+    }),
+
+    new Router("POST","/actor-profile/:",async (req,res)=>{
+        try {
+            const controller = new feedController();
+            const sendId = await controller.sendId(req,res);
+            return sendId;
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
     })
 ];
 

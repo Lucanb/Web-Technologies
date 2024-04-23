@@ -94,6 +94,41 @@
             </div>
         </div>
     <script>
+
+        function redirectToActor(event){
+            event.preventDefault();
+            const id = event.target.id;
+            let formData = new URLSearchParams();
+            formData.append('id', id);
+
+            fetch('http://localhost:3001/actor-profile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData
+            })
+                .then(response => {
+                    // console.log('Raw Response:', response);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    console.log('Raw Response:', response);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('Mail sent successful! ');
+                    } else {
+                        alert('Mail not sent. Check if email exists ');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred: ' + error.message);
+                });
+        }
+
         fetch('http://localhost:3001/announces', {
             method: 'GET',
             headers: {
@@ -148,6 +183,7 @@
                             imgElement.src = item.posterUrl;
                             imgElement.id = item.id;
                             imgElement.alt = item.full_name;
+                            imgElement.addEventListener('click', redirectToActor);
                             actorElement.appendChild(imgElement);
                         }
                     });
@@ -179,6 +215,7 @@
                             imgElement.src = item.posterUrl;
                             imgElement.id = item.id;
                             imgElement.alt = item.full_name;
+                            imgElement.addEventListener('click',redirectToActor);
                             actorElement.appendChild(imgElement);
                         }
                     });

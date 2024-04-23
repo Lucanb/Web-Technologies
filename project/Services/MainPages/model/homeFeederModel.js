@@ -1,4 +1,3 @@
-
 const { config, pool } = require("../configuration/configApplication");
 const homeQuerries = require('./homeFeederQuery')
 const {JS} = require("follow/lib");
