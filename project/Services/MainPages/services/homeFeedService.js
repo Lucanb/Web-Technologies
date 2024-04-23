@@ -26,9 +26,11 @@ class homeService {
                 });
 
                 const posterPath = tmdbResponse.data.results[0].poster_path;
+                const id = tmdbResponse.data.results[0].id;
                 if(posterPath != null) {
                     console.log(`Poster pentru ${result.show}: https://image.tmdb.org/t/p/w500${posterPath}`);
                     resultsWithLinks.push({
+                        id: id,
                         show: result.show,
                         posterUrl: `https://image.tmdb.org/t/p/w500${posterPath}`
                     });
@@ -56,9 +58,11 @@ class homeService {
                     }
                 });
                 const profilePath = tmdbResponse.data.results[0].profile_path;
+                const id = tmdbResponse.data.results[0].id;
                 if(profilePath != null) {
                     console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
                     resultsWithLinks.push({
+                        id: id,
                         full_name: result.full_name,
                         posterUrl: `https://image.tmdb.org/t/p/w500/${profilePath}`
                     });
@@ -87,9 +91,11 @@ class homeService {
                     }
                 });
                 const profilePath = tmdbResponse.data.results[0].profile_path;
+                const id = tmdbResponse.data.results[0].id;
                 if(profilePath != null) {
                     console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
                     resultsWithLinks.push({
+                        id: id,
                         full_name: result.full_name,
                         posterUrl: `https://image.tmdb.org/t/p/w500/${profilePath}`
                     });
