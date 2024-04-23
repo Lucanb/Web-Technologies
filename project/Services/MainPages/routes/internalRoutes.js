@@ -88,6 +88,16 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
+    }),   new Router("GET", '/todayActors', async (req, res) => {
+        try {
+            const controller = new feedController();
+            const feedDone = await controller.feedTodayActors(req,res);
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
     }),
     new Router("GET", "/favorites", async (req, res, next) => {
 

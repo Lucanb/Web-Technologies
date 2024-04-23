@@ -26,11 +26,13 @@ class homeService {
                 });
 
                 const posterPath = tmdbResponse.data.results[0].poster_path;
-                console.log(`Poster pentru ${result.show}: https://image.tmdb.org/t/p/w500${posterPath}`);
-                resultsWithLinks.push({
-                    show: result.show,
-                    posterUrl: `https://image.tmdb.org/t/p/w500${posterPath}`
-                });
+                if(posterPath != null) {
+                    console.log(`Poster pentru ${result.show}: https://image.tmdb.org/t/p/w500${posterPath}`);
+                    resultsWithLinks.push({
+                        show: result.show,
+                        posterUrl: `https://image.tmdb.org/t/p/w500${posterPath}`
+                    });
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -54,11 +56,44 @@ class homeService {
                     }
                 });
                 const profilePath = tmdbResponse.data.results[0].profile_path;
-                console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
-                resultsWithLinks.push({
-                    full_name: result.full_name,
-                    posterUrl: `https://image.tmdb.org/t/p/w500/${profilePath}`
+                if(profilePath != null) {
+                    console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
+                    resultsWithLinks.push({
+                        full_name: result.full_name,
+                        posterUrl: `https://image.tmdb.org/t/p/w500/${profilePath}`
+                    });
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.write(JSON.stringify(resultsWithLinks))
+        res.end()
+    }
+
+    async todayActors(req,res){
+        const feederModel = new homeFeederModel()
+        const results = await  feederModel.getTodayActors()
+        console.log(results)
+        const resultsWithLinks = [];
+        console.log(results)
+        for (const result of results) {
+            try {
+                const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1`, {
+                    params: {
+                        api_key: config.api_key,
+                        query: result.full_name,
+                    }
                 });
+                const profilePath = tmdbResponse.data.results[0].profile_path;
+                if(profilePath != null) {
+                    console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
+                    resultsWithLinks.push({
+                        full_name: result.full_name,
+                        posterUrl: `https://image.tmdb.org/t/p/w500/${profilePath}`
+                    });
+                }
             } catch (error) {
                 console.error(error);
             }

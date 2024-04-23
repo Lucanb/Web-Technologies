@@ -15,6 +15,13 @@ const homeQuerries = {
     AND won = TRUE
     ORDER BY RANDOM()
     LIMIT 9;
-    `
+    `,
+    todayActors : `SELECT full_name
+    FROM guildawards
+    WHERE full_name IS NOT NULL
+    AND year = (SELECT MAX(year) FROM guildawards)
+    GROUP BY full_name
+    ORDER BY RANDOM()
+    LIMIT 9;`
 }
 module.exports = homeQuerries;

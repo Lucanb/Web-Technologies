@@ -32,5 +32,17 @@ class UserModel {
             throw error;
         }
     }
+
+    async getTodayActors(){
+        const values = []
+
+        try {
+            const {rows} = await pool.query(homeQuerries.todayActors, values);
+            return rows
+        } catch (error) {
+            console.error('Eroare la returnearea datelor din getTodayActors', error);
+            throw error;
+        }
+    }
 }
 module.exports = UserModel
