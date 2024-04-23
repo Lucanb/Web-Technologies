@@ -109,6 +109,40 @@ class homeService {
         res.end()
     }
 
+    async commingSoon(req,res){
+
+        const feederModel = new homeFeederModel()
+        const results = await  feederModel.getCommingSoon()
+        const resultsWithLinks = [];
+        console.log(results)
+        for (const result of results) {
+            try {
+                const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/multi`, {
+                    params: {
+                        api_key: config.api_key,
+                        query: result.show,
+                    }
+                });
+
+                const posterPath = tmdbResponse.data.results[0].poster_path;
+                const id = tmdbResponse.data.results[0].id;
+                if(posterPath != null) {
+                    console.log(`Poster pentru ${result.show}: https://image.tmdb.org/t/p/w500${posterPath}`);
+                    resultsWithLinks.push({
+                        id: id,
+                        show: result.show,
+                        posterUrl: `https://image.tmdb.org/t/p/w500${posterPath}`
+                    });
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.write(JSON.stringify(resultsWithLinks))
+        res.end()
+    }
+
 }
 
 module.exports = homeService;

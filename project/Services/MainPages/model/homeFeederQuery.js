@@ -1,10 +1,9 @@
 const homeQuerries = {
-    anouncesQuerry : `SELECT *
+    anouncesQuerry : `SELECT DISTINCT *,RANDOM() AS rnd
     FROM guildawards
-    WHERE year IS NOT NULL
+    WHERE SUBSTR(year, 1, 4) != '2020'
     AND full_name IS NOT NULL
-    AND show IN (SELECT DISTINCT show FROM guildawards)
-    ORDER BY year DESC, RANDOM()
+    ORDER BY rnd
     LIMIT 9;
     `,
     topPicksQuery : `SELECT full_name
@@ -16,12 +15,20 @@ const homeQuerries = {
     ORDER BY RANDOM()
     LIMIT 9;
     `,
-    todayActors : `SELECT full_name
+    todayActorsQuery : `SELECT full_name
     FROM guildawards
     WHERE full_name IS NOT NULL
     AND year = (SELECT MAX(year) FROM guildawards)
     GROUP BY full_name
     ORDER BY RANDOM()
-    LIMIT 9;`
+    LIMIT 9;
+    `,
+    commingSoonQuery : `SELECT DISTINCT *,RANDOM() AS rnd
+    FROM guildawards
+    WHERE SUBSTR(year, 1, 4) = '2020'
+    AND full_name IS NOT NULL
+    ORDER BY rnd
+    LIMIT 9;
+    `
 }
 module.exports = homeQuerries;

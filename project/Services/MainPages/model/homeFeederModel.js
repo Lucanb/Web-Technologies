@@ -37,12 +37,24 @@ class UserModel {
         const values = []
 
         try {
-            const {rows} = await pool.query(homeQuerries.todayActors, values);
+            const {rows} = await pool.query(homeQuerries.todayActorsQuery, values);
             return rows
         } catch (error) {
             console.error('Eroare la returnearea datelor din getTodayActors', error);
             throw error;
         }
+    }
+
+    async getCommingSoon(){
+        const values = []
+        try {
+            const {rows} = await pool.query(homeQuerries.commingSoonQuery, values);
+            return rows
+        } catch (error) {
+            console.error('Eroare la returnearea datelor din getCommingSoon', error);
+            throw error;
+        }
+
     }
 }
 module.exports = UserModel
