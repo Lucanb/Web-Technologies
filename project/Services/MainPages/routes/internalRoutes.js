@@ -78,6 +78,19 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
+    new Router("POST","/actor-profile/:",async (req,res)=>{
+        try {
+            const controller = new feedController();
+            const sendId = await controller.sendId(req,res);
+            return sendId;
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    })
+    ,
     new Router("GET", '/toppicks', async (req, res) => {
         try {
             const controller = new feedController();
