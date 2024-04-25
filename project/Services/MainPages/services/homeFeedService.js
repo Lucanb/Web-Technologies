@@ -27,10 +27,17 @@ class homeService {
 
                 const posterPath = tmdbResponse.data.results[0].poster_path;
                 const id = tmdbResponse.data.results[0].id;
+                const movieToken = await Token.generateKey({
+                    movieID: id,
+                    fresh: true,
+                    type: 'access'
+                }, {
+                    expiresIn: '1h'
+                })
                 if(posterPath != null) {
                     console.log(`Poster pentru ${result.show}: https://image.tmdb.org/t/p/w500${posterPath}`);
                     resultsWithLinks.push({
-                        id: id,
+                        id: movieToken,
                         show: result.show,
                         posterUrl: `https://image.tmdb.org/t/p/w500${posterPath}`
                     });
@@ -126,10 +133,17 @@ class homeService {
 
                 const posterPath = tmdbResponse.data.results[0].poster_path;
                 const id = tmdbResponse.data.results[0].id;
+                const movieToken = await Token.generateKey({
+                    movieID: id,
+                    fresh: true,
+                    type: 'access'
+                }, {
+                    expiresIn: '1h'
+                })
                 if(posterPath != null) {
                     console.log(`Poster pentru ${result.show}: https://image.tmdb.org/t/p/w500${posterPath}`);
                     resultsWithLinks.push({
-                        id: id,
+                        id: movieToken,
                         show: result.show,
                         posterUrl: `https://image.tmdb.org/t/p/w500${posterPath}`
                     });
