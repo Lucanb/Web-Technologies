@@ -66,10 +66,17 @@ class homeService {
                 });
                 const profilePath = tmdbResponse.data.results[0].profile_path;
                 const id = tmdbResponse.data.results[0].id;
+                const actorId = await Token.generateKey({
+                    movieID: id,
+                    fresh: true,
+                    type: 'access'
+                }, {
+                    expiresIn: '1h'
+                })
                 if(profilePath != null) {
                     console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
                     resultsWithLinks.push({
-                        id: id,
+                        id: actorId, //astea le codific
                         full_name: result.full_name,
                         posterUrl: `https://image.tmdb.org/t/p/w500/${profilePath}`
                     });
@@ -99,10 +106,17 @@ class homeService {
                 });
                 const profilePath = tmdbResponse.data.results[0].profile_path;
                 const id = tmdbResponse.data.results[0].id;
+                const actorId = await Token.generateKey({
+                    movieID: id,
+                    fresh: true,
+                    type: 'access'
+                }, {
+                    expiresIn: '1h'
+                })
                 if(profilePath != null) {
                     console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
                     resultsWithLinks.push({
-                        id: id,
+                        id: actorId,   //ASTEA LE CODIFIC
                         full_name: result.full_name,
                         posterUrl: `https://image.tmdb.org/t/p/w500/${profilePath}`
                     });

@@ -5,6 +5,7 @@ const url = require("url");
 const axios = require("axios");
 const config = require('../configuration/config.js')
 const {json} = require("../../../modules/middlewares/bodyParser");
+const JWToken = require("../modules/token");
 
 class actorService {
     constructor() {
@@ -27,6 +28,9 @@ class actorService {
             })
                const id = data.id;
                 console.log(id);
+                console.log('-----------------------')
+                console.log(' ')
+                console.log('----------------------')
                 if(id != undefined) {
                    return id;
                 }
@@ -80,8 +84,11 @@ class actorService {
             })
             const id = data.id;
             console.log(id);
+            const decoded = await JWToken.validate(id);
+            console.log(decoded)
+            const actor_id = decoded[0].movieID;
                 const apiKey = config.api_key;
-                const apiUrl = `https://api.themoviedb.org/3/person/${id}?language=en-US&api_key=${apiKey}`;
+                const apiUrl = `https://api.themoviedb.org/3/person/${actor_id}?language=en-US&api_key=${apiKey}`;
                 const response = await axios.get(apiUrl);
 
                 if (response.status !== 200) {

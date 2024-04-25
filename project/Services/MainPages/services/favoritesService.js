@@ -28,6 +28,7 @@ class favoritesService{
             })
             const id_actor = data.id;
             console.log(id_actor);
+            const decodedIdActor = await JWToken.validate(id_actor);
             const cookies = req.headers.cookie;
             let accessToken = null;
             if (cookies) {
@@ -52,7 +53,8 @@ class favoritesService{
                 const id_user = decoded[0].userId;
                 try {
                     const model = new favoritesModel();
-                    await model.addToFavorites(id_user, id_actor);
+                    console.log('actor_id : ',decodedIdActor)
+                    await model.addToFavorites(id_user, decodedIdActor[0].movieID);
                     res.writeHead(200, {'Content-Type': 'application/json'});
                 } catch (error) {
                     console.error(error);
@@ -66,7 +68,7 @@ class favoritesService{
         }
     }
 
-    async getAllFavorites(req,res){
+    async getAllFavorites(req, res) {
         const cookies = req.headers.cookie;
         let accessToken = null;
         if (cookies) {
@@ -84,6 +86,7 @@ class favoritesService{
 
         try {
             const decoded = await JWToken.validate(accessToken);
+            console.log(decoded)
             // if (!decoded) {
             //     res.writeHead(401, {'Content-Type': 'text/html'});
             // }
@@ -91,16 +94,30 @@ class favoritesService{
             const id_user = decoded[0].userId;
             try {
                 const model = new favoritesModel();
+                console.log('aici crapa?')
                 const results = await model.getAllFavorites(id_user);
+
+                // Folosește un loop for pentru a itera prin fiecare element și a aștepta generarea cheii
+                for (const element of results) {
+                    const actorId = await Token.generateKey({
+                        movieID: element.id_actor,
+                        fresh: true,
+                        type: 'access'
+                    }, {
+                        expiresIn: '1h'
+                    });
+                    element.id_actor = actorId;
+                }
+
+                console.log(JSON.stringify(results));
                 res.writeHead(200, {'Content-Type': 'application/json'});
-                res.write(JSON.stringify(results))
+                res.write(JSON.stringify(results));
             } catch (error) {
                 console.error(error);
                 res.status(500).json({error: "Error: get all favorites"});
             }
-        }catch (error)
-        {
-            console.log(error)
+        } catch (error) {
+            console.log(error);
         }
     }
 }
