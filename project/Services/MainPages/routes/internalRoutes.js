@@ -2,6 +2,7 @@ const { Router } = require("../../../modules/controllers/routerController");
 const fs = require("fs");
 const JWToken = require("../modules/token");
 const {feedController} = require("../controllers/feedController");
+const {favoritesController} = require("../controllers/favoritesController");
 
 const internalRoutes = [
     new Router("GET", "/altaRuta", async (req, res) => {
@@ -78,7 +79,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
-    new Router("POST","/actor-profile/:",async (req,res)=>{
+    new Router("POST","/send-actor-id",async (req,res)=>{
         try {
             const controller = new feedController();
             const sendId = await controller.sendId(req,res);
@@ -89,8 +90,21 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    })
-    ,
+    }),
+
+    new Router("POST","/actor-profile-info",async (req,res)=>{
+        try {
+            const controller = new feedController();
+            const sendId = await controller.sendIdInformations(req,res);
+            return sendId;
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
+
     new Router("GET", '/toppicks', async (req, res) => {
         try {
             const controller = new feedController();
@@ -177,7 +191,7 @@ const internalRoutes = [
             }
         });
     }),
-    new Router("GET", "/actor-profile", async (req, res, next) => {
+    new Router("GET", "/actor-profile/:", async (req, res, next) => {
 
         fs.readFile("Frontend/views/actor-profile.html", 'utf-8', async (err, html) => {
             if (err) {
@@ -209,6 +223,8 @@ const internalRoutes = [
             //         res.writeHead(401, {'Content-Type': 'text/html'});
             //         return res.end('Invalid token');
             //     }
+
+            /*
             if (!accessToken) {
                 res.writeHead(302, {'Location': 'http://localhost:3000/login'});
                 return res.end('Authorization cookie missing or invalid');
@@ -220,14 +236,14 @@ const internalRoutes = [
                     res.writeHead(401, {'Content-Type': 'text/html'});
                     return res.end('Invalid token');
                 } ///aici o sa fac si cu refresh
-
+            */
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
-            } catch (error) {
-                console.error('Error validating token:', error);
-                res.writeHead(500, {'Content-Type': 'text/html'});
-                res.end('Internal server error');
-            }
+            // } catch (error) {
+            //     console.error('Error validating token:', error);
+            //     res.writeHead(500, {'Content-Type': 'text/html'});
+            //     res.end('Internal server error');
+            // }
         });
     })
     ,
@@ -449,7 +465,30 @@ const internalRoutes = [
             res.write(data);
             res.end();
         });
-    })
+    }),
+
+
+    new Router("POST","/add-favorites",async (req,res)=>{
+        try {
+            const controller = new favoritesController();
+            return await controller.addFavorite(req, res);
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
+
+    new Router("GET","/all-favorites",async (req,res)=>{
+        try {
+            const controller = new favoritesController();
+            return await controller.getAllFavorites(req, res);
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
 ];
 
 

@@ -3,7 +3,7 @@ const Password = require("../../Authentication/modules/password");
 const Token = require("../../Authentication/modules/token");
 const url = require("url");
 const axios = require("axios");
-const homeFeederModel = require('../model/homeFeederModel')
+const homeFeederModel = require('../model/home/homeFeederModel')
 const config = require('../configuration/config.js')
 
 class homeService {

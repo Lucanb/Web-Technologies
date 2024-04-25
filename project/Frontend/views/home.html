@@ -99,8 +99,9 @@
             const id = event.target.id;
             let formData = new URLSearchParams();
             formData.append('id', id);
+            console.log(formData)
 
-            fetch('http://localhost:3001/actor-profile', {
+            fetch('http://localhost:3001/send-actor-id', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -112,16 +113,18 @@
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
+                    window.location.href = `/actor-profile/${id}`
                     console.log('Raw Response:', response);
-                    return response.json();
+                    return response;
                 })
-                .then(data => {
+                /*.then(data => {
                     if (data.success) {
-                        alert('Mail sent successful! ');
+
                     } else {
-                        alert('Mail not sent. Check if email exists ');
+                        console.log('DATA : ',data)
+                        alert('Id not sent. Check if id exists ');
                     }
-                })
+                })*/
                 .catch(error => {
                     console.error('Error:', error);
                     alert('An error occurred: ' + error.message);

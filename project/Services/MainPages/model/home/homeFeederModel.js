@@ -1,13 +1,7 @@
-
-const { config, pool } = require("../configuration/configApplication");
+const {pool } = require("../../configuration/configApplication");
 const homeQuerries = require('./homeFeederQuery')
-const {JS} = require("follow/lib");
-class UserModel {
-    constructor(username, password, email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-    }
+class homeModel {
+    constructor() {}
 
     async getAnnounces() {
         const values = []
@@ -16,7 +10,7 @@ class UserModel {
             const {rows} = await pool.query(homeQuerries.anouncesQuerry, values);
             return rows
         } catch (error) {
-            console.error('Eroare la returnearea datelor din homeFeederQuery', error);
+            console.error(error);
             throw error;
         }
     }
@@ -28,7 +22,7 @@ class UserModel {
             const {rows} = await pool.query(homeQuerries.topPicksQuery, values);
             return rows
         } catch (error) {
-            console.error('Eroare la returnearea datelor din getTopPicks', error);
+            console.error(error);
             throw error;
         }
     }
@@ -40,7 +34,7 @@ class UserModel {
             const {rows} = await pool.query(homeQuerries.todayActorsQuery, values);
             return rows
         } catch (error) {
-            console.error('Eroare la returnearea datelor din getTodayActors', error);
+            console.error(error);
             throw error;
         }
     }
@@ -51,10 +45,10 @@ class UserModel {
             const {rows} = await pool.query(homeQuerries.commingSoonQuery, values);
             return rows
         } catch (error) {
-            console.error('Eroare la returnearea datelor din getCommingSoon', error);
+            console.error(error);
             throw error;
         }
 
     }
 }
-module.exports = UserModel
+module.exports = homeModel
