@@ -5,13 +5,14 @@ const url = require("url");
 const axios = require("axios");
 const favoritesModel = require('../model/favorites/favoritesModel')
 const config = require('../configuration/config.js')
+const JWToken = require("../modules/token");
 
 class favoritesService{
     constructor() {}
 
     async add(req,res){
-        const id_user = 1;
-        try{
+        // const id_user = 1;
+        try {
             let body = '';
             req.on('data', chunk => {
                 body += chunk.toString();
@@ -27,29 +28,79 @@ class favoritesService{
             })
             const id_actor = data.id;
             console.log(id_actor);
-            try{
-                const model = new favoritesModel();
-                await model.addToFavorites(id_user,id_actor);
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-            }catch (error) {
-                console.error(error);
-                res.status(500).json({ error: "Error: add to favorites" });
+            const cookies = req.headers.cookie;
+            let accessToken = null;
+            if (cookies) {
+                const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+                    const parts = cookie.split('=');
+                    acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+                    return acc;
+                }, {});
+                accessToken = cookieObj['accessToken'];
             }
-        }catch (error) {
-            console.error(error);
+            if (!accessToken) {
+                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                return res.end('Authorization cookie missing or invalid');
+            }
+
+            try {
+                const decoded = await JWToken.validate(accessToken);
+                // if (!decoded) {
+                //     res.writeHead(401, {'Content-Type': 'text/html'});
+                // }
+                console.log('decoded :', decoded[0].userId)
+                const id_user = decoded[0].userId;
+                try {
+                    const model = new favoritesModel();
+                    await model.addToFavorites(id_user, id_actor);
+                    res.writeHead(200, {'Content-Type': 'application/json'});
+                } catch (error) {
+                    console.error(error);
+                    res.status(500).json({error: "Error: add to favorites"});
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }catch (error){
+            console.log(error)
         }
     }
 
     async getAllFavorites(req,res){
-        const id_user = 1;
-        try{
-            const model = new favoritesModel();
-            const results = await model.getAllFavorites(id_user);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.write(JSON.stringify(results))
-        }catch (error) {
-            console.error(error);
-            res.status(500).json({ error: "Error: get all favorites" });
+        const cookies = req.headers.cookie;
+        let accessToken = null;
+        if (cookies) {
+            const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+                const parts = cookie.split('=');
+                acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+                return acc;
+            }, {});
+            accessToken = cookieObj['accessToken'];
+        }
+        if (!accessToken) {
+            res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            return res.end('Authorization cookie missing or invalid');
+        }
+
+        try {
+            const decoded = await JWToken.validate(accessToken);
+            // if (!decoded) {
+            //     res.writeHead(401, {'Content-Type': 'text/html'});
+            // }
+            console.log('decoded :', decoded[0].userId)
+            const id_user = decoded[0].userId;
+            try {
+                const model = new favoritesModel();
+                const results = await model.getAllFavorites(id_user);
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.write(JSON.stringify(results))
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({error: "Error: get all favorites"});
+            }
+        }catch (error)
+        {
+            console.log(error)
         }
     }
 }

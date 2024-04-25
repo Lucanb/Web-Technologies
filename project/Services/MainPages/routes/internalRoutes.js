@@ -181,7 +181,7 @@ const internalRoutes = [
                     res.writeHead(401, {'Content-Type': 'text/html'});
                     return res.end('Invalid token');
                 } ///aici o sa fac si cu refresh
-
+                console.log('decoded :',decoded[0].userId)
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             } catch (error) {
