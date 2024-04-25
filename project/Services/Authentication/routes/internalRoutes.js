@@ -3,17 +3,6 @@ const fs = require("fs");
 const JWToken = require("../modules/token");
 
 const internalRoutes = [
-    new Router("GET", "/altaRuta", async (req, res) => {
-        fs.readFile("Frontend/index.html", (err, data) => {
-            if (err) {
-                res.writeHead(404, {'Content-Type': 'text/html'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type' : 'text/html'});
-            res.write(data);
-            res.end();
-        });
-    }),
     new Router("GET", "/news", async (req, res, next) => {
 
         fs.readFile("Frontend/views/news.html", 'utf-8', async (err, html) => {
@@ -118,108 +107,6 @@ const internalRoutes = [
                 res.writeHead(500, {'Content-Type': 'text/html'});
                 res.end('Internal server error');
             }
-        });
-    })
-    ,
-    new Router("GET","/about",async (req,res)=>{
-        fs.readFile("Frontend/views/about.html",(err, data)=>{
-            if(err){
-                res.writeHead(404, {'Content-Type': 'text/html'});
-                // console.log(err)
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type' : 'text/html'});
-            res.write(data);
-            res.end();
-        })
-    }),
-    new Router("GET","/help",async (req,res)=>{
-        fs.readFile("Frontend/views/help.html",(err, data)=>{
-            if(err){
-                res.writeHead(404, {'Content-Type': 'text/html'});
-                // console.log(err)
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type' : 'text/html'});
-            res.write(data);
-            res.end();
-        })
-    }),
-    new Router("GET", "/styles/favourites.css", async (req, res) => {
-        fs.readFile("Frontend/styles/favourites.css", (err, data) => {
-            if (err) {
-                res.writeHead(404, {'Content-Type': 'text/css'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.write(data);
-            res.end();
-        });
-    }),
-    new Router("GET", "/styles/about.css", async (req, res) => {
-        fs.readFile("Frontend/styles/about.css", (err, data) => {
-            if (err) {
-                res.writeHead(404, {'Content-Type': 'text/css'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.write(data);
-            res.end();
-        });
-    }),
-    new Router("GET", "/styles/help.css", async (req, res) => {
-        fs.readFile("Frontend/styles/help.css", (err, data) => {
-            if (err) {
-                res.writeHead(404, {'Content-Type': 'text/css'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.write(data);
-            res.end();
-        });
-    }),
-    new Router("GET", "/styles/index.css", async (req, res) => {
-        fs.readFile("Frontend/styles/index.css", (err, data) => {
-            if (err) {
-                res.writeHead(404, {'Content-Type': 'text/css'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.write(data);
-            res.end();
-        });
-    }),
-    new Router("GET", "/styles/news.css", async (req, res) => {
-        fs.readFile("Frontend/styles/news.css", (err, data) => {
-            if (err) {
-                res.writeHead(404, {'Content-Type': 'text/css'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.write(data);
-            res.end();
-        });
-    }),
-    new Router("GET", "/styles/actor-profile.css", async (req, res) => {
-        fs.readFile("Frontend/styles/actor-profile.css", (err, data) => {
-            if (err) {
-                res.writeHead(404, {'Content-Type': 'text/css'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.write(data);
-            res.end();
-        });
-    }),
-    new Router("GET", "/styles/admin.css", async (req, res) => {
-        fs.readFile("Frontend/styles/admin.css", (err, data) => {
-            if (err) {
-                res.writeHead(404, {'Content-Type': 'text/css'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.write(data);
-            res.end();
         });
     })
 ];
