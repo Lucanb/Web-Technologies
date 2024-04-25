@@ -20,64 +20,6 @@
     <h1 class="favourites-page">Your Favourites</h1>
     <div class="your-favourites-actors">
         <h2>Your Favourites Actors</h2>
-        <div class="actor-element">
-            <div class="actor-details">
-                <div class="actor-name">
-                    <h2>Ana de Armas</h2>
-                </div>
-                <div class="actor-picture">
-                    <img src="../img/tmp_AvvDvj_e8e6a4c0679b5a83_GettyImages-1197390293.jpg" alt="Placeholder Image Actors">
-                </div>
-            </div>
-            <div class="actor-details">
-                <div class="actor-name">
-                    <h2>Al Pacino</h2>
-                </div>
-                <div class="actor-picture">
-                    <img src="../img/Al_Pacino.jpg" alt="Placeholder Image Actors">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="your-favourites-movies">
-        <h2>Your Favourites Movie Types</h2>
-        <button class="movies-categories">Options</button>
-        <div class="actor-element">
-            <div class="movie-details">
-                <div class="year">
-                    <h2>Year 2017</h2>
-                </div>
-                <div class="category">
-                    <h2>Drama Movie</h2>
-                </div>
-                <div class="movie-name">
-                    <h2>Blade Runner 2049</h2>
-                </div>
-                <div class="Score">
-                    <h3>Score: 8.2</h3>
-                </div>
-                <div class="movie-picture">
-                    <img src="../img/s-l1200.jpg" alt="Placeholder Image Actors">
-                </div>
-            </div>
-            <div class="movie-details">
-                <div class="year">
-                    <h2>Year 1983</h2>
-                </div>
-                <div class="category">
-                    <h2>Drama Movie</h2>
-                </div>
-                <div class="movie-name">
-                    <h2>Scarface</h2>
-                </div>
-                <div class="Score">
-                    <h3>Score: 8.2</h3>
-                </div>
-                <div class="movie-picture">
-                    <img src="../img/images.jpeg" alt="Placeholder Image Actors">
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <div class="low-bar">
@@ -87,5 +29,113 @@
         <label onclick="location.href='/index';" class="references-element">Site Index</label>
     </div>
 </div>
+<script>
+    function redirectToActor(event){
+        event.preventDefault();
+        const id = event.target.id;
+        let formData = new URLSearchParams();
+        formData.append('id', id);
+        console.log(formData)
+
+        fetch('http://localhost:3001/send-actor-id', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData
+        })
+            .then(response => {
+                // console.log('Raw Response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.href = `/actor-profile/${id}`
+                console.log('Raw Response:', response);
+                return response;
+            })
+            /*.then(data => {
+                if (data.success) {
+
+                } else {
+                    console.log('DATA : ',data)
+                    alert('Id not sent. Check if id exists ');
+                }
+            })*/
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+    }
+
+    fetch('http://localhost:3001/all-favorites', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const ids = data.map(item => item.id_actor);
+            ids.forEach(id => {
+                console.log(id);
+                let formData = new URLSearchParams();
+                formData.append('id', id);
+                console.log(formData);
+                fetch('http://localhost:3001/actor-profile-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData,
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const actorDetailsDiv = document.createElement('div');
+                        actorDetailsDiv.classList.add('actor-details');
+
+                        const actorNameDiv = document.createElement('div');
+                        actorNameDiv.classList.add('actor-name');
+                        const actorNameH2 = document.createElement('h2');
+                        actorNameH2.textContent = data.data[0].name;
+                        actorNameDiv.appendChild(actorNameH2);
+                        actorDetailsDiv.appendChild(actorNameDiv);
+
+                        const actorPictureDiv = document.createElement('div');
+                        actorPictureDiv.classList.add('actor-picture');
+                        const actorImg = document.createElement('img');
+                        actorImg.src = data.data[0].profile_path;
+                        actorImg.id = id;
+                        actorPictureDiv.appendChild(actorImg);
+                        actorDetailsDiv.appendChild(actorPictureDiv);
+                        const actorContainer = document.querySelector('.your-favourites-actors');
+                        actorContainer.appendChild(actorDetailsDiv);
+
+                        actorImg.addEventListener('click',redirectToActor);
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error: ' + error.message);
+                    });
+            })
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+
+
+</script>
 </body>
 </html>

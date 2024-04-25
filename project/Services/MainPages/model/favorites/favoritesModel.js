@@ -24,6 +24,5 @@ class favoritesModel {
             throw error;
         }
     }
-
 }
 module.exports = favoritesModel

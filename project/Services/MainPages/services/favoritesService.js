@@ -11,14 +11,32 @@ class favoritesService{
 
     async add(req,res){
         const id_user = 1;
-        const id_actor = 515;
         try{
-            const model = new favoritesModel();
-            await model.addToFavorites(id_user,id_actor);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            const data = await new Promise(async (resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            })
+            const id_actor = data.id;
+            console.log(id_actor);
+            try{
+                const model = new favoritesModel();
+                await model.addToFavorites(id_user,id_actor);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+            }catch (error) {
+                console.error(error);
+                res.status(500).json({ error: "Error: add to favorites" });
+            }
         }catch (error) {
             console.error(error);
-            res.status(500).json({ error: "Error: add to favorites" });
         }
     }
 
