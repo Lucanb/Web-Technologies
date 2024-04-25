@@ -117,6 +117,10 @@ class UserService {
                             }, {
                                 expiresIn: '24h'
                             })
+                            //aici salvam in baza de date token-ul daca nu exista altfel doar cat il cautam(el sigur va fi ok)
+
+                            this.userModel = new userModel(username, password, 'email');
+                            const addToken = await this.userModel.addToken(accessToken,refreshToken,userId);
                             return [accessToken, refreshToken];
                         } else {
                             console.log('Try again!');
@@ -284,27 +288,27 @@ class UserService {
 
     async verifyEmail(req, res){
         try {
-                let body= '';
-                req.on('data', chunk => {
-                    body += chunk.toString();
+            let body= '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            const data = await new Promise((resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
                 });
-                const data = await new Promise((resolve, reject) => {
-                    req.on('end', () => {
-                        try {
-                            resolve(querystring.parse(body));
-                        } catch (error) {
-                            reject(error);
-                        }
-                    });
-                });
-                try{
-                    this.userModel = new userModel('default', 'default', data.email);
-                    const exist = await this.userModel.emailExists()
-                    return {success:exist,email:data.email};
-                }catch (error){
-                    console.error('Eroare la actualizarea parolei:', error);
-                    throw error;
-                }
+            });
+            try{
+                this.userModel = new userModel('default', 'default', data.email);
+                const exist = await this.userModel.emailExists()
+                return {success:exist,email:data.email};
+            }catch (error){
+                console.error('Eroare la actualizarea parolei:', error);
+                throw error;
+            }
         }
         catch (error)
         {

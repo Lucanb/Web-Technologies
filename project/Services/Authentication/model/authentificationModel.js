@@ -60,13 +60,13 @@ class UserModel
         // const usernameExists = await this.usernameExists();
         // const emailExists = await this.emailExists();
         // if (!usernameExists && ! emailExists) {
-            try{
-                const { rows } = await pool.query(userSQL.insertUser,values);
-                return rows[0];
-            }catch (error){
-                console.error('Eroarea la inregitrarea utilizatorului',error);
-                throw error;
-            }
+        try{
+            const { rows } = await pool.query(userSQL.insertUser,values);
+            return rows[0];
+        }catch (error){
+            console.error('Eroarea la inregitrarea utilizatorului',error);
+            throw error;
+        }
         // }else{
         //     console.log('Username or Email already exists!');
         // }
@@ -140,6 +140,18 @@ class UserModel
                 console.error('Eroare la get Id after email:', error);
                 throw error;
             }
+        }
+    }
+    async addToken(access_token,refresh_token,id)
+    {
+        const values = [access_token,refresh_token,id]
+
+        try{
+            const { rows } = await pool.query(userSQL.insertToken,values);
+            return rows[0];
+        }catch (error){
+            console.error('Eroarea la inregitrarea utilizatorului',error);
+            throw error;
         }
     }
 }

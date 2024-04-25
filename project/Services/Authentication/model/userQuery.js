@@ -8,7 +8,8 @@ const userSQL = {
     updateUsername : "UPDATE users SET username = $1 WHERE id = $2",
     updatePassword : "UPDATE users SET password = $1 WHERE id = $2",
     getUserIDAfterEmail : "SELECT id FROM users WHERE email = $1",
-    getUserIDAfterUsername : "SELECT id FROM users WHERE username = $1"
+    getUserIDAfterUsername : "SELECT id FROM users WHERE username = $1",
+    insertToken : "INSERT INTO token (access_token, refresh_token , id_user) VALUES ($1, $2, $3) RETURNING *"
 }
 
 module.exports = userSQL;
