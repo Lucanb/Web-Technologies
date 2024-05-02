@@ -18,15 +18,18 @@ class homeService {
         console.log(results)
         for (const result of results) {
             try {
-                const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/multi`, {
-                    params: {
-                        api_key: config.api_key,
-                        query: result.show,
-                    }
-                });
-
-                const posterPath = tmdbResponse.data.results[0].poster_path;
-                const id = tmdbResponse.data.results[0].id;
+                // const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/multi`, {
+                //     params: {
+                //         api_key: config.api_key,
+                //         query: result.show,
+                //     }
+                // });
+                const url = `https://api.themoviedb.org/3/search/multi?api_key=${config.api_key}&query=${result.show}`;
+                const tmdbResponse = await fetch(url);
+                const tmdbData = await tmdbResponse.json();
+                console.log('tmdbResponse : ',tmdbData)
+                const posterPath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].poster_path : null;
+                const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
                 const movieToken = await Token.generateKey({
                     movieID: id,
                     fresh: true,
@@ -58,14 +61,20 @@ class homeService {
         console.log(results)
         for (const result of results) {
             try {
-                const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1`, {
-                    params: {
-                        api_key: config.api_key,
-                        query: result.full_name,
-                    }
-                });
-                const profilePath = tmdbResponse.data.results[0].profile_path;
-                const id = tmdbResponse.data.results[0].id;
+                // const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1`, {
+                //     params: {
+                //         api_key: config.api_key,
+                //         query: result.full_name,
+                //     }
+                // });
+                // const profilePath = tmdbResponse.data.results[0].profile_path;
+                // const id = tmdbResponse.data.results[0].id;
+                const url = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1&api_key=${config.api_key}&query=${result.full_name}`;
+                const tmdbResponse = await fetch(url);
+                const tmdbData = await tmdbResponse.json();
+                console.log('tmdbResponse : ',tmdbData)
+                const profilePath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].profile_path : null;
+                const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
                 const actorId = await Token.generateKey({
                     movieID: id,
                     fresh: true,
@@ -98,14 +107,20 @@ class homeService {
         console.log(results)
         for (const result of results) {
             try {
-                const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1`, {
-                    params: {
-                        api_key: config.api_key,
-                        query: result.full_name,
-                    }
-                });
-                const profilePath = tmdbResponse.data.results[0].profile_path;
-                const id = tmdbResponse.data.results[0].id;
+                // const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1`, {
+                //     params: {
+                //         api_key: config.api_key,
+                //         query: result.full_name,
+                //     }
+                // });
+                // const profilePath = tmdbResponse.data.results[0].profile_path;
+                // const id = tmdbResponse.data.results[0].id;
+                const url = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1&api_key=${config.api_key}&query=${result.full_name}`;
+                const tmdbResponse = await fetch(url);
+                const tmdbData = await tmdbResponse.json();
+                console.log('tmdbResponse : ',tmdbData)
+                const profilePath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].profile_path : null;
+                const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
                 const actorId = await Token.generateKey({
                     movieID: id,
                     fresh: true,
@@ -138,15 +153,21 @@ class homeService {
         console.log(results)
         for (const result of results) {
             try {
-                const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/multi`, {
-                    params: {
-                        api_key: config.api_key,
-                        query: result.show,
-                    }
-                });
-
-                const posterPath = tmdbResponse.data.results[0].poster_path;
-                const id = tmdbResponse.data.results[0].id;
+                // const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/multi`, {
+                //     params: {
+                //         api_key: config.api_key,
+                //         query: result.show,
+                //     }
+                // });
+                //
+                // const posterPath = tmdbResponse.data.results[0].poster_path;
+                // const id = tmdbResponse.data.results[0].id;
+                const url = `https://api.themoviedb.org/3/search/multi?api_key=${config.api_key}&query=${result.show}`;
+                const tmdbResponse = await fetch(url);
+                const tmdbData = await tmdbResponse.json();
+                console.log('tmdbResponse : ',tmdbData)
+                const posterPath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].poster_path : null;
+                const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
                 const movieToken = await Token.generateKey({
                     movieID: id,
                     fresh: true,

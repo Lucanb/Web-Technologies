@@ -2,7 +2,6 @@ const querystring = require("querystring");
 const Password = require("../../Authentication/modules/password");
 const Token = require("../../Authentication/modules/token");
 const url = require("url");
-const axios = require("axios");
 const favoritesModel = require('../model/favorites/favoritesModel')
 const config = require('../configuration/config.js')
 const JWToken = require("../modules/token");
