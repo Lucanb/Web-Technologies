@@ -87,37 +87,49 @@ class actorService {
             const decoded = await JWToken.validate(id);
             console.log(decoded)
             const actor_id = decoded[0].movieID;
-                const apiKey = config.api_key;
-                const apiUrl = `https://api.themoviedb.org/3/person/${actor_id}?language=en-US&api_key=${apiKey}`;
-                const response = await axios.get(apiUrl);
+            const apiKey = config.api_key;
+                // const apiUrl = `https://api.themoviedb.org/3/person/${actor_id}?language=en-US&api_key=${apiKey}`;
+                // const response = await fetch(apiUrl);
+            const apiUrl = `https://api.themoviedb.org/3/person/${actor_id}?language=en-US&api_key=${apiKey}`;
+            const response = await fetch(apiUrl);
+            // console.log(response);
+            const responseJSON = await response.json()
+            // console.log(responseJSON);
 
                 if (response.status !== 200) {
                     throw new Error('Nu am putut obține informațiile despre actor.');
                 }
-                console.log(response.data.name);
-            if (response.data.name != null) {
+                // console.log(responseJSON.name);
+            if (responseJSON.name != null) {
                 const apiKey = config.api_key;
-                const apiUrl = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1&query=${response.data.name}&api_key=${apiKey}`;
-                const initialResponse = await axios.get(apiUrl);
-
+                const apiUrl = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1&query=${responseJSON.name}&api_key=${apiKey}`;
+                // const initialResponse = await axios.get(apiUrl);
+                const initialResponse = await fetch(apiUrl);
+                const initialResponseJSON = await initialResponse.json()
+                // console.log('Rasp : ',initialResponseJSON)
                 if (initialResponse.status !== 200) {
                     throw new Error('Nu am putut obține informațiile despre actor.');
                 }
 
-                const totalPages = initialResponse.data.total_pages;
-                const results = initialResponse.data.results;
+                // const totalPages = initialResponse.data.total_pages;
+                // const results = initialResponse.data.results;
+
+                const totalPages = initialResponseJSON.total_pages;
+                const results = initialResponseJSON.results;
 
                 // Stocăm toate rezultatele într-un array
                 let allResults = [...results];
 
                 // Parcurgem restul paginilor și adăugăm rezultatele în array-ul nostru
                 for (let page = 2; page <= totalPages; page++) {
-                    const nextPageUrl = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=${page}&query=${response.data.name}&api_key=${apiKey}`;
-                    const nextPageResponse = await axios.get(nextPageUrl);
+                    const nextPageUrl = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=${page}&query=${responseJSON.name}&api_key=${apiKey}`;
+                    const nextPageResponse = await fetch(nextPageUrl);
+                    const nextPageResponseJSON = nextPageResponse.json()
+                    console.log('resp last : ', nextPageResponseJSON)
                     if (nextPageResponse.status !== 200) {
                         throw new Error('Nu am putut obține informațiile despre actor.');
                     }
-                    allResults = [...allResults, ...nextPageResponse.data.results];
+                    allResults = [...allResults, ...nextPageResponseJSON.results];
                 }
 
                 const formattedResponse = {
