@@ -79,6 +79,20 @@ routerController.addRoute(new Router("POST","/register",async (req,res,next)=>{
     })
 )
 
+routerController.addRoute(new Router("POST","/register_userCredentialsExists",async (req,res,next)=>{
+        try {
+            const controller = new authController();
+            const registered = await controller.userNameEmailExists(req,res,next);
+            return registered;
+
+        } catch (error) {
+            console.error("Error register user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    })
+)
+
 routerController.addRoute(new Router("GET","/forgot",async (req,res)=>{
         fs.readFile("Frontend/views/auth/forgot.html",(err, data)=>{
             if(err){

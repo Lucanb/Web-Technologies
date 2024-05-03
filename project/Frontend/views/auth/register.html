@@ -22,6 +22,7 @@
         <label>
             <input type="text" id="username" name="username" placeholder="Username" required>
         </label>
+        <p id="error-message" style="color: red; display: none;">User or Email already exists!</p>
         <label>
             <input type="password" id="password" name="password" placeholder="Password" required>
         </label>
@@ -40,7 +41,45 @@
     </div>
 </div>
 <script>
-    document.getElementById('registerForm').addEventListener('submit', function(event) {
+    async function checkUserCredentials(field, value) {
+        let checkFormData = new URLSearchParams();
+        checkFormData.append(field, value);
+
+        try {
+            const checkResponse = await fetch('http://localhost:3000/register_userCredentialsExists', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: checkFormData
+            });
+            const checkData = await checkResponse.json();
+
+            if (checkData.success && (checkData.message[0] === true || checkData.message[1] === true)) {
+                document.getElementById("error-message").style.display = 'block';
+                if (checkData.message[0] === true && field === "username") {
+                    document.getElementById("error-message").textContent = 'Username already exists!';
+                } else if (checkData.message[1] === true && field === "email") {
+                    document.getElementById("error-message").textContent = 'Email already exists!';
+                }
+            } else {
+                document.getElementById("error-message").style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Verification Error:', error);
+            alert('Verification failed: ' + error.message);
+        }
+    }
+
+    document.getElementById("email").addEventListener('blur', function() {
+        checkUserCredentials("email", this.value);
+    });
+
+    document.getElementById("username").addEventListener('blur', function() {
+        checkUserCredentials("username", this.value);
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
         event.preventDefault();
         const email = document.getElementById("email").value;
         const username = document.getElementById("username").value;

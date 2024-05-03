@@ -54,6 +54,40 @@ class UserService {
         }
     }
 
+    async userNameEmailExists(req, res)
+    {
+        try {
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            const data = await new Promise((resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            });
+            console.log('Datele de înregistrare:', data);
+            this.userModel = new userModel(data.username, 'encryptedPassword', data.email);
+            const usernameExists = await this.userModel.usernameExists();
+            console.log(usernameExists)
+            const emailExists = await this.userModel.emailExists();
+            console.log(emailExists)
+            return [usernameExists,emailExists]
+        }catch (error){
+            console.error('Eroare la înregistrarea utilizatorului:', error);
+            res.statusCode = 500;
+            res.end(JSON.stringify({
+                success: false,
+                message: 'Eroare la înregistrarea utilizatorului.'
+            }));
+            return [false,false];
+        }
+    }
+
 
     async loginUser(req,res) {
         try {

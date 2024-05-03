@@ -87,6 +87,33 @@ class authController {
             }));
         }
     }
+
+    async userNameEmailExists(req, res, next){
+        try {
+            const registerService = new userService();
+            const registered = await registerService.userNameEmailExists(req, res);
+                res.writeHead(200, {
+                    'Content-Type': 'application/json',
+                });
+                res.end(JSON.stringify({
+                    success: true,
+                    message: [registered[0],registered[1]],
+                }));
+
+        } catch (error){
+            console.error('Error during register:', error);
+            res.writeHead(500, {
+                'Content-Type': 'application/json',
+            });
+            res.statusCode = 500;
+            res.end(JSON.stringify({
+                success: false,
+                message: 'Internal server error',
+                error: error
+            }));
+        }
+    }
+
     async changePassword(req, res) {
         try {
             const changePass = new userService();
