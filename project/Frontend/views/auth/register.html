@@ -18,11 +18,12 @@
     <form id="registerForm" method="post" action="http://localhost:3000/register">
         <label>
             <input type="text" id="email" name="email" placeholder="Email" required>
+            <p id="error-message1" style="color: red; display: none;">Email already exists!</p>
         </label>
         <label>
             <input type="text" id="username" name="username" placeholder="Username" required>
         </label>
-        <p id="error-message" style="color: red; display: none;">User or Email already exists!</p>
+            <p id="error-message2" style="color: red; display: none;">Username already exists!</p>
         <label>
             <input type="password" id="password" name="password" placeholder="Password" required>
         </label>
@@ -56,14 +57,16 @@
             const checkData = await checkResponse.json();
 
             if (checkData.success && (checkData.message[0] === true || checkData.message[1] === true)) {
-                document.getElementById("error-message").style.display = 'block';
                 if (checkData.message[0] === true && field === "username") {
-                    document.getElementById("error-message").textContent = 'Username already exists!';
+                    document.getElementById("error-message2").textContent = 'Username already exists!';
+                    document.getElementById("error-message2").style.display = 'block';
                 } else if (checkData.message[1] === true && field === "email") {
-                    document.getElementById("error-message").textContent = 'Email already exists!';
+                    document.getElementById("error-message1").textContent = 'Email already exists!';
+                    document.getElementById("error-message1").style.display = 'block';
                 }
             } else {
-                document.getElementById("error-message").style.display = 'none';
+                document.getElementById("error-message1").style.display = 'none';
+                document.getElementById("error-message2").style.display = 'none';
             }
         } catch (error) {
             console.error('Verification Error:', error);
