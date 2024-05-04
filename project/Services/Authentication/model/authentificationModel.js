@@ -48,7 +48,7 @@ class UserModel
             }else {
                 // console.log(rows.length)
                 // console.log(JSON.stringify(rows))
-                return [rows[0].id, rows[0].password]
+                return [rows[0].id, rows[0].password, rows[0].roles]
             }//incerc sa returnez hash-ul
         }catch (error){
             console.error('Eroare la verificarea userului cu parola', error);

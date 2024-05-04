@@ -122,7 +122,9 @@ class UserService {
                     const vector = await this.userModel.passwordMatch();
                     console.log('vector : ',vector);
                     const userId = vector[0];
-                    const passwordMatch = vector[1]
+                    const role = vector[2];
+                    console.log('role : ',role)
+                    const passwordMatch = vector[1];
                     console.log('parola', passwordMatch)
 
                     if (!(usernameExists && passwordMatch)) {
@@ -137,6 +139,7 @@ class UserService {
                             console.log('User logged successfully!'); // ,newUser);
                             const accessToken = await Token.generateKey({
                                 userId: userId,
+                                role: role,
                                 username: this.userModel.username,
                                 fresh: true,
                                 type: 'access'
@@ -146,6 +149,7 @@ class UserService {
                             console.log( accessToken)
                             const refreshToken = await Token.generateKey({
                                 userId: userId,
+                                role : role,
                                 username: this.userModel.username,
                                 type: 'refresh',
                             }, {
@@ -155,7 +159,7 @@ class UserService {
 
                             this.userModel = new userModel(username, password, 'email');
                             const addToken = await this.userModel.addToken(accessToken,refreshToken,userId);
-                            return [accessToken, refreshToken];
+                            return [accessToken, refreshToken, role];
                         } else {
                             console.log('Try again!');
                             return null;

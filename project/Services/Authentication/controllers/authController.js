@@ -7,6 +7,7 @@ class authController {
             if (result) {
                 const accessToken = result[0];
                 const refreshToken = result[1];
+                const role = result[2]
 
                 // Setează cookie-uri sau header-uri necesare aici dacă este necesar
                 // De exemplu, setarea unui cookie pentru token-ul de acces
@@ -22,6 +23,12 @@ class authController {
                     res.writeHead(200, {
                         'Content-Type': 'application/json',
                     });
+                    let redirectUrl = ''
+                    if (role === true){
+                        redirectUrl = 'http://localhost:3001/admin'
+                    }else {
+                        redirectUrl = 'http://localhost:3001/home'
+                    }
                 res.end(JSON.stringify({
                     success: true,
                     message: 'Login success!',
@@ -30,7 +37,7 @@ class authController {
                             accessToken: accessToken,
                             refreshToken: refreshToken
                         },
-                        redirectUrl: 'http://localhost:3001/home'
+                        redirectUrl: redirectUrl
                     }
                 }));
 

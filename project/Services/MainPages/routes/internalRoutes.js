@@ -357,6 +357,12 @@ const internalRoutes = [
                     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
                     return res.end('Invalid token');
                 } ///aici o sa fac si cu refresh
+                console.log('decoded',decoded[0])
+                if (!decoded[0].role)
+                {
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    return res.end('Invalid token');
+                }
 
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
