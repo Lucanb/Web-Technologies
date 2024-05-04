@@ -193,6 +193,7 @@
                 console.error('Error:', error);
                 alert('Error: ' + error.message);
             });
+
         fetch('http://localhost:3001/todayActors', {
             method: 'GET',
             headers: {
@@ -225,6 +226,66 @@
                 console.error('Error:', error);
                 alert('Error: ' + error.message);
             });
+
+        fetch('http://localhost:3001/topPicksWeek', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            // console.log('Raw Response:', response);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // console.log('Raw Response:', response.json());
+            return response.json();
+        })
+            .then(data => {
+                if (data.success) {
+
+                } else {
+                    console.log('DATA test: ', data)
+                    if (data && Array.isArray(data)) {
+                        const actorElement = document.querySelector('.top-picks-this-week .actor-element');
+                        data.forEach(item => {
+                            if (item && item.posterUrl) {
+                                const imgElement = document.createElement('img');
+                                imgElement.src = item.posterUrl;
+                                imgElement.id = item.id;
+                                imgElement.alt = item.full_name;
+                                imgElement.addEventListener('click', redirectToActor);
+                                actorElement.appendChild(imgElement);
+                            }
+                        });
+                        // alert('Id not sent. Check if id exists ');
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+
+            //     console.log('DATA today: ', data);
+            //     if (data && Array.isArray(data)) {
+            //         const actorElement = document.querySelector('.top-picks-this-week .actor-element');
+            //         data.forEach(item => {
+            //             if (item && item.posterUrl) {
+            //                 const imgElement = document.createElement('img');
+            //                 imgElement.src = item.posterUrl;
+            //                 imgElement.id = item.id;
+            //                 imgElement.alt = item.full_name;
+            //                 imgElement.addEventListener('click',redirectToActor);
+            //                 actorElement.appendChild(imgElement);
+            //             }
+            //         });
+            //     }
+            // })
+            // .catch(error => {
+            //     console.error('Error:', error);
+            //     alert('Error: ' + error.message);
+            // });
 
         fetch('http://localhost:3001/commingSoon', {
             method: 'GET',

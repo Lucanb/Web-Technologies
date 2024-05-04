@@ -26,6 +26,27 @@ class favoritesController {
             const getService = await service.getAllFavorites(req,res)
             if (getService) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
+                // res.write(JSON.stringify(getService))
+                res.end()
+            } else {
+                res.end()
+            }
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
+
+    async getTopPicks(req, res) {
+        try {
+            const service = new favoritesService();
+            const getService = await service.getTopWeekPicks(req,res)
+            console.log('-------------------')
+            console.log('res service : ',JSON.stringify(getService))
+            console.log('-------------------')
+            if (getService) {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.write(JSON.stringify(getService))
                 res.end()
             } else {
