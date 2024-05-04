@@ -68,6 +68,20 @@ const internalRoutes = [
             }
         });
     }),
+    new Router("GET", '/actvis', async (req, res) => {
+        fs.readFile("Frontend/views/home_unauthenticated.html", 'utf-8', async (err, html) => {
+            if (err) {
+                console.error('Error reading file:', err);
+                res.writeHead(404, {'Content-Type': 'text/html'});
+                return res.end('404 Not Found');
+            }
+            console.log('header : ',JSON.stringify(req.headers))
+
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.end(html);
+
+        });
+    }),
     new Router("GET", '/announces', async (req, res) => {
         try {
             const controller = new feedController();

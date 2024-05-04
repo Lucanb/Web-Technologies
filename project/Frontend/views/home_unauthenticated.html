@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACVIS</title>
+    <link rel="stylesheet" href="../styles/home.css">
+</head>
+<body>
+<div class="tab">
+    <button class="tabs">Menu</button>
+    <div class="search-bar">
+        <button>Option</button>
+        <input type="text" placeholder="Search">
+    </div>
+    <button onclick="location.href='http://localhost:3000/login';" class="tabs">Sign In</button>
+</div>
+<div class="main-content">
+    <div class="intro">
+        <div class="video-container">
+        </div>
+    </div>
+
+</div>
+<div class="announces">
+    <h2>Announces</h2>
+    <div class="announce-element">
+    </div>
+</div>
+<div class="related-actors">
+    <h2>Top Picks For You</h2>
+    <div class="actor-element">
+    </div>
+</div>
+
+<div class="today-actors">
+    <h2>Today's Actors</h2>
+    <div class="actor-element">
+    </div>
+</div>
+
+<div class="low-bar">
+    <div>
+        <button onclick="location.href='http://localhost:3000/login';">Sign In For More Content</button>
+    </div>
+    <div class="follow-bar">
+        <div class="follow-instagram-icon">
+            <button>Instagram</button>
+        </div>
+        <div class="follow-facebook">
+            <button>Facebook</button>
+        </div>
+    </div>
+    <div class = "references">
+        <label onclick="location.href='/about';" class="references-element">About</label>
+        <label onclick="location.href='/help';" class="references-element">Help</label>
+        <label onclick="location.href='/index';" class="references-element">Site Index</label>
+    </div>
+</div>
+<script>
+    function redirectToActor(event){
+        event.preventDefault();
+        const id = event.target.id;
+        let formData = new URLSearchParams();
+        formData.append('id', id);
+        console.log(formData)
+
+        fetch('http://localhost:3001/send-actor-id', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData
+        })
+            .then(response => {
+                // console.log('Raw Response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.href = `/actor-profile/${id}`
+                console.log('Raw Response:', response);
+                return response;
+            })
+            /*.then(data => {
+                if (data.success) {
+
+                } else {
+                    console.log('DATA : ',data)
+                    alert('Id not sent. Check if id exists ');
+                }
+            })*/
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+    }
+
+    fetch('http://localhost:3001/announces', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('DATA : ', data);
+            if (data && Array.isArray(data)) {
+                const announceElement = document.querySelector('.announce-element');
+                data.forEach(item => {
+                    if (item && item.posterUrl) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = item.posterUrl;
+                        imgElement.id = item.id;
+                        imgElement.alt = item.show;
+                        announceElement.appendChild(imgElement);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+
+    fetch('http://localhost:3001/toppicks', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('DATA : ', data);
+            if (data && Array.isArray(data)) {
+                const actorElement = document.querySelector('.related-actors .actor-element');
+                data.forEach(item => {
+                    if (item && item.posterUrl) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = item.posterUrl;
+                        imgElement.id = item.id;
+                        imgElement.alt = item.full_name;
+                        imgElement.addEventListener('click', redirectToActor);
+                        actorElement.appendChild(imgElement);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+    fetch('http://localhost:3001/todayActors', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('DATA today: ', data);
+            if (data && Array.isArray(data)) {
+                const actorElement = document.querySelector('.today-actors .actor-element');
+                data.forEach(item => {
+                    if (item && item.posterUrl) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = item.posterUrl;
+                        imgElement.id = item.id;
+                        imgElement.alt = item.full_name;
+                        imgElement.addEventListener('click',redirectToActor);
+                        actorElement.appendChild(imgElement);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+
+    fetch('http://localhost:3001/commingSoon', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('DATA : ', data);
+            if (data && Array.isArray(data)) {
+                const announceElement = document.querySelector('.Coming-Soon .actor-element');
+                data.forEach(item => {
+                    if (item && item.posterUrl) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = item.posterUrl;
+                        imgElement.id = item.id;
+                        imgElement.alt = item.show;
+                        announceElement.appendChild(imgElement);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+</script>
+</body>
+</html>
