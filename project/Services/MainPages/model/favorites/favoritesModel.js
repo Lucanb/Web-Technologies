@@ -29,9 +29,17 @@ class favoritesModel {
         try
         {
             const {rows} = await pool.query(favoritesQuerries.topPickWeek);
-            console.log('----------')
-            console.log(JSON.stringify(rows))
-            console.log('----------')
+            return rows;
+        }catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
+    async getTopFavorites(){
+        try
+        {
+            const {rows} = await pool.query(favoritesQuerries.topFavourites);
             return rows;
         }catch (error) {
             console.error(error);
