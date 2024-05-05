@@ -249,9 +249,16 @@ class homeService {
                         const randomActor = cast[Math.floor(Math.random() * cast.length)];
                         if (!actorIds.has(randomActor.id) && actors.length < 7) {
                             if (randomActor.profile_path != null) {
-                                actorIds.add(randomActor.id);
+                                const movieToken = await Token.generateKey({
+                                    movieID: randomActor.id,
+                                    fresh: true,
+                                    type: 'access'
+                                }, {
+                                    expiresIn: '1h'
+                                })
+                                actorIds.add(movieToken);
                                 actors.push({
-                                    actorId: randomActor.id,
+                                    actorId: movieToken,
                                     actorName: randomActor.name,
                                     character: randomActor.character,
                                     profilePath: randomActor.profile_path ? `https://image.tmdb.org/t/p/w500${randomActor.profile_path}` : null,

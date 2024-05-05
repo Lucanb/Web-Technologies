@@ -97,7 +97,6 @@
             const id = event.target.id;
             let formData = new URLSearchParams();
             formData.append('id', id);
-            console.log(formData)
 
             fetch('http://localhost:3001/send-actor-id', {
                 method: 'POST',
@@ -107,19 +106,16 @@
                 body: formData
             })
                 .then(response => {
-                    // console.log('Raw Response:', response);
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
                     window.location.href = `/actor-profile/${id}`
-                    console.log('Raw Response:', response);
                     return response;
                 })
                 /*.then(data => {
                     if (data.success) {
 
                     } else {
-                        console.log('DATA : ',data)
                         alert('Id not sent. Check if id exists ');
                     }
                 })*/
@@ -142,7 +138,6 @@
                 return response.json();
             })
             .then(data => {
-                console.log('DATA : ', data);
                 if (data && Array.isArray(data)) {
                     const announceElement = document.querySelector('.announce-element');
                     data.forEach(item => {
@@ -152,6 +147,39 @@
                             imgElement.id = item.id;
                             imgElement.alt = item.show;
                             announceElement.appendChild(imgElement);
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+
+        fetch('http://localhost:3001/exploreActors', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data && Array.isArray(data)) {
+                    const actorElement = document.querySelector('.explore-actors .actor-element');
+                    console.log(data)
+                    data.forEach(item => {
+                        if (item && item.profilePath) {
+                            const imgElement = document.createElement('img');
+                            imgElement.src = item.profilePath;
+                            imgElement.id = item.actorId;
+                            imgElement.alt = item.actorName;
+                            imgElement.addEventListener('click', redirectToActor);
+                            actorElement.appendChild(imgElement);
                         }
                     });
                 }
@@ -174,7 +202,6 @@
                 return response.json();
             })
             .then(data => {
-                console.log('DATA : ', data);
                 if (data && Array.isArray(data)) {
                     const actorElement = document.querySelector('.related-actors .actor-element');
                     data.forEach(item => {
@@ -207,7 +234,6 @@
                 return response.json();
             })
             .then(data => {
-                console.log('DATA today: ', data);
                 if (data && Array.isArray(data)) {
                     const actorElement = document.querySelector('.today-actors .actor-element');
                     data.forEach(item => {
@@ -233,19 +259,16 @@
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            // console.log('Raw Response:', response);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
 
-            // console.log('Raw Response:', response.json());
             return response.json();
         })
             .then(data => {
                 if (data.success) {
 
                 } else {
-                    console.log('DATA test: ', data)
                     if (data && Array.isArray(data)) {
                         const actorElement = document.querySelector('.top-picks-this-week .actor-element');
                         data.forEach(item => {
@@ -273,19 +296,16 @@
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            // console.log('Raw Response:', response);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
 
-            // console.log('Raw Response:', response.json());
             return response.json();
         })
             .then(data => {
                 if (data.success) {
 
                 } else {
-                    console.log('DATA test: ', data)
                     if (data && Array.isArray(data)) {
                         const actorElement = document.querySelector('.fan-favourites .actor-element');
                         data.forEach(item => {
@@ -320,7 +340,6 @@
                 return response.json();
             })
             .then(data => {
-                console.log('DATA : ', data);
                 if (data && Array.isArray(data)) {
                     const announceElement = document.querySelector('.Coming-Soon .actor-element');
                     data.forEach(item => {

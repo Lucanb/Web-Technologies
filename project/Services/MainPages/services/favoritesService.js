@@ -99,7 +99,6 @@ class favoritesService{
                 const model = new favoritesModel();
                 const results = await model.getAllFavorites(id_user);
 
-                // Folosește un loop for pentru a itera prin fiecare element și a aștepta generarea cheii
                 for (const element of results) {
                     const actorId = await Token.generateKey({
                         movieID: element.id_actor,
