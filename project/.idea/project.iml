@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/Services/Authentication/configuration" />
       <excludeFolder url="file://$MODULE_DIR$/Services/MainPages/configuration" />
+      <excludeFolder url="file://$MODULE_DIR$/Services/Admin/configuration" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -1,4 +1,4 @@
 node_modules/
 Services/Authentication/configuration/
 Services/MainPages/configuration/
-Services/Admin/configuration/
+Services/Admin/configuration
