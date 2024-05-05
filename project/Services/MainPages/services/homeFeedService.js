@@ -148,49 +148,130 @@ class homeService {
         res.end()
     }
 
-    async exploreActors(req, res) {
-        try {
-            const genreId = 18;
-            const discoverUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${config.api_key}&with_genres=${genreId}`;
+    // async exploreActors(req, res) {
+    //     try {
+    //         const genreId = 18;
+    //           /*
+    //             Acțiune - 28
+    //             Aventură - 12
+    //             Animație - 16
+    //             Comedie - 35
+    //             Crimă - 80
+    //             Documentar - 99
+    //             Dramă - 18
+    //             Familie - 10751
+    //             Fantezie - 14
+    //             Istoric - 36
+    //             Horror - 27
+    //             Muzică - 10402
+    //             Mister - 9648
+    //             Romance - 10749
+    //             Science Fiction (SF) - 878
+    //             Film TV - 10770
+    //             Thriller - 53
+    //             Război - 10752
+    //             Western - 37
+    //             */
+    //         const discoverUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${config.api_key}&with_genres=${genreId}`;
+    //
+    //         const discoverResponse = await fetch(discoverUrl);
+    //         const discoverData = await discoverResponse.json();
+    //         const movies = discoverData.results.slice(0, 5);
+    //
+    //         const resultsWithLinks = [];
+    //
+    //         for (const movie of movies) {
+    //             const movieId = movie.id;
+    //             const creditsUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${config.api_key}`;
+    //
+    //             const creditsResponse = await fetch(creditsUrl);
+    //             const creditsData = await creditsResponse.json();
+    //             const cast = creditsData.cast;
+    //
+    //             const limitedActors = cast.slice(0, 3).map(actor => ({
+    //                 actorId: actor.id,
+    //                 actorName: actor.name,
+    //                 character: actor.character,
+    //                 profilePath: actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : null
+    //             }));
+    //
+    //             resultsWithLinks.push({
+    //                 movieId: movie.id,
+    //                 movieTitle: movie.title,
+    //                 moviePoster: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null,
+    //                 actors: limitedActors
+    //             });
+    //         }
+    //
+    //         res.writeHead(200, {'Content-Type': 'application/json'});
+    //         res.write(JSON.stringify(resultsWithLinks));
+    //         res.end();
+    //     } catch (error) {
+    //         console.error(error);
+    //         res.writeHead(500, {'Content-Type': 'application/json'});
+    //         res.write(JSON.stringify({ error: 'Internal Server Error' }));
+    //         res.end();
+    //     }
+    // }
 
-            const discoverResponse = await fetch(discoverUrl);
-            const discoverData = await discoverResponse.json();
-            const movies = discoverData.results;
+        async exploreActors(req, res) {
+            try {
+                const genreId = 12;
+                const discoverUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${config.api_key}&with_genres=${genreId}`;
 
-            const resultsWithLinks = [];
+                const discoverResponse = await fetch(discoverUrl);
+                const discoverData = await discoverResponse.json();
 
-            for (const movie of movies) {
-                const movieId = movie.id;
-                const creditsUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${config.api_key}`;
+                function shuffle(array) {
+                    for (let i = array.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [array[i], array[j]] = [array[j], array[i]];
+                    }
+                }
 
-                const creditsResponse = await fetch(creditsUrl);
-                const creditsData = await creditsResponse.json();
-                const cast = creditsData.cast;
+                shuffle(discoverData);
+                const movies = discoverData.results;
 
-                const limitedActors = cast.slice(0, 7).map(actor => ({
-                    actorId: actor.id,
-                    actorName: actor.name,
-                    character: actor.character,
-                    profilePath: actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : null
-                }));
+                let actors = [];
+                let actorIds = new Set();
 
-                resultsWithLinks.push({
-                    movieId: movie.id,
-                    movieTitle: movie.title,
-                    moviePoster: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null,
-                    actors: limitedActors
-                });
+                let actorSet = new Set();
+
+                for (const movie of movies) {
+                    const movieId = movie.id;
+                    const creditsUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${config.api_key}`;
+
+                    const creditsResponse = await fetch(creditsUrl);
+                    const creditsData = await creditsResponse.json();
+                    const cast = creditsData.cast;
+
+                    if (cast.length > 0) {
+                        const randomActor = cast[Math.floor(Math.random() * cast.length)];
+                        if (!actorIds.has(randomActor.id) && actors.length < 7) {
+                            if (randomActor.profile_path != null) {
+                                actorIds.add(randomActor.id);
+                                actors.push({
+                                    actorId: randomActor.id,
+                                    actorName: randomActor.name,
+                                    character: randomActor.character,
+                                    profilePath: randomActor.profile_path ? `https://image.tmdb.org/t/p/w500${randomActor.profile_path}` : null,
+                                    movies: movie.title
+                                });
+                            }
+                        }
+                    }
+                    if (actors.length >= 7) break;
+                }
+
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.write(JSON.stringify(actors));
+                res.end();
+            } catch (error) {
+                console.error(error);
+                res.writeHead(500, {'Content-Type': 'application/json'});
+                res.write(JSON.stringify({ error: 'Internal Server Error' }));
+                res.end();
             }
-
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write(JSON.stringify(resultsWithLinks));
-            res.end();
-        } catch (error) {
-            console.error(error);
-            res.writeHead(500, {'Content-Type': 'application/json'});
-            res.write(JSON.stringify({ error: 'Internal Server Error' }));
-            res.end();
         }
-    }
 }
 module.exports = homeService;
