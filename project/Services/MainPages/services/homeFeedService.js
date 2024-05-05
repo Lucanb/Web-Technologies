@@ -10,24 +10,16 @@ class homeService {
     constructor() {
     }
 
-    async announces(req,res){
+    async announces(req, res) {
 
         const feederModel = new homeFeederModel()
-        const results = await  feederModel.getAnnounces()
+        const results = await feederModel.getAnnounces()
         const resultsWithLinks = [];
-        console.log(results)
         for (const result of results) {
             try {
-                // const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/multi`, {
-                //     params: {
-                //         api_key: config.api_key,
-                //         query: result.show,
-                //     }
-                // });
                 const url = `https://api.themoviedb.org/3/search/multi?api_key=${config.api_key}&query=${result.show}`;
                 const tmdbResponse = await fetch(url);
                 const tmdbData = await tmdbResponse.json();
-                console.log('tmdbResponse : ',tmdbData)
                 const posterPath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].poster_path : null;
                 const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
                 const movieToken = await Token.generateKey({
@@ -37,8 +29,7 @@ class homeService {
                 }, {
                     expiresIn: '1h'
                 })
-                if(posterPath != null) {
-                    console.log(`Poster pentru ${result.show}: https://image.tmdb.org/t/p/w500${posterPath}`);
+                if (posterPath != null) {
                     resultsWithLinks.push({
                         id: movieToken,
                         show: result.show,
@@ -49,30 +40,20 @@ class homeService {
                 console.error(error);
             }
         }
-        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.writeHead(200, {'Content-Type': 'application/json'});
         res.write(JSON.stringify(resultsWithLinks))
         res.end()
     }
 
-    async topPicks(req,res){
+    async topPicks(req, res) {
         const feederModel = new homeFeederModel()
-        const results = await  feederModel.getTopPicks()
+        const results = await feederModel.getTopPicks()
         const resultsWithLinks = [];
-        console.log(results)
         for (const result of results) {
             try {
-                // const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1`, {
-                //     params: {
-                //         api_key: config.api_key,
-                //         query: result.full_name,
-                //     }
-                // });
-                // const profilePath = tmdbResponse.data.results[0].profile_path;
-                // const id = tmdbResponse.data.results[0].id;
                 const url = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1&api_key=${config.api_key}&query=${result.full_name}`;
                 const tmdbResponse = await fetch(url);
                 const tmdbData = await tmdbResponse.json();
-                console.log('tmdbResponse : ',tmdbData)
                 const profilePath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].profile_path : null;
                 const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
                 const actorId = await Token.generateKey({
@@ -82,8 +63,7 @@ class homeService {
                 }, {
                     expiresIn: '1h'
                 })
-                if(profilePath != null) {
-                    console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
+                if (profilePath != null) {
                     resultsWithLinks.push({
                         id: actorId, //astea le codific
                         full_name: result.full_name,
@@ -94,31 +74,20 @@ class homeService {
                 console.error(error);
             }
         }
-        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.writeHead(200, {'Content-Type': 'application/json'});
         res.write(JSON.stringify(resultsWithLinks))
         res.end()
     }
 
-    async todayActors(req,res){
+    async todayActors(req, res) {
         const feederModel = new homeFeederModel()
-        const results = await  feederModel.getTodayActors()
-        console.log(results)
+        const results = await feederModel.getTodayActors()
         const resultsWithLinks = [];
-        console.log(results)
         for (const result of results) {
             try {
-                // const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1`, {
-                //     params: {
-                //         api_key: config.api_key,
-                //         query: result.full_name,
-                //     }
-                // });
-                // const profilePath = tmdbResponse.data.results[0].profile_path;
-                // const id = tmdbResponse.data.results[0].id;
                 const url = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1&api_key=${config.api_key}&query=${result.full_name}`;
                 const tmdbResponse = await fetch(url);
                 const tmdbData = await tmdbResponse.json();
-                console.log('tmdbResponse : ',tmdbData)
                 const profilePath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].profile_path : null;
                 const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
                 const actorId = await Token.generateKey({
@@ -128,8 +97,7 @@ class homeService {
                 }, {
                     expiresIn: '1h'
                 })
-                if(profilePath != null) {
-                    console.log(`Poster pentru ${result.full_name}: https://image.tmdb.org/t/p/w500/${profilePath}`);
+                if (profilePath != null) {
                     resultsWithLinks.push({
                         id: actorId,   //ASTEA LE CODIFIC
                         full_name: result.full_name,
@@ -140,32 +108,21 @@ class homeService {
                 console.error(error);
             }
         }
-        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.writeHead(200, {'Content-Type': 'application/json'});
         res.write(JSON.stringify(resultsWithLinks))
         res.end()
     }
 
-    async commingSoon(req,res){
+    async commingSoon(req, res) {
 
         const feederModel = new homeFeederModel()
-        const results = await  feederModel.getCommingSoon()
+        const results = await feederModel.getCommingSoon()
         const resultsWithLinks = [];
-        console.log(results)
         for (const result of results) {
             try {
-                // const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/search/multi`, {
-                //     params: {
-                //         api_key: config.api_key,
-                //         query: result.show,
-                //     }
-                // });
-                //
-                // const posterPath = tmdbResponse.data.results[0].poster_path;
-                // const id = tmdbResponse.data.results[0].id;
                 const url = `https://api.themoviedb.org/3/search/multi?api_key=${config.api_key}&query=${result.show}`;
                 const tmdbResponse = await fetch(url);
                 const tmdbData = await tmdbResponse.json();
-                console.log('tmdbResponse : ',tmdbData)
                 const posterPath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].poster_path : null;
                 const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
                 const movieToken = await Token.generateKey({
@@ -175,8 +132,7 @@ class homeService {
                 }, {
                     expiresIn: '1h'
                 })
-                if(posterPath != null) {
-                    console.log(`Poster pentru ${result.show}: https://image.tmdb.org/t/p/w500${posterPath}`);
+                if (posterPath != null) {
                     resultsWithLinks.push({
                         id: movieToken,
                         show: result.show,
@@ -187,11 +143,54 @@ class homeService {
                 console.error(error);
             }
         }
-        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.writeHead(200, {'Content-Type': 'application/json'});
         res.write(JSON.stringify(resultsWithLinks))
         res.end()
     }
 
-}
+    async exploreActors(req, res) {
+        try {
+            const genreId = 18;
+            const discoverUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${config.api_key}&with_genres=${genreId}`;
 
+            const discoverResponse = await fetch(discoverUrl);
+            const discoverData = await discoverResponse.json();
+            const movies = discoverData.results;
+
+            const resultsWithLinks = [];
+
+            for (const movie of movies) {
+                const movieId = movie.id;
+                const creditsUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${config.api_key}`;
+
+                const creditsResponse = await fetch(creditsUrl);
+                const creditsData = await creditsResponse.json();
+                const cast = creditsData.cast;
+
+                const limitedActors = cast.slice(0, 7).map(actor => ({
+                    actorId: actor.id,
+                    actorName: actor.name,
+                    character: actor.character,
+                    profilePath: actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : null
+                }));
+
+                resultsWithLinks.push({
+                    movieId: movie.id,
+                    movieTitle: movie.title,
+                    moviePoster: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null,
+                    actors: limitedActors
+                });
+            }
+
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(JSON.stringify(resultsWithLinks));
+            res.end();
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.write(JSON.stringify({ error: 'Internal Server Error' }));
+            res.end();
+        }
+    }
+}
 module.exports = homeService;

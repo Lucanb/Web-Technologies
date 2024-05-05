@@ -24,7 +24,6 @@ const internalRoutes = [
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            console.log('header : ',JSON.stringify(req.headers))
             // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
             //     res.writeHead(401, {'Content-Type': 'text/html'});
             //     return res.end('Authorization header missing or invalid');
@@ -40,7 +39,6 @@ const internalRoutes = [
                 }, {});
                 accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
             }
-            console.log(accessToken)
             // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
             // try {
             //     const decoded = await JWToken.validate(token);
@@ -75,7 +73,6 @@ const internalRoutes = [
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            console.log('header : ',JSON.stringify(req.headers))
 
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.end(html);
@@ -160,7 +157,6 @@ const internalRoutes = [
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            console.log('header : ',JSON.stringify(req.headers))
             // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
             //     res.writeHead(401, {'Content-Type': 'text/html'});
             //     return res.end('Authorization header missing or invalid');
@@ -195,7 +191,6 @@ const internalRoutes = [
                     res.writeHead(401, {'Content-Type': 'text/html'});
                     return res.end('Invalid token');
                 } ///aici o sa fac si cu refresh
-                console.log('decoded :',decoded[0].userId)
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             } catch (error) {
@@ -213,7 +208,6 @@ const internalRoutes = [
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            console.log('header : ',JSON.stringify(req.headers))
             // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
             //     res.writeHead(401, {'Content-Type': 'text/html'});
             //     return res.end('Authorization header missing or invalid');
@@ -269,7 +263,6 @@ const internalRoutes = [
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            console.log('header : ',JSON.stringify(req.headers))
             // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
             //     res.writeHead(401, {'Content-Type': 'text/html'});
             //     return res.end('Authorization header missing or invalid');
@@ -322,7 +315,6 @@ const internalRoutes = [
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            console.log('header : ',JSON.stringify(req.headers))
             // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
             //     res.writeHead(401, {'Content-Type': 'text/html'});
             //     return res.end('Authorization header missing or invalid');
@@ -357,7 +349,6 @@ const internalRoutes = [
                     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
                     return res.end('Invalid token');
                 } ///aici o sa fac si cu refresh
-                console.log('decoded',decoded[0])
                 if (!decoded[0].role)
                 {
                     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
@@ -378,7 +369,6 @@ const internalRoutes = [
         fs.readFile("Frontend/views/about.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
-                // console.log(err)
                 return res.end('404 Not Found');
             }
             res.writeHead(200, {'Content-Type' : 'text/html'});
@@ -390,7 +380,6 @@ const internalRoutes = [
         fs.readFile("Frontend/views/help.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
-                // console.log(err)
                 return res.end('404 Not Found');
             }
             res.writeHead(200, {'Content-Type' : 'text/html'});
@@ -524,6 +513,16 @@ const internalRoutes = [
         try {
             const controller = new favoritesController();
             return await controller.getTopFavorites(req, res);
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
+    new Router("GET","/exploreActors",async (req,res)=>{
+        try {
+            const controller = new feedController();
+            return await controller.exploreActorsTypes(req, res);
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
