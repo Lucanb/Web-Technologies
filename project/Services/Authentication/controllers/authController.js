@@ -188,9 +188,5 @@ class authController {
         }
 
     }
-
-     refreshToken(){
-
-     }
 }
 module.exports = {authController}
