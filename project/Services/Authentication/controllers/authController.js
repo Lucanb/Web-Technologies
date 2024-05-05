@@ -25,7 +25,7 @@ class authController {
                     });
                     let redirectUrl = ''
                     if (role === true){
-                        redirectUrl = 'http://localhost:3001/admin'
+                        redirectUrl = 'http://localhost:3002/admin'
                     }else {
                         redirectUrl = 'http://localhost:3001/home'
                     }
