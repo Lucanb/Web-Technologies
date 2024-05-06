@@ -15,7 +15,7 @@
     <button onclick="location.href='/news';" class="tabs">Notifications</button>
     <button onclick="location.href='/favorites';" class="tabs">Favorites</button>
     <button class="tabs" id="add" >Add to Favourites</button>
-    <button onclick="location.href='/home';" class="tabs">Log Out</button>
+    <button onclick="handleLogout()" class="tabs">Log Out</button>
 </div>
 <div class="intro-container">
     <div class="actress-name">
@@ -91,6 +91,26 @@
 </div>
 </div>
 <script>
+
+    function handleLogout() {
+        fetch('http://localhost:3001/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'logout-message': 'LogOut'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to log out');
+                }
+                window.location.href = 'http://localhost:3000/login';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during logout: ' + error.message);
+            });
+    }
 
     const path = window.location.pathname;
     var lastIndex = path.lastIndexOf("/");

@@ -13,6 +13,7 @@
         <input type="text" placeholder="Search">
     </div>
     <button class="tabs">Add user</button>
+    <button onclick="handleLogout()" class="tabs">Log Out</button>
 </div>
 
 <div class="admin">
@@ -51,5 +52,26 @@
         <label onclick="location.href='http://localhost:3001/index';" class="references-element">Site Index</label>
     </div>
 </div>
+<script>
+    function handleLogout() {
+        fetch('http://localhost:3001/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'logout-message': 'LogOut'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to log out');
+                }
+                window.location.href = 'http://localhost:3000/login';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during logout: ' + error.message);
+            });
+    }
+</script>
 </body>
 </html>

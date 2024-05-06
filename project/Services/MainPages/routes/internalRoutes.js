@@ -655,6 +655,17 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
+    }),
+    new Router("POST","/logout",async (req,res)=>{
+        try {
+
+            const controller = new feedController();
+            return await controller.logout(req, res);
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
     })
 ];
 

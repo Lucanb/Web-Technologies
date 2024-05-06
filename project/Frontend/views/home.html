@@ -15,8 +15,9 @@
             </div>
             <button onclick="location.href='/news';" class="tabs">Notifications</button>
             <button onclick="location.href='/favorites';" class="tabs">Favorites</button>
-            <button onclick="location.href='http://localhost:3000/login';" class="tabs">Sign In</button>
+            <button onclick="handleLogout()" class="tabs">Log Out</button>
             <button onclick="location.href='/news';" class="tabs">See News</button>
+<!--        location.href='http://localhost:3000/login-->
     </div>
     <div class="main-content">
         <div class="intro">
@@ -101,6 +102,7 @@
             </div>
         </div>
     <script>
+
         document.addEventListener('DOMContentLoaded', function () {
             var genreButton = document.querySelector('.genre-button');
             var dropdownContent = document.getElementById("myDropdown");
@@ -138,6 +140,26 @@
                 }
             }
         });
+
+        function handleLogout() {
+            fetch('http://localhost:3001/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'logout-message': 'LogOut'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to log out');
+                    }
+                    window.location.href = 'http://localhost:3000/login';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred during logout: ' + error.message);
+                });
+        }
 
         function getCookie(name) {
             let cookieArray = document.cookie.split(';');
