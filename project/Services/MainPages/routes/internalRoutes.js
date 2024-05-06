@@ -636,6 +636,7 @@ const internalRoutes = [
     }),
     new Router("GET","/exploreActors",async (req,res)=>{
         try {
+
             const controller = new feedController();
             return await controller.exploreActorsTypes(req, res);
         } catch (error) {

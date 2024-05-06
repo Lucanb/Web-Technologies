@@ -216,7 +216,24 @@ class homeService {
 
         async exploreActors(req, res) {
             try {
-                const genreId = 12;
+                const cookies = req.headers.cookie;
+                let genre = null;
+                if (cookies) {
+                    const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+                        const parts = cookie.split('=');
+                        acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+                        return acc;
+                    }, {});
+                    genre = cookieObj['selectedGenre'];
+                }
+                let genreId = 18;
+                if (genre === 'Action') {
+                    genreId = 28;
+                } else if (genre === 'Comedy') {
+                    genreId = 35;
+                } else if (genre === 'Adventure') {
+                    genreId = 12;
+                }
                 const discoverUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${config.api_key}&with_genres=${genreId}`;
 
                 const discoverResponse = await fetch(discoverUrl);
