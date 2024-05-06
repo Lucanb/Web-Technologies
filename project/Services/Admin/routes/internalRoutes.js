@@ -2,6 +2,7 @@ const { Router } = require("../../../modules/controllers/routerController");
 const fs = require("fs");
 const JWToken = require("../modules/token");
 const Token = require("../../Authentication/modules/token");
+const {adminController} = require("../../Admin/controllers/AdminController");
 
 const internalRoutes = [
     new Router("GET", "/altaRuta", async (req, res) => {
@@ -202,6 +203,17 @@ const internalRoutes = [
             res.write(data);
             res.end();
         });
+    }),
+    new Router("POST","/logout",async (req,res)=>{
+        try {
+
+            const controller = new adminController();
+            return await controller.logout(req,res)
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
     })
 ];
 
