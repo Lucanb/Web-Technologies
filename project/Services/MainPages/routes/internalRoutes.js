@@ -644,6 +644,17 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
+    }),
+    new Router("DELETE","/delete-actor",async (req,res)=>{
+        try {
+
+            const controller = new favoritesController();
+            return await controller.deleteFavorites(req, res);
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
     })
 ];
 

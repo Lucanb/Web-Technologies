@@ -145,6 +145,21 @@ body
   flex-direction: column
   align-items: center
 
+  button
+    padding: 8px 16px
+    background-color: $primary-color
+    color: $secondary_color
+    border: 1px solid darken($primary-color, 10%)
+    border-radius: 5px
+    font-weight: bold
+    cursor: pointer
+    margin-top: 10px
+    transition: background-color 0.3s ease, color 0.3s ease
+
+    &:hover
+      background-color: $button-bg-hover
+      color: $primary-color
+
   .movie-picture img, .actor-picture img
     width: 100%
     display: block

@@ -46,5 +46,16 @@ class favoritesModel {
             throw error;
         }
     }
+
+    async deleteActor(id_actor){
+        try{
+            const values = [id_actor];
+            await pool.query(favoritesQuerries.delete,values);
+            return true
+        }catch (error){
+            console.log(error)
+            return false
+        }
+    }
 }
 module.exports = favoritesModel

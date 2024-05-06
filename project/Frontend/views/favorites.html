@@ -67,6 +67,32 @@
             });
     }
 
+    function deleteActor(id) {
+        if (confirm('Are you sure you want to delete this actor from your favorites?')) {
+            console.log('Deleting actor with ID:', id);
+            fetch(`http://localhost:3001/delete-actor`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'id': id
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to delete the actor');
+                    }
+                    alert('Actor deleted successfully');
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                });
+        }
+    }
+
+
     fetch('http://localhost:3001/all-favorites', {
         method: 'GET',
         headers: {
@@ -119,6 +145,11 @@
                         actorDetailsDiv.appendChild(actorPictureDiv);
                         const actorContainer = document.querySelector('.your-favourites-actors');
                         actorContainer.appendChild(actorDetailsDiv);
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.textContent = 'Delete';
+                        deleteButton.onclick = () => deleteActor(id);
+                        actorDetailsDiv.appendChild(deleteButton);
 
                         actorImg.addEventListener('click',redirectToActor);
 

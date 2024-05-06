@@ -242,6 +242,28 @@ class favoritesService{
             console.log(error);
         }
     }
+
+
+    async deleteFavorites(req, res) {
+        const id = req.headers['id'];
+        const decoded = await JWToken.validate(id)
+        const actor_id = decoded[0].movieID
+        try {
+                const model = new favoritesModel();
+                const results = await model.deleteActor(actor_id);
+                if(results)
+                {//res.write(JSON.stringify(resultsWithLinks))
+                 console.log('Deleted successfull')
+                 res.end()
+                }else {
+                    console.log('Deleted unsuccessfull')
+                    res.end()
+                }
+            } catch (error) {
+                console.error(error);
+            }
+
+    }
 }
 
 module.exports = favoritesService;

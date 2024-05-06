@@ -73,6 +73,24 @@ class favoritesController {
             res.end(JSON.stringify({success: false, message: 'Internal error'}));
         }
     }
+
+    async deleteFavorites(req, res) {
+        try { //deleteFavorites
+            const service = new favoritesService();
+            const deleteService = await service.deleteFavorites(req,res)
+            if (deleteService) {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.write(JSON.stringify(deleteService))
+                res.end()
+            } else {
+                res.end()
+            }
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
 }
 
 module.exports = {favoritesController}
