@@ -12,80 +12,54 @@
     <div class="search-bar">
         <input type="text" placeholder="Search">
     </div>
-    <button class="tabs" onclick="window.location.href='news/RSS';">RSS</button>
     <button onclick="handleLogout()" class="tabs"> Log Out </button>
 </div>
 <div class="main-content">
-    <h1 class="news">Today's News</h1>
-    <div class="today-date">
-    </div>
-    <div class="news-container" id="news-container">
-    </div>
-    </div>
-
+    <table class="center-table">
+        <thead>
+        <tr>
+            <th>Year</th>
+            <th>Category</th>
+            <th>Show</th>
+            <th>Winner</th>
+            <th>Full Name</th>
+        </tr>
+        </thead>
+        <tbody id="actorTable">
+        <!-- Actor data will be populated here -->
+        </tbody>
+    </table>
 </div>
 <div class="low-bar">
     <div class="references">
         <label onclick="location.href='/about';" class="references-element">About</label>
-        <label onclick="location.href='/help';"  class="references-element">Help</label>
+        <label onclick="location.href='/help';" class="references-element">Help</label>
         <label onclick="location.href='/index';" class="references-element">Site Index</label>
     </div>
 </div>
 <script>
-    function handleLogout() {
-        fetch('http://localhost:3001/logout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'logout-message': 'LogOut'
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to log out');
-                }
-                window.location.href = 'http://localhost:3000/login';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred during logout: ' + error.message);
+    async function fetchActors() {
+        try {
+            const response = await fetch('http://localhost:3002/nominatedActors');
+            const data = await response.json();
+            const table = document.getElementById('actorTable');
+            data.forEach(actor => {
+                let row = `<tr onclick="location.href='news/:${actor.full_name}'">
+                <td>${actor.year}</td>
+                <td>${actor.category}</td>
+                <td>${actor.show}</td>
+                <td>${actor.won ? 'Yes' : 'No'}</td>
+                <td>${actor.full_name || ''}</td>
+            </tr>`;
+                table.innerHTML += row;
             });
+        } catch (error) {
+            console.error('Failed to fetch actors:', error);
+        }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('http://localhost:3002/get-news')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const container = document.getElementById('news-container');
-                if (container) {
-                    data.forEach(item => {
-                        const newsItem = document.createElement('div');
-                        newsItem.className = 'new-details';
-                        newsItem.innerHTML = `
-                        <div class="Title"><h2>${item.title}</h2></div>
-                        <div class="Topic"><h2 class="topic-element">${item.category}</h2></div>
-                        <div class="Author"><h2 class="author-element">${item.source}</h2></div>
-                        <div class="Date"><h2 class="date-element">${item.pubDate}</h2></div>
-                        <div class="movie-picture"><img src="${item.imageUrl}" alt="News Image"></div>
-                        <div class="news-content"><h3>${item.contentSnippet}</h3></div>
-                    `;
-                        container.appendChild(newsItem);
-                    });
-                } else {
-                    console.error('The news container was not found.');
-                }
-            })
-            .catch(error => {
-                console.error('Fetch Error:', error);
-                container.innerHTML = '<p>Error loading news.</p>'; // Provide feedback in case of failure
-            });
-    });
-
+    // Call fetchActors on page load
+    document.addEventListener('DOMContentLoaded', fetchActors);
 </script>
 </body>
 </html>

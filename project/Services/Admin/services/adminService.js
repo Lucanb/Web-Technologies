@@ -1,6 +1,6 @@
 const Token = require("../../Authentication/modules/token");
 const config = require('../configuration/config.js')
-
+const AdminModel = require('../model/adminModel')
 class adminService {
     constructor() {
     }
@@ -40,6 +40,14 @@ class adminService {
         res.end()
     }
 
+    async getNominated(req,res){
+        const adminModel = new AdminModel()
+        const results = await adminModel.getNominated()
+
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.write(JSON.stringify(results))
+        res.end()
+    }
 
 }
-module.exports = homeService;
+module.exports = adminService;

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACVIS</title>
+    <link rel="stylesheet" href="../styles/news.css">
+</head>
+<body>
+<div class="tab">
+    <button onclick="location.href='/home';" class="tabs">Home</button>
+    <div class="search-bar">
+        <input type="text" placeholder="Search">
+    </div>
+    <button class="tabs" onclick="redirectToRSS()">RSS</button>
+    <button onclick="handleLogout()" class="tabs"> Log Out </button>
+</div>
+<div class="main-content">
+    <h1 class="news">Today's News</h1>
+    <div class="today-date">
+    </div>
+    <div class="news-container" id="news-container">
+    </div>
+</div>
+
+</div>
+<div class="low-bar">
+    <div class="references">
+        <label onclick="location.href='/about';" class="references-element">About</label>
+        <label onclick="location.href='/help';"  class="references-element">Help</label>
+        <label onclick="location.href='/index';" class="references-element">Site Index</label>
+    </div>
+</div>
+<script>
+    function handleLogout() {
+        fetch('http://localhost:3001/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'logout-message': 'LogOut'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to log out');
+                }
+                window.location.href = 'http://localhost:3000/login';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during logout: ' + error.message);
+            });
+    }
+    function getCategoryFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('category'); // Assume the URL parameter is named 'category'
+    }
+
+
+    function getActorFromPath() {
+        const pathArray = window.location.pathname.split('/:');
+        return decodeURIComponent(pathArray[pathArray.length - 1]); // Gets the last segment and decodes URI component
+    }
+
+    function redirectToRSS() {
+        const actor = getActorFromPath();// Assumes input from a text field
+        if(actor) {
+            window.location.href = `/RSS/:${encodeURIComponent(actor)}`; // Redirect to the RSS route with the actor parameter
+        } else {
+            alert('Please enter an actor name.');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const actor = getActorFromPath();
+        console.log(actor)
+        fetch(`http://localhost:3002/get-news/:${actor}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const container = document.getElementById('news-container');
+                if (container) {
+                    data.forEach(item => {
+                        const newsItem = document.createElement('div');
+                        newsItem.className = 'new-details';
+                        newsItem.innerHTML = `
+                        <div class="Title"><h2>${item.title}</h2></div>
+                        <div class="Topic"><h2 class="topic-element">${item.category}</h2></div>
+                        <div class="Author"><h2 class="author-element">${item.source}</h2></div>
+                        <div class="Date"><h2 class="date-element">${item.pubDate}</h2></div>
+                        <div class="movie-picture"><img src="${item.imageUrl}" alt="News Image"></div>
+                        <div class="news-content"><h3>${item.contentSnippet}</h3></div>
+                    `;
+                        container.appendChild(newsItem);
+                    });
+                } else {
+                    console.error('The news container was not found.');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
+                container.innerHTML = '<p>Error loading news.</p>'; // Provide feedback in case of failure
+            });
+    });
+
+</script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 // const favoritesService = require('../services/favoritesService');
+const adminService = require('../services/adminService');
 
 class adminController {
 
@@ -92,6 +93,17 @@ class adminController {
                 console.log('errror')
                 res.end()
             }
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
+
+    async nominated(req,res){
+        try {
+            const service = new adminService();
+            await service.getNominated(req,res)
         } catch (error) {
             console.log(error);
             res.writeHead(500, {'Content-Type': 'application/json'});

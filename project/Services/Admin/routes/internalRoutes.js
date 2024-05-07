@@ -19,19 +19,19 @@ const internalRoutes = [
             res.end();
         });
     }),
-    // new Router("GET", "/news/RSS", async (req, res) => {
-    //     fs.readFile("Frontend/views/newsrss.html", (err, data) => {
-    //         if (err) {
-    //             console.log(err)
-    //             res.writeHead(404, {'Content-Type': 'text/html'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type' : 'text/html'});
-    //         res.write(data);
-    //         res.end();
-    //     });
-    // })
-    //,
+    new Router("GET", "/news/RSS", async (req, res) => {
+        fs.readFile("Frontend/views/newsrss.html", (err, data) => {
+            if (err) {
+                console.log(err)
+                res.writeHead(404, {'Content-Type': 'text/html'});
+                return res.end('404 Not Found');
+            }
+            res.writeHead(200, {'Content-Type' : 'text/html'});
+            res.write(data);
+            res.end();
+        });
+    })
+    ,
     new Router("GET", "/news", async (req, res, next) => {
 
         fs.readFile("Frontend/views/news.html", 'utf-8', async (err, html) => {
@@ -112,10 +112,92 @@ const internalRoutes = [
             }
         });
     }),
-    new Router("GET",'/get-news', async (req, res) => {
-        const url = "https://variety.com/v/film/news/feed/";
-        const sourceUrl = new URL(url);
-        const hostname = sourceUrl.hostname;
+    new Router("GET", "/news/:", async (req, res, next) => {
+
+        fs.readFile("Frontend/views/newsActor.html", 'utf-8', async (err, html) => {
+            if (err) {
+                console.error('Error reading file:', err);
+                res.writeHead(404, {'Content-Type': 'text/html'});
+                return res.end('404 Not Found');
+            }
+            // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
+            //     res.writeHead(401, {'Content-Type': 'text/html'});
+            //     return res.end('Authorization header missing or invalid');
+            // }
+
+            const cookies = req.headers.cookie;
+            let accessToken = null;
+            let refreshToken = null;
+            if (cookies) {
+                const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+                    const parts = cookie.split('=');
+                    acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+                    return acc;
+                }, {});
+                accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
+                refreshToken = cookieObj['refreshToken'];
+            }
+
+            // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
+            // try {
+            //     const decoded = await JWToken.validate(token);
+            //     if (!decoded) {
+            //         res.writeHead(401, {'Content-Type': 'text/html'});
+            //         return res.end('Invalid token');
+            //     }
+            if (!accessToken) {
+                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                return res.end('Authorization cookie missing or invalid');
+            }
+
+            try {
+                const decoded = await JWToken.validate(accessToken);
+                if (!decoded) {
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    return res.end('Invalid token');
+                } ///aici o sa fac si cu refresh
+
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.end(html);
+            } catch (error) {
+                try {
+                    const decoded = await JWToken.validate(refreshToken);
+                    console.log(decoded)
+                    if (!decoded) {
+                        res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                        return res.end();
+                    } else {
+                        const accessToken = await Token.generateKey({
+                            userId: decoded[0].userId,
+                            role: decoded[0].role,
+                            username: decoded[0].username,
+                            fresh: true,
+                            type: 'access'
+                        }, {
+                            expiresIn: '1h'
+                        })
+                        console.log( accessToken)
+                        res.setHeader('Set-Cookie',
+                            `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                        );
+                        res.writeHead(200, {'Content-Type': 'text/html'});
+                        res.end(html);
+                    }
+                }catch (error)
+                {
+                    console.error('Error validating token:', error);
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end('Internal server error');
+                }
+            }
+        });
+    }),
+    new Router("GET", "/get-news/:actor", async (req, res) => {
+        const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+        const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
+        const actor = decodeURIComponent(pathSegments[2]);
+
+        const url = `https://variety.com/v/film/news/feed?query=${encodeURIComponent(actor)}`; // Hypothetical URL
         const parser = new Parser();
         try {
             const feed = await parser.parseURL(url);
@@ -125,20 +207,23 @@ const internalRoutes = [
                 contentSnippet: item.contentSnippet || '',
                 imageUrl: item.enclosure ? item.enclosure.url : '../img/default-image.jpg',
                 pubDate: item.pubDate || 'Date not available',
-                source: hostname,
+                source: new URL(url).hostname,
                 category: item.categories ? item.categories.join(", ") : 'General'
             }));
 
-            res.writeHead(200, {'Content-Type': 'application/json'}); // Set the content type to JSON
-            res.end(JSON.stringify(newsItems)); // Convert the array to a JSON string before sending
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(newsItems));
         } catch (error) {
-            console.error('Error fetching RSS feed:', error);
+            console.error('Error fetching news for actor:', actor, error);
             res.writeHead(500, {'Content-Type': 'text/html'});
             res.end('Internal server error');
         }
-    })
-    ,
-    new Router("GET", "/news/RSS", async (req, res) => {
+    }),
+    new Router("GET", "/RSS/:actor", async (req, res) => {
+        const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+        const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
+        const actor = decodeURIComponent(pathSegments[2]);
+
         const feed = new RSS({
             title: 'Variety - Film News',
             description: 'Latest updates on film news from Variety.',
@@ -151,8 +236,8 @@ const internalRoutes = [
         });
 
         try {
+            const url = `https://variety.com/v/film/news/feed?query=${encodeURIComponent(actor)}`; // Hypothetical URL
             const parser = new Parser();
-            const url = "https://variety.com/v/film/news/feed/";
             const sourceFeed = await parser.parseURL(url);
 
             sourceFeed.items.forEach(article => {
@@ -168,10 +253,10 @@ const internalRoutes = [
                 });
             });
 
-            // Generate the RSS XML from the new feed
             const xml = feed.xml({indent: true});
             res.writeHead(200, {'Content-Type': 'application/rss+xml'});
-            res.end(xml);
+            res.write(xml);
+            res.end()
         } catch (error) {
             console.error('Error fetching or generating RSS feed:', error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -296,7 +381,18 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
+    }),
+    new Router("GET","/nominatedActors",async (req,res)=>{
+        try {
+            const controller = new adminController();
+            return await controller.nominated(req,res)
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
     })
+
 ];
 
 
