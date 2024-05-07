@@ -4,6 +4,8 @@ const JWToken = require("../modules/token");
 const Token = require("../../Authentication/modules/token");
 const {adminController} = require("../../Admin/controllers/AdminController");
 const Parser = require('rss-parser');
+const { URL } = require('url');
+const RSS = require('rss');
 
 const internalRoutes = [
     new Router("GET", "/altaRuta", async (req, res) => {
@@ -16,8 +18,20 @@ const internalRoutes = [
             res.write(data);
             res.end();
         });
-    })
-    ,
+    }),
+    // new Router("GET", "/news/RSS", async (req, res) => {
+    //     fs.readFile("Frontend/views/newsrss.html", (err, data) => {
+    //         if (err) {
+    //             console.log(err)
+    //             res.writeHead(404, {'Content-Type': 'text/html'});
+    //             return res.end('404 Not Found');
+    //         }
+    //         res.writeHead(200, {'Content-Type' : 'text/html'});
+    //         res.write(data);
+    //         res.end();
+    //     });
+    // })
+    //,
     new Router("GET", "/news", async (req, res, next) => {
 
         fs.readFile("Frontend/views/news.html", 'utf-8', async (err, html) => {
@@ -100,6 +114,8 @@ const internalRoutes = [
     }),
     new Router("GET",'/get-news', async (req, res) => {
         const url = "https://variety.com/v/film/news/feed/";
+        const sourceUrl = new URL(url);
+        const hostname = sourceUrl.hostname;
         const parser = new Parser();
         try {
             const feed = await parser.parseURL(url);
@@ -107,7 +123,10 @@ const internalRoutes = [
                 title: item.title,
                 link: item.link,
                 contentSnippet: item.contentSnippet || '',
-                imageUrl: item.enclosure ? item.enclosure.url : '../img/default-image.jpg'
+                imageUrl: item.enclosure ? item.enclosure.url : '../img/default-image.jpg',
+                pubDate: item.pubDate || 'Date not available',
+                source: hostname,
+                category: item.categories ? item.categories.join(", ") : 'General'
             }));
 
             res.writeHead(200, {'Content-Type': 'application/json'}); // Set the content type to JSON
@@ -119,6 +138,47 @@ const internalRoutes = [
         }
     })
     ,
+    new Router("GET", "/news/RSS", async (req, res) => {
+        const feed = new RSS({
+            title: 'Variety - Film News',
+            description: 'Latest updates on film news from Variety.',
+            feed_url: 'http://yourdomain.com/news/RSS',
+            site_url: 'https://variety.com',
+            image_url: 'https://variety.com/wp-content/uploads/2018/06/variety-favicon.png',
+            language: 'en',
+            pubDate: new Date().toUTCString(),
+            ttl: 60
+        });
+
+        try {
+            const parser = new Parser();
+            const url = "https://variety.com/v/film/news/feed/";
+            const sourceFeed = await parser.parseURL(url);
+
+            sourceFeed.items.forEach(article => {
+                feed.item({
+                    title: article.title,
+                    description: article.contentSnippet || article.description,
+                    url: article.link,
+                    guid: article.guid || article.link,
+                    author: article.creator,
+                    date: article.pubDate,
+                    categories: article.categories,
+                    enclosure: article.enclosure ? {url: article.enclosure.url} : undefined,
+                });
+            });
+
+            // Generate the RSS XML from the new feed
+            const xml = feed.xml({indent: true});
+            res.writeHead(200, {'Content-Type': 'application/rss+xml'});
+            res.end(xml);
+        } catch (error) {
+            console.error('Error fetching or generating RSS feed:', error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end('Internal server error');
+        }
+    })
+,
     new Router("GET", "/admin", async (req, res, next) => {
 
         fs.readFile("Frontend/views/admin.html", 'utf-8', async (err, html) => {

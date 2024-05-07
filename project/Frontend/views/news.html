@@ -12,14 +12,12 @@
     <div class="search-bar">
         <input type="text" placeholder="Search">
     </div>
-    <button onclick="location.href='/favorites';" class="tabs">Favorites</button>
-    <button class="tabs">Add to Favourites</button>
+    <button class="tabs" onclick="window.location.href='news/RSS';">RSS</button>
     <button onclick="handleLogout()" class="tabs"> Log Out </button>
 </div>
 <div class="main-content">
     <h1 class="news">Today's News</h1>
     <div class="today-date">
-        <h3>apr 13</h3>
     </div>
     <div class="news-container" id="news-container">
     </div>
@@ -54,7 +52,7 @@
             });
     }
 
-        document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
         fetch('http://localhost:3002/get-news')
             .then(response => {
                 if (!response.ok) {
@@ -70,10 +68,11 @@
                         newsItem.className = 'new-details';
                         newsItem.innerHTML = `
                         <div class="Title"><h2>${item.title}</h2></div>
-                        <div class="Topic"><h2 class="topic-element">Hot News</h2></div>
-                        <div class="Author"><h2 class="author-element">Show Biz</h2></div>
-                        <div class="movie-picture"><img src="${item.imageUrl || '../img/default-image.jpg'}" alt="News Image"></div>
-                        <div class="news-content"><h3>${item.contentSnippet || 'No details available.'}</h3></div>
+                        <div class="Topic"><h2 class="topic-element">${item.category}</h2></div>
+                        <div class="Author"><h2 class="author-element">${item.source}</h2></div>
+                        <div class="Date"><h2 class="date-element">${item.pubDate}</h2></div>
+                        <div class="movie-picture"><img src="${item.imageUrl}" alt="News Image"></div>
+                        <div class="news-content"><h3>${item.contentSnippet}</h3></div>
                     `;
                         container.appendChild(newsItem);
                     });
@@ -83,7 +82,7 @@
             })
             .catch(error => {
                 console.error('Fetch Error:', error);
-                container.innerHTML = '<p>Error loading news.</p>';
+                container.innerHTML = '<p>Error loading news.</p>'; // Provide feedback in case of failure
             });
     });
 
