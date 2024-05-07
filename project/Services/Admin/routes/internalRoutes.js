@@ -3,6 +3,7 @@ const fs = require("fs");
 const JWToken = require("../modules/token");
 const Token = require("../../Authentication/modules/token");
 const {adminController} = require("../../Admin/controllers/AdminController");
+const Parser = require('rss-parser');
 
 const internalRoutes = [
     new Router("GET", "/altaRuta", async (req, res) => {
@@ -97,6 +98,27 @@ const internalRoutes = [
             }
         });
     }),
+    new Router("GET",'/get-news', async (req, res) => {
+        const url = "https://variety.com/v/film/news/feed/";
+        const parser = new Parser();
+        try {
+            const feed = await parser.parseURL(url);
+            const newsItems = feed.items.map(item => ({
+                title: item.title,
+                link: item.link,
+                contentSnippet: item.contentSnippet || '',
+                imageUrl: item.enclosure ? item.enclosure.url : '../img/default-image.jpg'
+            }));
+
+            res.writeHead(200, {'Content-Type': 'application/json'}); // Set the content type to JSON
+            res.end(JSON.stringify(newsItems)); // Convert the array to a JSON string before sending
+        } catch (error) {
+            console.error('Error fetching RSS feed:', error);
+            res.writeHead(500, {'Content-Type': 'text/html'});
+            res.end('Internal server error');
+        }
+    })
+    ,
     new Router("GET", "/admin", async (req, res, next) => {
 
         fs.readFile("Frontend/views/admin.html", 'utf-8', async (err, html) => {

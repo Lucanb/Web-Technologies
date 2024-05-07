@@ -21,24 +21,8 @@
     <div class="today-date">
         <h3>apr 13</h3>
     </div>
-    <div class="news-container">
-        <div class="new-details">
-            <div class="Title">
-                <h2>Ana de Armas Married A Non Celebrity Guy</h2>
-            </div>
-            <div class="Topic">
-                <h2 class="topic-element">Hot News</h2>
-            </div>
-            <div class="Author">
-                <h2 class="author-element">Show Biz</h2>
-            </div>
-            <div class="movie-picture">
-                <img src="../img/gettyimages-1197366653.jpg" alt="Placeholder Image Actors">
-            </div>
-            <div class="news-content">
-                <h3>His name is Luca Nastasa Baras and is an It-is</h3>
-            </div>
-        </div>
+    <div class="news-container" id="news-container">
+    </div>
     </div>
 
 </div>
@@ -69,6 +53,40 @@
                 alert('An error occurred during logout: ' + error.message);
             });
     }
+
+        document.addEventListener('DOMContentLoaded', function() {
+        fetch('http://localhost:3002/get-news')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const container = document.getElementById('news-container');
+                if (container) {
+                    data.forEach(item => {
+                        const newsItem = document.createElement('div');
+                        newsItem.className = 'new-details';
+                        newsItem.innerHTML = `
+                        <div class="Title"><h2>${item.title}</h2></div>
+                        <div class="Topic"><h2 class="topic-element">Hot News</h2></div>
+                        <div class="Author"><h2 class="author-element">Show Biz</h2></div>
+                        <div class="movie-picture"><img src="${item.imageUrl || '../img/default-image.jpg'}" alt="News Image"></div>
+                        <div class="news-content"><h3>${item.contentSnippet || 'No details available.'}</h3></div>
+                    `;
+                        container.appendChild(newsItem);
+                    });
+                } else {
+                    console.error('The news container was not found.');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
+                container.innerHTML = '<p>Error loading news.</p>';
+            });
+    });
+
 </script>
 </body>
 </html>
