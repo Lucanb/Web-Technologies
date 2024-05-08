@@ -17,5 +17,16 @@ class AdminModel {
             throw error;
         }
     }
+
+    async addAnnounce(startdate,enddate,topic,title,author,picture,content){
+        const values = [startdate,enddate,topic,title,author,picture,content]
+        try{
+            const {rows} = await pool.query(adminSQL.addAnnounces, values);
+            return rows;
+        }catch (error){
+            console.error('Eroare la verificarea email-ului', error);
+            throw error;
+        }
+    }
 }
 module.exports = AdminModel;

@@ -108,6 +108,30 @@ const internalRoutes = [
 
         });
     }),
+    new Router("GET", '/notifications', async (req, res) => {
+        fs.readFile("Frontend/views/announces.html", 'utf-8', async (err, html) => {
+            if (err) {
+                console.error('Error reading file:', err);
+                res.writeHead(404, {'Content-Type': 'text/html'});
+                return res.end('404 Not Found');
+            }
+
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.end(html);
+
+        });
+    }),
+    new Router("GET", '/getnotifications', async (req, res) => {
+        try {
+            const controller = new feedController();
+            const feedDone = await controller.getnotifications(req,res);
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
     new Router("GET", '/announces', async (req, res) => {
         try {
             const controller = new feedController();

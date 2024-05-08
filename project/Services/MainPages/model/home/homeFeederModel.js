@@ -50,5 +50,16 @@ class homeModel {
         }
 
     }
+
+    async getAnnouncesNews(){
+        const values = []
+        try {
+            const {rows} = await pool.query(homeQuerries.getAnnounces, values);
+            return rows
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
 }
 module.exports = homeModel

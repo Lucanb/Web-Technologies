@@ -1,6 +1,7 @@
 const Token = require("../../Authentication/modules/token");
 const config = require('../configuration/config.js')
 const AdminModel = require('../model/adminModel')
+const querystring = require("querystring");
 class adminService {
     constructor() {
     }
@@ -49,5 +50,47 @@ class adminService {
         res.end()
     }
 
+    async addAnnounce(req,res){
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString(); // convert Buffer to string
+        });
+        const data = await new Promise((resolve, reject) => {
+            req.on('end', () => {
+                try {
+                    // Parse the string body as JSON
+                    resolve(JSON.parse(body));
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        });
+
+        console.log(data.start_date);
+        console.log(data.end_date);
+        console.log(data.topic);
+        console.log(data.title);
+        console.log(data.author);
+        console.log(data.picture);
+        console.log(data.content);
+
+        const adminModel = new AdminModel();
+        const results = await adminModel.addAnnounce(
+            data.start_date,
+            data.end_date,
+            data.topic,
+            data.title,
+            data.author,
+            data.picture,
+            data.content
+        );
+
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({success: true, results}));
+    } catch (error) {
+        console.error('Error in addAnnounce:', error);
+        res.writeHead(500, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({success: false, error: error.message}));
+    }
 }
 module.exports = adminService;

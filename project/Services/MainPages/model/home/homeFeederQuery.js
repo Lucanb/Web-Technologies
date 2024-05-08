@@ -29,6 +29,10 @@ const homeQuerries = {
     AND full_name IS NOT NULL
     ORDER BY rnd
     LIMIT 9;
+    `,
+    getAnnounces : `SELECT start_date, end_date, topic, title, author, picture, content
+                    FROM public.announces
+                    WHERE CURRENT_DATE BETWEEN start_date AND end_date;
     `
 }
 module.exports = homeQuerries;

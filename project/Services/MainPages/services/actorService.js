@@ -5,7 +5,9 @@ const url = require("url");
 const axios = require("axios");
 const config = require('../configuration/config.js')
 const {json} = require("../../../modules/middlewares/bodyParser");
+const homeModel = require("../model/home/homeFeederModel")
 const JWToken = require("../modules/token");
+const {rows} = require("pg/lib/defaults");
 
 class actorService {
     constructor() {
@@ -149,7 +151,18 @@ class actorService {
         }
     }
 
-
+    async getNotifications(req, res) {
+        try {
+                const announceModel = new homeModel();
+                const rows = await announceModel.getAnnouncesNews()
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.write(JSON.stringify(rows));
+                res.end();
+        } catch (error) {
+            console.error('Eroare interna la obținerea informațiilor despre actor:', error);
+            res.end(error)
+        }
+    }
 }
 
 module.exports = actorService;

@@ -32,6 +32,18 @@ const internalRoutes = [
         });
     })
     ,
+    new Router("POST", "/addAnnounce", async (req, res) => {
+        try {
+
+            const controller = new adminController();
+            return await controller.addAnnounce(req,res)
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    })
+    ,
     new Router("GET", "/news", async (req, res, next) => {
 
         fs.readFile("Frontend/views/news.html", 'utf-8', async (err, html) => {

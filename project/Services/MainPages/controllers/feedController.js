@@ -153,6 +153,21 @@ class feedController {
             res.end(JSON.stringify({success: false, message: 'Internal error'}));
         }
     }
+    async getnotifications(req,res){
+        const service = new actorService();
+        const getService = await service.getNotifications(req, res);
+        if (getService) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.write(JSON.stringify(getService))
+            res.end()
+        } else {
+            res.end()
+        }
+    } catch (error) {
+        console.log(error);
+        res.writeHead(500, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({success: false, message: 'Internal error'}));
+    }
 }
 
 module.exports = {feedController}

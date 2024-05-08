@@ -13,11 +13,24 @@
         <input type="text" placeholder="Search">
     </div>
     <button class="tabs">Add user</button>
+    <button class="tabs" onclick="showAddAnnounceForm()">Add Announce</button>
     <button onclick="handleLogout()" class="tabs">Log Out</button>
 </div>
 
 <div class="admin">
     <h2 class="title">Admin Panel</h2>
+    <form id="announceForm" style="display:none;" onsubmit="submitAnnounce(event)">
+        <h2>Add New Announcement</h2>
+        <input type="date" id="startdate" required>
+        <input type="date" id="enddate" required>
+        <input type="text" id="topic" placeholder="Topic" required>
+        <input type="text" id="title" placeholder="Title" required>
+        <input type="text" id="author" placeholder="Author" required>
+        <input type="text" id="picture" placeholder="Picture URL">
+        <textarea id="content" placeholder="Content" required></textarea>
+        <button type="submit">Submit Announcement</button>
+    </form>
+
     <div class="admin-column">
         <h2>Mihail Buturuga</h2>
         <button>Delete</button>
@@ -53,6 +66,49 @@
     </div>
 </div>
 <script>
+    function showAddAnnounceForm() {
+        document.getElementById('announceForm').style.display = 'block';
+    }
+
+    function submitAnnounce(event) {
+        event.preventDefault();
+        const formData = {
+            start_date: document.getElementById('startdate').value,
+            end_date: document.getElementById('enddate').value,
+            topic: document.getElementById('topic').value,
+            title: document.getElementById('title').value,
+            author: document.getElementById('author').value,
+            picture: document.getElementById('picture').value,
+            content: document.getElementById('content').value
+        };
+
+        // Log the formData to the console to ensure all values are captured
+        console.log('Form Data:', formData);
+
+        fetch('http://localhost:3002/addAnnounce', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to submit announcement');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Announcement added successfully!');
+                document.getElementById('announceForm').reset();
+                document.getElementById('announceForm').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+    }
+
     function handleLogout() {
         fetch('http://localhost:3002/logout', {
             method: 'POST',
