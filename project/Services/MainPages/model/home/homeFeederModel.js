@@ -1,5 +1,6 @@
 const {pool } = require("../../configuration/configApplication");
 const homeQuerries = require('./homeFeederQuery')
+const verifChar = require('../../modules/verifChar')
 class homeModel {
     constructor() {}
 
@@ -7,8 +8,13 @@ class homeModel {
         const values = []
 
         try {
-            const {rows} = await pool.query(homeQuerries.anouncesQuerry, values);
-            return rows
+            if (verifChar(values)) {
+                const {rows} = await pool.query(homeQuerries.anouncesQuerry, values);
+                return rows
+            }else {
+                console.error('Eroare la verificarea email-ului', error);
+                throw error;
+            }
         } catch (error) {
             console.error(error);
             throw error;
@@ -19,8 +25,13 @@ class homeModel {
         const values = []
 
         try {
-            const {rows} = await pool.query(homeQuerries.topPicksQuery, values);
-            return rows
+            if (verifChar(values)) {
+                const {rows} = await pool.query(homeQuerries.topPicksQuery, values);
+                return rows
+            }else {
+                console.error('Eroare la verificarea email-ului', error);
+                throw error;
+            }
         } catch (error) {
             console.error(error);
             throw error;
@@ -31,8 +42,13 @@ class homeModel {
         const values = []
 
         try {
-            const {rows} = await pool.query(homeQuerries.todayActorsQuery, values);
-            return rows
+            if (verifChar(values)) {
+                const {rows} = await pool.query(homeQuerries.todayActorsQuery, values);
+                return rows
+            }else {
+                console.error('Eroare la verificarea email-ului', error);
+                throw error;
+            }
         } catch (error) {
             console.error(error);
             throw error;
@@ -42,8 +58,13 @@ class homeModel {
     async getCommingSoon(){
         const values = []
         try {
-            const {rows} = await pool.query(homeQuerries.commingSoonQuery, values);
-            return rows
+            if (verifChar(values)) {
+                const {rows} = await pool.query(homeQuerries.commingSoonQuery, values);
+                return rows
+            }else {
+                console.error('Eroare la verificarea email-ului', error);
+                throw error;
+            }
         } catch (error) {
             console.error(error);
             throw error;
@@ -54,8 +75,13 @@ class homeModel {
     async getAnnouncesNews(){
         const values = []
         try {
-            const {rows} = await pool.query(homeQuerries.getAnnounces, values);
-            return rows
+            if (verifChar(values)) {
+                const {rows} = await pool.query(homeQuerries.getAnnounces, values);
+                return rows
+            }else {
+                console.error('Eroare la verificarea email-ului', error);
+                throw error;
+            }
         } catch (error) {
             console.error(error);
             throw error;

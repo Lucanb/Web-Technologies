@@ -1,5 +1,6 @@
 const { config, pool } = require("../configuration/configApplication");
 const userSQL = require('./userQuery')
+const { verifChar, verifToken } = require('../modules/verifChar')
 class UserModel
 {
     constructor(username, password, email) {
@@ -10,8 +11,13 @@ class UserModel
     async emailExists(){
         const values = [this.email]
         try{
-            const { rows } = await pool.query(userSQL.emailExists, values);
-            return (rows.length > 0);
+            if (verifChar(values)) {
+                const {rows} = await pool.query(userSQL.emailExists, values);
+                return (rows.length > 0);
+            }else {
+                console.error('Eroare la verificarea email-ului', error);
+                throw error;
+            }
         }catch (error){
             console.error('Eroare la verificarea email-ului', error);
             throw error;
@@ -20,8 +26,13 @@ class UserModel
     async usernameExists(){
         const values = [this.username]
         try{
-            const { rows } = await pool.query(userSQL.usernameExists, values);
-            return (rows.length > 0)
+            if (verifChar(values)) {
+                const {rows} = await pool.query(userSQL.usernameExists, values);
+                return (rows.length > 0)
+            }else {
+                console.error('Eroare la verificarea email-ului', error);
+                throw error;
+            }
         }catch (error){
             console.error('Eroare la verificarea username-ului', error);
             throw error;
@@ -31,9 +42,14 @@ class UserModel
     async getId() {
         const values = [this.username, this.password]
         try {
+            if (verifChar(values)) {
             const {rows} = await pool.query(userSQL.usernameAndPassword, values);
             console.log(rows[0].id)
             return rows[0].id
+            }else {
+                console.error('Eroare la verificarea email-ului', error);
+                throw error;
+            }
         } catch (error) {
             console.error('Eroare la luarea id-ului', error);
             throw error;
@@ -42,14 +58,19 @@ class UserModel
     async passwordMatch(){
         const values = [this.username]
         try{
-            const { rows } = await pool.query(userSQL.getHashPassword, values);
-            if (rows.length == 0) {
-                return undefined
+            if (verifChar(values)) {
+                const {rows} = await pool.query(userSQL.getHashPassword, values);
+                if (rows.length == 0) {
+                    return undefined
+                } else {
+                    // console.log(rows.length)
+                    // console.log(JSON.stringify(rows))
+                    return [rows[0].id, rows[0].password, rows[0].roles]
+                }//incerc sa returnez hash-ul
             }else {
-                // console.log(rows.length)
-                // console.log(JSON.stringify(rows))
-                return [rows[0].id, rows[0].password, rows[0].roles]
-            }//incerc sa returnez hash-ul
+                    console.error('Eroare la verificarea email-ului', error);
+                    throw error;
+            }
         }catch (error){
             console.error('Eroare la verificarea userului cu parola', error);
             throw error;
@@ -61,8 +82,13 @@ class UserModel
         // const emailExists = await this.emailExists();
         // if (!usernameExists && ! emailExists) {
         try{
-            const { rows } = await pool.query(userSQL.insertUser,values);
-            return rows[0];
+            if (verifChar(values)) {
+                const {rows} = await pool.query(userSQL.insertUser, values);
+                return rows[0];
+            }else {
+                console.error('Eroare la verificarea email-ului', error);
+                throw error;
+            }
         }catch (error){
             console.error('Eroarea la inregitrarea utilizatorului',error);
             throw error;
@@ -85,7 +111,12 @@ class UserModel
     async updateUsername() {
         const values = [this.username];
         try {
-            const result = await pool.query(userSQL.getUserIDAfterEmail, values);
+            if (verifChar(values)) {
+                const result = await pool.query(userSQL.getUserIDAfterEmail, values);
+            }else {
+                console.error('Eroare la verificarea email-ului', error);
+                throw error;
+            }
             if (result.rowCount === 0) {
                 console.error('Nu există un utilizator cu acest username.');
                 throw new Error('Nu există un utilizator cu acest username.');
@@ -95,8 +126,13 @@ class UserModel
             const userId = rows[0].id;
             const values2 = [this.username, rows.rows[0].id];
             try {
-                await pool.query(userSQL.updateUsername, values2);
-                console.log('Numele de utilizator a fost actualizat cu succes.');
+                if (verifChar(values2)) {
+                    await pool.query(userSQL.updateUsername, values2);
+                    console.log('Numele de utilizator a fost actualizat cu succes.');
+                }else {
+                    console.error('Eroare la verificarea email-ului', error);
+                    throw error;
+                }
             } catch (error) {
                 console.error('Eroare la actualizarea numelui de utilizator:', error);
                 throw error;
@@ -118,7 +154,12 @@ class UserModel
         {
             console.log('this email : ', this.email)
             try {
-                const result = await pool.query(userSQL.getUserIDAfterEmail, values);
+                if (verifChar(values)) {
+                    const result = await pool.query(userSQL.getUserIDAfterEmail, values);
+                }else {
+                    console.error('Eroare la verificarea email-ului', error);
+                    throw error;
+                }
                 if (result.rowCount === 0) {
                     console.error('Nu există un utilizator cu acest email.');
                     throw new Error('Nu există un utilizator cu acest email.');
@@ -129,9 +170,14 @@ class UserModel
                 console.log('id : ',userId)
                 const values2 = [this.password, userId];
                 try {
-                    await pool.query(userSQL.updatePassword, values2);
-                    console.log('Parola a fost actualizată cu succes.');
-                    return true;
+                    if (verifChar(values2)) {
+                        await pool.query(userSQL.updatePassword, values2);
+                        console.log('Parola a fost actualizată cu succes.');
+                        return true;
+                    }else {
+                        console.error('Eroare la verificarea email-ului', error);
+                        return false;
+                    }
                 } catch (error) {
                     console.error('Eroare la actualizarea parolei:', error);
                     throw error;
@@ -147,8 +193,13 @@ class UserModel
         const values = [access_token,refresh_token,id]
 
         try{
-            const { rows } = await pool.query(userSQL.insertToken,values);
-            return rows[0];
+            if (verifToken(values)) {
+                const {rows} = await pool.query(userSQL.insertToken, values);
+                return rows[0];
+            }else {
+                console.error('Eroare la actualizarea parolei:', error);
+                throw error;
+            }
         }catch (error){
             console.error('Eroarea la inregitrarea utilizatorului',error);
             throw error;
