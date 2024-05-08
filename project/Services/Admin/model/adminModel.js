@@ -8,7 +8,8 @@ class AdminModel {
     }
 
     async getNominated() {
-        const values = []
+        const year = 2020
+        const values = [year]
         try {
             const {rows} = await pool.query(adminSQL.getNominatedActors, values);
             return rows;
