@@ -297,5 +297,33 @@ class homeService {
                 res.end();
             }
         }
+
+        async addHelpMessage(req, res) {
+        try {
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            const data = await new Promise((resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(JSON.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            });
+            console.log()
+            const feederModel = new homeFeederModel()
+            const results = await feederModel.addHelpItem(data.content,data.email)
+            // res.writeHead(200, {'Content-Type': 'application/json'});
+            // res.end()
+            return results
+        }catch (error){
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(error)
+            return false
+        }
+    }
 }
 module.exports = homeService;

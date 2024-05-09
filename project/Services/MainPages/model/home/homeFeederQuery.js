@@ -33,6 +33,7 @@ const homeQuerries = {
     getAnnounces : `SELECT start_date, end_date, topic, title, author, picture, content
                     FROM public.announces
                     WHERE CURRENT_DATE BETWEEN start_date AND end_date;
-    `
+    `,
+    addHelp : `INSERT INTO help (content, email) VALUES ($1, $2)  RETURNING *`
 }
 module.exports = homeQuerries;

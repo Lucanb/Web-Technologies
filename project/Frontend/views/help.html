@@ -18,7 +18,7 @@
 <div class="main-content">
     <div class="main-content">
         <h1>Welcome to Help Menu</h1>
-        <form action="/send-help-request" method="POST">
+        <form id="helpForm" action="/help" method="POST">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             <label for="content">Descriere Problema:</label>
@@ -34,5 +34,33 @@
         <label onclick="location.href='/index';" class="references-element">Site Index</label>
     </div>
 </div>
+<script>
+    document.getElementById('helpForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = {
+            email: document.getElementById('email').value,
+            content: document.getElementById('content').value
+        };
+
+        fetch('http://localhost:3001/help', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Cererea de ajutor a fost trimisă cu succes!');
+                document.getElementById('helpForm').reset();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('A apărut o eroare la trimiterea cererii de ajutor.');
+            });
+    });
+</script>
 </body>
 </html>

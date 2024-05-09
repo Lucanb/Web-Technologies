@@ -1,6 +1,6 @@
 const {pool } = require("../../configuration/configApplication");
 const homeQuerries = require('./homeFeederQuery')
-const verifChar = require('../../modules/verifChar')
+const {verifChar,verifCharMessage} = require('../../modules/verifChar')
 class homeModel {
     constructor() {}
 
@@ -87,5 +87,21 @@ class homeModel {
             throw error;
         }
     }
+
+    async addHelpItem(content,email){
+        const values = [content,email]
+        try {
+            if (verifCharMessage(values)) {
+                const {rows} = await pool.query(homeQuerries.addHelp, values);
+                return rows
+            }else {
+                console.error('Eroare la verificarea email-ului');
+            }
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
 }
 module.exports = homeModel

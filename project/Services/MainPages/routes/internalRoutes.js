@@ -526,7 +526,19 @@ const internalRoutes = [
             res.end();
         })
     }),
-    new Router("GET", "/styles/home.css", async (req, res) => {
+    new Router("POST","/help",async (req,res)=>{
+        try {
+
+            const controller = new feedController();
+            return await controller.addHelp(req, res);
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+
+    })
+    , new Router("GET", "/styles/home.css", async (req, res) => {
         fs.readFile("Frontend/styles/home.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
