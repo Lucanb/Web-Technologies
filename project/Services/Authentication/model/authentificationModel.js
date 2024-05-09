@@ -1,6 +1,6 @@
 const { config, pool } = require("../configuration/configApplication");
 const userSQL = require('./userQuery')
-const { verifChar, verifToken } = require('../modules/verifChar')
+const { verifChar, verifToken,verifCharMessage,verifPass } = require('../modules/verifChar')
 class UserModel
 {
     constructor(username, password, email) {
@@ -11,7 +11,7 @@ class UserModel
     async emailExists(){
         const values = [this.email]
         try{
-            if (verifChar(values)) {
+            if (verifCharMessage(values)) {
                 const {rows} = await pool.query(userSQL.emailExists, values);
                 return (rows.length > 0);
             }else {
@@ -42,7 +42,7 @@ class UserModel
     async getId() {
         const values = [this.username, this.password]
         try {
-            if (verifChar(values)) {
+            if (verifPass(values)) {
             const {rows} = await pool.query(userSQL.usernameAndPassword, values);
             console.log(rows[0].id)
             return rows[0].id
@@ -82,7 +82,7 @@ class UserModel
         // const emailExists = await this.emailExists();
         // if (!usernameExists && ! emailExists) {
         try{
-            if (verifChar(values)) {
+            if (verifPass(values)) {
                 const {rows} = await pool.query(userSQL.insertUser, values);
                 return rows[0];
             }else {
@@ -154,7 +154,7 @@ class UserModel
         {
             console.log('this email : ', this.email)
             try {
-                if (verifChar(values)) {
+                if (verifCharMessage(values)) {
                     const result = await pool.query(userSQL.getUserIDAfterEmail, values);
                 }else {
                     console.error('Eroare la verificarea email-ului', error);
@@ -170,7 +170,7 @@ class UserModel
                 console.log('id : ',userId)
                 const values2 = [this.password, userId];
                 try {
-                    if (verifChar(values2)) {
+                    if (verifPass(values2)) {
                         await pool.query(userSQL.updatePassword, values2);
                         console.log('Parola a fost actualizată cu succes.');
                         return true;
