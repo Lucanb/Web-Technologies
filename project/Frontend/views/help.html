@@ -16,17 +16,15 @@
 </div>
 
 <div class="main-content">
-    <h1>Welcome to Help Menu</h1>
-
-    <div class="description">
-        <textarea placeholder="Type your message here..." rows="4" cols="50"></textarea>
-        <button class="send-button">Send</button>
-    </div>
-
-    <div class="live-chat">
-        <h2>Live Chat - if you need immediate assistance</h2>
-        <textarea placeholder="Start typing..." rows="4" cols="50"></textarea>
-        <button class="send-button">Send</button>
+    <div class="main-content">
+        <h1>Welcome to Help Menu</h1>
+        <form action="/send-help-request" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="content">Descriere Problema:</label>
+            <textarea id="content" name="content" required></textarea>
+            <button type="submit">Send</button>
+        </form>
     </div>
 </div>
 

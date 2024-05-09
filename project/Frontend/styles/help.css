@@ -55,7 +55,7 @@ body {
 .search-bar input[type=text] {
   border: 1px solid #ccc;
   width: calc(100% - 20px);
-  padding: 10px 10px 10px 40px;
+  padding: 10px 10px;
 }
 .search-bar input[type=text]:hover {
   background-color: #fff;
@@ -85,25 +85,23 @@ body {
 .main-content h1 {
   color: black;
 }
-
-.description, .live-chat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-.description textarea, .live-chat textarea {
+.main-content form {
   width: 90%;
+}
+.main-content form label {
+  display: block;
+  margin: 5px 0;
+}
+.main-content form input[type=email], .main-content form textarea {
+  width: 100%;
   padding: 8px;
-  margin-top: 10px;
+  margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
 }
-.description .send-button, .live-chat .send-button {
+.main-content form button {
   display: block;
-  width: 92px;
+  width: 100%;
   padding: 10px;
   margin-top: 10px;
   background-color: #000;
@@ -112,7 +110,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
 }
-.description .send-button:hover, .live-chat .send-button:hover {
+.main-content form button:hover {
   background-color: #ffd700;
 }
 
@@ -132,6 +130,13 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+.references .references-element {
+  margin: 5px 10px;
+  cursor: pointer;
+}
+.references .references-element:hover {
+  text-decoration: underline;
 }
 
 .references-element {

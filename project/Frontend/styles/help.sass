@@ -60,8 +60,7 @@ body
   input[type="text"]
     border: 1px solid $input-border
     width: calc(100% - 20px)
-    padding: 10px 10px 10px 40px
-
+    padding: 10px 10px
     &:hover
       background-color: $secondary-color
       border-radius: 10px
@@ -83,40 +82,37 @@ body
     color: darken($primary-color, 10%)
   h1
     color: darken($primary-color, 20%)
-
-.description, .live-chat
-  display: flex
-  flex-direction: column
-  align-items: center
-  justify-content: center
-  width: 100%
-  textarea
+  form
     width: 90%
-    padding: 8px
-    margin-top: 10px
-    border: 1px solid #ccc
-    border-radius: 4px
-    box-sizing: border-box
-  .send-button
-    display: block
-    width: 92px
-    padding: 10px
-    margin-top: 10px
-    background-color: $primary-color
-    color: white
-    border: none
-    border-radius: 4px
-    cursor: pointer
-    &:hover
-      background-color: $highlight-color
+    label
+      display: block
+      margin: 5px 0
+    input[type="email"], textarea
+      width: 100%
+      padding: 8px
+      margin-top: 5px
+      border: 1px solid $input-border
+      border-radius: 4px
+    button
+      display: block
+      width: 100%
+      padding: 10px
+      margin-top: 10px
+      background-color: $primary-color
+      color: white
+      border: none
+      border-radius: 4px
+      cursor: pointer
+      &:hover
+        background-color: $highlight-color
 
 .low-bar
   display: flex
   flex-direction: column
   align-items: center
   padding: 20px
-  background-color: $secondary_color
-  color: $primary_color
+  background-color: $secondary-color
+  color: $primary-color
   width: 100%
   margin-top: 20px
   z-index: 1
@@ -125,6 +121,11 @@ body
   display: flex
   justify-content: center
   flex-wrap: wrap
+  .references-element
+    margin: 5px 10px
+    cursor: pointer
+    &:hover
+      text-decoration: underline
 
 .references-element
   margin: 5px 10px
