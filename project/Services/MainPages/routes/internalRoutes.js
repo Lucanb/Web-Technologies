@@ -702,6 +702,18 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
+    }),
+
+    new Router("POST", "/search", async(req,res) =>{
+        try {
+
+            const controller = new feedController();
+            return await controller.searchBar(req, res);
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
     })
 ];
 

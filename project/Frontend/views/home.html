@@ -9,10 +9,10 @@
     <body>
     <div class="tab">
             <button class="tabs">Menu</button>
-            <div class="search-bar">
-                <button>Option</button>
-                <input type="text" placeholder="Search">
-            </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+            <div class="autocomplete-options-container result"></div>
+        </div>
             <button onclick="location.href='/notifications';" class="tabs">Notifications</button>
             <button onclick="location.href='/favorites';" class="tabs">Favorites</button>
             <button onclick="handleLogout()" class="tabs">Log Out</button>
@@ -101,6 +101,7 @@
                 <label onclick="location.href='/index';" class="references-element">Site Index</label>
             </div>
         </div>
+    <div class="result"></div>
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -430,6 +431,66 @@
                 console.error('Error:', error);
                 alert('Error: ' + error.message);
             });
+
+        const searchBar = document.querySelector('.search-bar input');
+
+        searchBar.addEventListener('input', async () => {
+            const searchText = searchBar.value.trim();
+            if (searchText.length === 0) {
+                return;
+            }
+
+            try {
+                let formData = new URLSearchParams();
+                formData.append('full_name', searchText);
+                const response = await fetch(`http://localhost:3001/search`,{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch search results');
+                }
+                const data = await response.json();
+                if (data && Array.isArray(data)) {
+                    clearAutocompleteOptions();
+                    data.forEach(item => {
+                        addAutocompleteOption(item.full_name);
+                        console.log(item.full_name);
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            }
+        });
+
+        function clearAutocompleteOptions() {
+            var result = document.querySelector('.result');
+            if (result) {
+                result.innerHTML = '';
+            }
+        }
+
+        function addAutocompleteOption(optionText) {
+            const autocompleteContainer = document.querySelector('.result');
+            if (autocompleteContainer) {
+                const optionElement = document.createElement('div');
+                optionElement.textContent = optionText;
+                optionElement.classList.add('autocomplete-option');
+                autocompleteContainer.appendChild(optionElement);
+
+                optionElement.addEventListener('click', () => {
+                    searchBar.value = optionText;
+                    clearAutocompleteOptions();
+                });
+            } else {
+                console.error('Elementul cu clasa ".result" nu a fost găsit.');
+            }
+        }
+
     </script>
     </body>
 </html>

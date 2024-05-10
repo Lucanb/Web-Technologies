@@ -6,6 +6,8 @@ const axios = require("axios");
 const config = require('../configuration/config.js')
 const {json} = require("../../../modules/middlewares/bodyParser");
 const homeModel = require("../model/home/homeFeederModel")
+const actorModel = require("../model/actor/actorModel")
+
 const JWToken = require("../modules/token");
 const {rows} = require("pg/lib/defaults");
 
@@ -158,6 +160,35 @@ class actorService {
                 res.writeHead(200, {'Content-Type': 'application/json'});
                 res.write(JSON.stringify(rows));
                 res.end();
+        } catch (error) {
+            console.error('Eroare interna la obținerea informațiilor despre actor:', error);
+            res.end(error)
+        }
+    }
+
+    async search(req, res) {
+        try {
+            let body= '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            const data = await new Promise(async (resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            })
+            const full_name = data.full_name;
+            console.log(full_name)
+            const actor = new actorModel();
+            const rows = await actor.searchByName(full_name);
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(JSON.stringify(rows));
+            res.end();
+
         } catch (error) {
             console.error('Eroare interna la obținerea informațiilor despre actor:', error);
             res.end(error)

@@ -10,14 +10,22 @@
 <div class="tab">
     <button class="tabs">Menu</button>
     <div class="search-bar">
-        <button>Option</button>
         <input type="text" placeholder="Search">
+        <div class="autocomplete-options-container result"></div>
     </div>
-    <button onclick="location.href='http://localhost:3000/login';" class="tabs">Sign In</button>
+    <button onclick="location.href='/news';" class="tabs">Notifications</button>
+    <button onclick="location.href='/favorites';" class="tabs">Favorites</button>
+    <button onclick="location.href='/news';" class="tabs">See News</button>
+    <button onclick="location.href='/home';" class="tabs">Log Out</button>
 </div>
 <div class="main-content">
     <div class="intro">
         <div class="video-container">
+        </div>
+    </div>
+    <div class="news-container">
+        <h2>News</h2>
+        <div class="news-element">
         </div>
     </div>
 
@@ -38,10 +46,36 @@
     <div class="actor-element">
     </div>
 </div>
+<div class="section1">
+    <h1>What to watch</h1>
+</div>
 
+<div class="top-picks-this-week">
+    <h2>Top Actor Picks This Week</h2>
+    <div class="actor-element">
+    </div>
+</div>
+
+<div class="fan-favourites">
+    <h2>Fans Favourites</h2>
+    <div class="actor-element">
+    </div>
+</div>
+
+<div class="explore-actors">
+    <h2>Explore Actors</h2>
+    <div class="actor-element">
+    </div>
+</div>
+
+<div class="Coming-Soon">
+    <h2>Coming Soon</h2>
+    <div class="actor-element">
+    </div>
+</div>
 <div class="low-bar">
     <div>
-        <button onclick="location.href='http://localhost:3000/login';">Sign In For More Content</button>
+        <button onclick="location.href='/login';">Sign In For More Content</button>
     </div>
     <div class="follow-bar">
         <div class="follow-instagram-icon">
@@ -51,12 +85,13 @@
             <button>Facebook</button>
         </div>
     </div>
-    <div class = "references">
+    <div class="references">
         <label onclick="location.href='/about';" class="references-element">About</label>
         <label onclick="location.href='/help';" class="references-element">Help</label>
         <label onclick="location.href='/index';" class="references-element">Site Index</label>
     </div>
 </div>
+<div class="result"></div>
 <script>
     function redirectToActor(event){
         event.preventDefault();
@@ -223,6 +258,64 @@
             console.error('Error:', error);
             alert('Error: ' + error.message);
         });
+    const searchBar = document.querySelector('.search-bar input');
+
+    searchBar.addEventListener('input', async () => {
+        const searchText = searchBar.value.trim();
+        if (searchText.length === 0) {
+            return;
+        }
+
+        try {
+            let formData = new URLSearchParams();
+            formData.append('full_name', searchText);
+            const response = await fetch(`http://localhost:3001/search`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch search results');
+            }
+            const data = await response.json();
+            if (data && Array.isArray(data)) {
+                clearAutocompleteOptions();
+                data.forEach(item => {
+                    addAutocompleteOption(item.full_name);
+                    console.log(item.full_name);
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        }
+    });
+
+    function clearAutocompleteOptions() {
+        var result = document.querySelector('.result');
+        if (result) {
+            result.innerHTML = '';
+        }
+    }
+
+    function addAutocompleteOption(optionText) {
+        const autocompleteContainer = document.querySelector('.result');
+        if (autocompleteContainer) {
+            const optionElement = document.createElement('div');
+            optionElement.textContent = optionText;
+            optionElement.classList.add('autocomplete-option');
+            autocompleteContainer.appendChild(optionElement);
+
+            optionElement.addEventListener('click', () => {
+                searchBar.value = optionText;
+                clearAutocompleteOptions();
+            });
+        } else {
+            console.error('Elementul cu clasa ".result" nu a fost găsit.');
+        }
+    }
 </script>
 </body>
 </html>
