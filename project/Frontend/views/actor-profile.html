@@ -95,7 +95,6 @@
 </div>
 <script>
     function openForm() {
-
         const existingForm = document.querySelector('.form-container form');
         if (existingForm) {
             existingForm.remove();
@@ -104,26 +103,44 @@
         const form = document.createElement('form');
         form.setAttribute('id', 'myForm');
 
-        const sourceInput = document.createElement('input');
-        sourceInput.setAttribute('type', 'text');
-        sourceInput.setAttribute('name', 'source');
-        sourceInput.setAttribute('placeholder', 'Introduceți sursa');
-        form.appendChild(sourceInput);
-
-        const submitButton = document.createElement('button');
-        submitButton.setAttribute('type', 'submit');
-        submitButton.textContent = 'Submit';
-        form.appendChild(submitButton);
-
-        document.querySelector('.form-container').appendChild(form);
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const sourceValue = sourceInput.value;
-            document.cookie = `source=${encodeURIComponent(sourceValue)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
-
+        const button1 = document.createElement('button');
+        button1.textContent = 'Button 1';
+        button1.addEventListener('click', function() {
+            saveSource('https://variety.com');
+            const source = 'https://variety.com';
+            document.cookie = `source=${encodeURIComponent(source)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
             redirectActorPage();
         });
+        form.appendChild(button1);
+
+        const button2 = document.createElement('button');
+        button2.textContent = 'Button 2';
+        button2.addEventListener('click', function() {
+            const source = 'Button 2';
+            document.cookie = `source=${encodeURIComponent(source)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+            redirectActorPage();
+        });
+        form.appendChild(button2);
+
+        const button3 = document.createElement('button');
+        button3.textContent = 'Button 3';
+        button3.addEventListener('click', function() {
+            const source = 'Button 3';
+            document.cookie = `source=${encodeURIComponent(source)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+            redirectActorPage();
+        });
+        form.appendChild(button3);
+
+        const button4 = document.createElement('button');
+        button4.textContent = 'Button 4';
+        button4.addEventListener('click', function() {
+            const source = 'Button 4';
+            document.cookie = `source=${encodeURIComponent(source)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+            redirectActorPage();
+        });
+        form.appendChild(button4);
+
+        document.querySelector('.form-container').appendChild(form);
     }
 
     function redirectActorPage() {
