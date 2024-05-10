@@ -1,6 +1,6 @@
 const { config, pool } = require("../configuration/configApplication");
 const adminSQL = require('./adminQuery')
-const verifChar = require('../modules/verifChar')
+const {verifChar,verifPass} = require('../modules/verifChar')
 class AdminModel {
     constructor(username, password, email) {
         this.username = username;
@@ -28,7 +28,7 @@ class AdminModel {
     async addAnnounce(startdate,enddate,topic,title,author,picture,content){
         const values = [startdate,enddate,topic,title,author,picture,content]
         try{
-            if (verifChar(values)) {
+            if (verifPass(values)) {
                 const {rows} = await pool.query(adminSQL.addAnnounces, values);
                 return rows;
             }else {
