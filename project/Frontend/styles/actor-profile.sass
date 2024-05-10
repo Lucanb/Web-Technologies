@@ -59,11 +59,58 @@ body
       background-color: $secondary-color
       border-radius: 10px
 
+.form-container
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  margin-top: calc(#{$bar-height} + 20px)
+  margin-left: auto
+  margin-right: auto
+
+  form
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    input[type="text"]
+      border: 1px solid $input-border
+      width: calc(100% - 20px)
+      padding: 10px 10px 10px 40px
+      background-color: $primary-color
+      color: $secondary-color
+      transition: background-color 0.3s ease
+
+      &:hover
+        background-color: $button-bg-hover
+        border-radius: 10px
+      margin-bottom: 10px
+
+    button[type="submit"]
+      background-color: $primary-color
+      color: $secondary-color
+      padding: 10px 15px
+      border: none
+      cursor: pointer
+      font-size: 16px
+      transition: background-color 0.3s ease
+
+      &:hover
+        background-color: $button-bg-hover
+      margin-top: 10px
+
+  &:hover
+    background-color: $button-bg-hover
+
+@media (max-width: $vertical-bar-breakpoint)
+  .form-container
+    margin-top: calc(2 * #{$bar-height} + 250px)
+
 .intro-container
   display: flex
   flex-direction: column
   align-items: center
-  margin-top: calc(#{$bar-height} + 200px)
+  margin-top: calc(#{$bar-height} + 10px)
   z-index: 15
 
   .actress-name

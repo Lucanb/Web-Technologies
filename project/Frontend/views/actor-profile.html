@@ -12,10 +12,13 @@
     <div class="search-bar">
         <input type="text" placeholder="Search">
     </div>
-    <button onclick="location.href='/notifications';" class="tabs">Notifications</button>
+    <button onclick="openForm()" class="tabs">News</button>
     <button onclick="location.href='/favorites';" class="tabs">Favorites</button>
     <button class="tabs" id="add" >Add to Favourites</button>
     <button onclick="handleLogout()" class="tabs">Log Out</button>
+</div>
+<div class="form-container">
+
 </div>
 <div class="intro-container">
     <div class="actress-name">
@@ -91,6 +94,43 @@
 </div>
 </div>
 <script>
+    function openForm() {
+
+        const existingForm = document.querySelector('.form-container form');
+        if (existingForm) {
+            existingForm.remove();
+        }
+
+        const form = document.createElement('form');
+        form.setAttribute('id', 'myForm');
+
+        const sourceInput = document.createElement('input');
+        sourceInput.setAttribute('type', 'text');
+        sourceInput.setAttribute('name', 'source');
+        sourceInput.setAttribute('placeholder', 'Introduceți sursa');
+        form.appendChild(sourceInput);
+
+        const submitButton = document.createElement('button');
+        submitButton.setAttribute('type', 'submit');
+        submitButton.textContent = 'Submit';
+        form.appendChild(submitButton);
+
+        document.querySelector('.form-container').appendChild(form);
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const sourceValue = sourceInput.value;
+            document.cookie = `source=${encodeURIComponent(sourceValue)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+
+            redirectActorPage();
+        });
+    }
+
+    function redirectActorPage() {
+        const actorName = document.querySelector('.actress-name h1');
+        const name = actorName.textContent;
+        window.location.href = `http://localhost:3002/news/:${name}`;
+    }
 
     function handleLogout() {
         fetch('http://localhost:3001/logout', {

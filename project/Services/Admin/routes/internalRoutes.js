@@ -205,11 +205,22 @@ const internalRoutes = [
         });
     }),
     new Router("GET", "/get-news/:actor", async (req, res) => {
+        const cookies = req.headers.cookie;
+        let source = null;
+        if (cookies) {
+            const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+                const parts = cookie.split('=');
+                acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+                return acc;
+            }, {});
+            source = cookieObj['source'];  // Assuming the token is stored under the key 'accessToken'
+        }
+
         const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
         const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
         const actor = decodeURIComponent(pathSegments[2]);
 
-        const url = `https://variety.com/v/film/news/feed?query=${encodeURIComponent(actor)}`; // Hypothetical URL
+        const url = `${source}/v/film/news/feed?query=${encodeURIComponent(actor)}`; // Hypothetical URL
         const parser = new Parser();
         try {
             const feed = await parser.parseURL(url);
@@ -232,6 +243,16 @@ const internalRoutes = [
         }
     }),
     new Router("GET", "/RSS/:actor", async (req, res) => {
+        const cookies = req.headers.cookie;
+        let source = null;
+        if (cookies) {
+            const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+                const parts = cookie.split('=');
+                acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+                return acc;
+            }, {});
+            source = cookieObj['source'];  // Assuming the token is stored under the key 'accessToken'
+        }
         const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
         const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
         const actor = decodeURIComponent(pathSegments[2]);
@@ -240,15 +261,15 @@ const internalRoutes = [
             title: 'Variety - Film News',
             description: 'Latest updates on film news from Variety.',
             feed_url: 'http://yourdomain.com/news/RSS',
-            site_url: 'https://variety.com',
-            image_url: 'https://variety.com/wp-content/uploads/2018/06/variety-favicon.png',
+            site_url: source,
+            image_url: `${source}/wp-content/uploads/2018/06/variety-favicon.png`,
             language: 'en',
             pubDate: new Date().toUTCString(),
             ttl: 60
         });
 
         try {
-            const url = `https://variety.com/v/film/news/feed?query=${encodeURIComponent(actor)}`; // Hypothetical URL
+            const url = `${source}/v/film/news/feed?query=${encodeURIComponent(actor)}`; // Hypothetical URL
             const parser = new Parser();
             const sourceFeed = await parser.parseURL(url);
 
