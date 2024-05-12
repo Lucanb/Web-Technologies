@@ -2,43 +2,17 @@ const Token = require("../../Authentication/modules/token");
 const config = require('../configuration/config.js')
 const AdminModel = require('../model/adminModel')
 const querystring = require("querystring");
+const homeModel = require("../../MainPages/model/home/homeFeederModel");
 class adminService {
     constructor() {
     }
 
-    async announces(req, res) {
-
-        const feederModel = new homeFeederModel()
-        const results = await feederModel.getAnnounces()
-        const resultsWithLinks = [];
-        for (const result of results) {
-            try {
-                const url = `https://api.themoviedb.org/3/search/multi?api_key=${config.api_key}&query=${result.show}`;
-                const tmdbResponse = await fetch(url);
-                const tmdbData = await tmdbResponse.json();
-                const posterPath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].poster_path : null;
-                const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
-                const movieToken = await Token.generateKey({
-                    movieID: id,
-                    fresh: true,
-                    type: 'access'
-                }, {
-                    expiresIn: '1h'
-                })
-                if (posterPath != null) {
-                    resultsWithLinks.push({
-                        id: movieToken,
-                        show: result.show,
-                        posterUrl: `https://image.tmdb.org/t/p/w500${posterPath}`
-                    });
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.write(JSON.stringify(resultsWithLinks))
-        res.end()
+    async announces(page,limit) {
+            const offset = (page - 1) * limit;
+            const announceModel = new homeModel();
+            const rows = await announceModel.getAnnouncesNews()
+            const limitedAnnounces = rows.slice(offset, offset + limit);
+            return limitedAnnounces
     }
 
     async getNominated(req,res){
@@ -91,6 +65,15 @@ class adminService {
         console.error('Error in addAnnounce:', error);
         res.writeHead(500, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({success: false, error: error.message}));
+    }
+
+    async getUsers(page, limit){
+        const offset = (page - 1) * limit;
+        const adminModel = new AdminModel();
+        const users = await adminModel.getUsers();
+        const limitedUsers = users.slice(offset, offset + limit);
+
+        return limitedUsers;
     }
 }
 module.exports = adminService;

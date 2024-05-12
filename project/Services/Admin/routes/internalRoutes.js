@@ -6,6 +6,7 @@ const {adminController} = require("../../Admin/controllers/AdminController");
 const Parser = require('rss-parser');
 const { URL } = require('url');
 const RSS = require('rss');
+const {feedController} = require("../../MainPages/controllers/feedController");
 
 const internalRoutes = [
     new Router("GET", "/altaRuta", async (req, res) => {
@@ -123,6 +124,27 @@ const internalRoutes = [
                 }
             }
         });
+    }),
+    new Router("GET", "/getUsers", async (req, res) => {
+        try {
+            const controller = new adminController();
+            return await controller.getUsers(req,res)
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
+    new Router("GET", '/announces', async (req, res) => {
+        try {
+            const controller = new adminController();
+            const feedDone = await controller.feedAnnounces(req,res);
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
     }),
     new Router("GET", "/news/:", async (req, res, next) => {
 

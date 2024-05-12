@@ -63,6 +63,7 @@ body
 
 .admin
   display: flex
+  margin-top: $bar-height + 10px
   flex-direction: column
   align-items: center
   justify-content: center
@@ -71,6 +72,7 @@ body
   width: 100%
   @media (max-width: $breakpoint-md)
     padding: 10px
+    margin-top: $bar-height + 250px
 
 .title
   margin-top: 150px
@@ -115,3 +117,33 @@ body
   &:hover
     text-decoration: underline
     background-color: $button-bg-hover
+
+@mixin action-buttons
+  button
+    padding: 5px 10px
+    margin-right: 5px
+    cursor: pointer
+    border: none
+    background-color: $primary-color
+    color: #fff
+    &:hover
+      background-color: darken($button-bg-hover, 10%)
+
+.user-list
+  display: flex
+  flex-wrap: wrap
+  gap: 20px
+
+.user-item
+  width: calc(50% - 20px)
+  padding: 20px
+  border: 1px solid #ccc
+  border-radius: 5px
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+
+.user-info
+  p
+    margin: 5px 0
+
+.actions
+  @include action-buttons

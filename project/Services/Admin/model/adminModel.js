@@ -40,5 +40,21 @@ class AdminModel {
             throw error;
         }
     }
+
+    async getUsers(){
+        const values = []
+        try{
+            if (verifPass(values)) {
+                const {rows} = await pool.query(adminSQL.getUsers, values);
+                return rows;
+            }else {
+                console.error('Folositi doar caractere normale', error);
+                throw error;
+            }
+        }catch (error){
+            console.error('Eroare la verificarea email-ului', error);
+            throw error;
+        }
+    }
 }
 module.exports = AdminModel;

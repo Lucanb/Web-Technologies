@@ -1,5 +1,6 @@
 // const favoritesService = require('../services/favoritesService');
 const adminService = require('../services/adminService');
+const {parse} = require("url");
 
 class adminController {
 
@@ -121,6 +122,39 @@ class adminController {
             res.end(JSON.stringify({success: false, message: 'Internal error'}));
         }
     }
+
+    async getUsers(req,res){
+        const queryParams = parse(req.url, true).query;
+        const page = parseInt(queryParams.page) || 1;
+        const limit = parseInt(queryParams.limit) || 5;
+        try{
+            const service = new adminService();
+            const users = await service.getUsers(page,limit)
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(users));
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
+
+    async feedAnnounces(req, res) {
+        const queryParams = parse(req.url, true).query;
+        const page = parseInt(queryParams.page) || 1;
+        const limit = parseInt(queryParams.limit) || 5;
+        try {
+            const service = new adminService();
+            const getService = await service.announces(page,limit)
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(getService))
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
+
 }
 
 module.exports = {adminController: adminController}

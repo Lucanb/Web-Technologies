@@ -3,6 +3,7 @@ const adminSQL = {
                          FROM guildawards
                          WHERE won = true AND full_name IS NOT NULL AND year LIKE '%'||$1||'%'`,
     addAnnounces: `INSERT INTO announces(start_date, end_date, topic, title, author, picture, content) 
-                    VALUES ($1,$2,$3,$4,$5,$6,$7)`
+                    VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+    getUsers : `SELECT username,email FROM users`
 }
 module.exports = adminSQL;

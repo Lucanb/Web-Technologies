@@ -12,8 +12,10 @@
     <div class="search-bar">
         <input type="text" placeholder="Search">
     </div>
+    <button id="seeUsersBtn" class="tabs">See Users</button>
     <button class="tabs">Add user</button>
     <button class="tabs" onclick="showAddAnnounceForm()">Add Announce</button>
+    <button id ="seeAnnouncesBtn" class="tabs">See Announces</button>
     <button onclick="handleLogout()" class="tabs">Log Out</button>
 </div>
 
@@ -30,32 +32,18 @@
         <textarea id="content" placeholder="Content" required></textarea>
         <button type="submit">Submit Announcement</button>
     </form>
+    <div class="announcement-list">
+    </div>
+</div>
 
-    <div class="admin-column">
-        <h2>Mihail Buturuga</h2>
-        <button>Delete</button>
-        <button>Update</button>
-    </div>
-    <div class="admin-column">
-        <h2>Ashf[oahfa</h2>
-        <button>Delete</button>
-        <button>Update</button>
-    </div>
-    <div class="admin-column">
-        <h2>Atat</h2>
-        <button>Delete</button>
-        <button>Update</button>
-    </div>
-    <div class="admin-column">
-        <h2>Nastasa Baras Luca</h2>
-        <button>Delete</button>
-        <button>Update</button>
-    </div>
-    <div class="admin-column">
-        <h2>Tiganus Riccardo Ionel</h2>
-        <button>Delete</button>
-        <button>Update</button>
-    </div>
+<div class="paginationUsers" style="display:none;">
+    <button id="prevPageBtn">Previous Page</button>
+    <button id="nextPageBtn">Next Page</button>
+</div>
+
+<div class="paginationAnnounces" style="display:none;">
+    <button id="prevPageBtn2">Previous Page</button>
+    <button id="nextPageBtn2">Next Page</button>
 </div>
 
 <div class="low-bar">
@@ -66,6 +54,156 @@
     </div>
 </div>
 <script>
+    let currentPage = 1;
+    let currentPage2 = 1;
+    document.getElementById('seeUsersBtn').addEventListener('click', function() {
+        currentPage = 1; // Resetăm pagina la prima pagină când se apasă butonul "See Users"
+        fetchUsers();
+        document.querySelector('.paginationUsers').style.display = 'block'; // Afișăm paginarea
+    });
+
+    document.getElementById('prevPageBtn').addEventListener('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchUsers();
+        }
+    });
+
+    document.getElementById('nextPageBtn').addEventListener('click', function() {
+        currentPage++;
+        fetchUsers();
+    });
+
+    document.getElementById('prevPageBtn2').addEventListener('click', function() {
+        if (currentPage2 > 1) {
+            currentPage2--;
+            fetchAnnouncements();
+        }
+    });
+
+    document.getElementById('nextPageBtn2').addEventListener('click', function() {
+        currentPage2++;
+        fetchAnnouncements();
+    });
+
+    document.getElementById('seeAnnouncesBtn').addEventListener('click', function() {
+        currentPage2 = 1;
+        fetchAnnouncements();
+        document.querySelector('.paginationAnnounces').style.display = 'block'; // Afișăm paginarea
+    });
+
+    function fetchAnnouncements() {
+        const limit = 5;
+        fetch(`http://localhost:3002/announces?page=${currentPage}&limit=${limit}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch announcements');
+                }
+                return response.json();
+            })
+            .then(announcements => {
+                const announcementList = document.querySelector('.announcement-list');
+                announcementList.innerHTML = '';
+
+                announcements.forEach(announcement => {
+                    const announcementItem = document.createElement('div');
+                    announcementItem.classList.add('announcement-item');
+
+                    const startDate = document.createElement('p');
+                    startDate.textContent = `Start Date: ${announcement.start_date}`;
+                    announcementItem.appendChild(startDate);
+
+                    const endDate = document.createElement('p');
+                    endDate.textContent = `End Date: ${announcement.end_date}`;
+                    announcementItem.appendChild(endDate);
+
+                    const topic = document.createElement('p');
+                    topic.textContent = `Topic: ${announcement.topic}`;
+                    announcementItem.appendChild(topic);
+
+                    const title = document.createElement('p');
+                    title.textContent = `Title: ${announcement.title}`;
+                    announcementItem.appendChild(title);
+
+                    const author = document.createElement('p');
+                    author.textContent = `Author: ${announcement.author}`;
+                    announcementItem.appendChild(author);
+
+                    const picture = document.createElement('p');
+                    picture.textContent = `Picture: ${announcement.picture}`
+                    announcementItem.appendChild(picture);
+
+                    const content = document.createElement('p');
+                    content.textContent = `Content: ${announcement.content}`;
+                    announcementItem.appendChild(content);
+
+                    announcementList.appendChild(announcementItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while fetching announcements: ' + error.message);
+            });
+    }
+
+    function fetchUsers() {
+        const limit = 5;
+
+        fetch(`http://localhost:3002/getUsers?page=${currentPage}&limit=${limit}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+                return response.json();
+            })
+            .then(users => {
+                const adminColumn = document.querySelector('.admin');
+                adminColumn.innerHTML = '';
+
+                const userList = document.createElement('div');
+                userList.classList.add('user-list');
+
+                users.forEach(user => {
+                    const userItem = document.createElement('div');
+                    userItem.classList.add('user-item');
+
+                    const userInfo = document.createElement('div');
+                    userInfo.classList.add('user-info');
+
+                    const username = document.createElement('p');
+                    username.textContent = `Username: ${user.username}`;
+                    userInfo.appendChild(username);
+
+                    const email = document.createElement('p');
+                    email.textContent = `Email: ${user.email}`;
+                    userInfo.appendChild(email);
+
+                    const actions = document.createElement('div');
+                    actions.classList.add('actions');
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Delete';
+                    actions.appendChild(deleteBtn);
+
+                    const updateBtn = document.createElement('button');
+                    updateBtn.textContent = 'Update';
+                    actions.appendChild(updateBtn);
+
+                    userItem.appendChild(userInfo);
+                    userItem.appendChild(actions);
+
+                    userList.appendChild(userItem);
+                });
+
+                adminColumn.appendChild(userList);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while fetching users: ' + error.message);
+            });
+    }
+
+
     function showAddAnnounceForm() {
         document.getElementById('announceForm').style.display = 'block';
     }
