@@ -155,6 +155,41 @@ class adminController {
         }
     }
 
+    async deleteFeedAnnounces(req, res) {
+        const queryParams = parse(req.url, true).query;
+        const title = parseInt(queryParams.title) || 1;
+        try {
+            const service = new adminService();
+            const getService = await service.deleteAnnounces(title)
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(getService))
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
+
+    async UpdateFeedAnnounces(req, res) {
+        const queryParams = parse(req.url, true).query;
+        const title = parseInt(queryParams.title) || 1;
+        const start_date = parseInt(queryParams.start_date) || 1;
+        const end_date = parseInt(queryParams.end_date) || 1;
+        const topic = parseInt(queryParams.topic) || 1;
+        const author = parseInt(queryParams.author) || 1;
+        const picture = parseInt(queryParams.picture) || 1;
+        const content = parseInt(queryParams.content) || 1;
+        try {
+            const service = new adminService();
+            const getService = await service.updateAnnounces(title,start_date,end_date,topic,author,picture,content)
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(getService))
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
 }
 
 module.exports = {adminController: adminController}

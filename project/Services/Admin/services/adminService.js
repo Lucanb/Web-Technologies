@@ -15,6 +15,18 @@ class adminService {
             return limitedAnnounces
     }
 
+    async deleteAnnounces(title) {
+        const announceModel = new homeModel();
+        const rows = await announceModel.DeleteAnnouncesNews(title)
+        return rows
+    }
+
+    async updateAnnounces(title,start_date,end_date,topic,author,picture,content) {
+        const announceModel = new homeModel();
+        const rows = await announceModel.updateAnnouncesNews(title,start_date,end_date,topic,author,picture,content)
+        return rows
+    }
+
     async getNominated(req,res){
         const adminModel = new AdminModel()
         const results = await adminModel.getNominated()

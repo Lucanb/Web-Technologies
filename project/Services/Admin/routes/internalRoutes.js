@@ -146,6 +146,27 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
+    new Router("PUT", '/announces', async (req, res) => {
+        try {
+            const controller = new adminController();
+            return await controller.UpdateFeedAnnounces(req,res);
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),    new Router("DELETE", '/announces', async (req, res) => {
+        try {
+            const controller = new adminController();
+            const feedDone = await controller.deleteFeedAnnounces(req,res);
+
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
     new Router("GET", "/news/:", async (req, res, next) => {
 
         fs.readFile("Frontend/views/newsActor.html", 'utf-8', async (err, html) => {

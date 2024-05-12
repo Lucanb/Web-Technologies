@@ -31,9 +31,19 @@ const homeQuerries = {
     LIMIT 9;
     `,
     getAnnounces : `SELECT start_date, end_date, topic, title, author, picture, content
-                    FROM public.announces
+                    FROM announces
                     WHERE CURRENT_DATE BETWEEN start_date AND end_date;
     `,
-    addHelp : `INSERT INTO help (content, email) VALUES ($1, $2)  RETURNING *`
+    addHelp : `INSERT INTO help (content, email) VALUES ($1, $2)  RETURNING *`,
+    deleteAnnounce : `DELETE FROM announces WHERE title = $1`,
+    updateAnnouncesQuery: `UPDATE announces 
+                        SET start_date = $2, 
+                            end_date = $3, 
+                            topic = $4, 
+                            author = $5, 
+                            picture = $6, 
+                            content = $7 
+                        WHERE title = $1`
+
 }
 module.exports = homeQuerries;

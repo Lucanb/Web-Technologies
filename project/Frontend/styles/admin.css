@@ -76,6 +76,23 @@ body {
   }
 }
 
+.form-addAnnounce {
+  display: flex;
+  margin-top: 70px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .form-addAnnounce {
+    padding: 10px;
+    margin-top: 310px;
+  }
+}
+
 .title {
   margin-top: 150px;
 }

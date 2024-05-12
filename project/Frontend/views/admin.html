@@ -21,6 +21,11 @@
 
 <div class="admin">
     <h2 class="title">Admin Panel</h2>
+    <div class="admin-container">
+</div>
+</div>
+
+<div class="form-addAnnounce">
     <form id="announceForm" style="display:none;" onsubmit="submitAnnounce(event)">
         <h2>Add New Announcement</h2>
         <input type="date" id="startdate" required>
@@ -32,8 +37,6 @@
         <textarea id="content" placeholder="Content" required></textarea>
         <button type="submit">Submit Announcement</button>
     </form>
-    <div class="announcement-list">
-    </div>
 </div>
 
 <div class="paginationUsers" style="display:none;">
@@ -59,6 +62,7 @@
     document.getElementById('seeUsersBtn').addEventListener('click', function() {
         currentPage = 1; // Resetăm pagina la prima pagină când se apasă butonul "See Users"
         fetchUsers();
+        document.querySelector('.paginationAnnounces').style.display = 'none';
         document.querySelector('.paginationUsers').style.display = 'block'; // Afișăm paginarea
     });
 
@@ -89,6 +93,7 @@
     document.getElementById('seeAnnouncesBtn').addEventListener('click', function() {
         currentPage2 = 1;
         fetchAnnouncements();
+        document.querySelector('.paginationUsers').style.display = 'none';
         document.querySelector('.paginationAnnounces').style.display = 'block'; // Afișăm paginarea
     });
 
@@ -102,8 +107,12 @@
                 return response.json();
             })
             .then(announcements => {
-                const announcementList = document.querySelector('.announcement-list');
-                announcementList.innerHTML = '';
+                const adminColumn = document.querySelector('.admin-container');
+
+                adminColumn.innerHTML = '';
+
+                const announcementList = document.createElement('div');
+                announcementList.classList.add('announcementList-list');
 
                 announcements.forEach(announcement => {
                     const announcementItem = document.createElement('div');
@@ -137,8 +146,20 @@
                     content.textContent = `Content: ${announcement.content}`;
                     announcementItem.appendChild(content);
 
+                    const actions = document.createElement('div');
+                    actions.classList.add('actions');
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Delete';
+                    actions.appendChild(deleteBtn);
+
+                    const updateBtn = document.createElement('button');
+                    updateBtn.textContent = 'Update';
+                    actions.appendChild(updateBtn);
+                    announcementItem.appendChild(actions);
                     announcementList.appendChild(announcementItem);
                 });
+                adminColumn.appendChild(announcementList);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -157,7 +178,7 @@
                 return response.json();
             })
             .then(users => {
-                const adminColumn = document.querySelector('.admin');
+                const adminColumn = document.querySelector('.admin-container');
                 adminColumn.innerHTML = '';
 
                 const userList = document.createElement('div');
