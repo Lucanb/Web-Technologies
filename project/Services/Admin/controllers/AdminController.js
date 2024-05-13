@@ -157,7 +157,7 @@ class adminController {
 
     async deleteFeedAnnounces(req, res) {
         const queryParams = parse(req.url, true).query;
-        const title = parseInt(queryParams.title) || 1;
+        const title = queryParams.title || 1;
         try {
             const service = new adminService();
             const deleteService = await service.deleteAnnounces(title)
@@ -172,13 +172,13 @@ class adminController {
 
     async UpdateFeedAnnounces(req, res) {
         const queryParams = parse(req.url, true).query;
-        const title = parseInt(queryParams.title) || 1;
-        const start_date = parseInt(queryParams.start_date) || 1;
-        const end_date = parseInt(queryParams.end_date) || 1;
-        const topic = parseInt(queryParams.topic) || 1;
-        const author = parseInt(queryParams.author) || 1;
-        const picture = parseInt(queryParams.picture) || 1;
-        const content = parseInt(queryParams.content) || 1;
+        const title = queryParams.title || 1;
+        const start_date = queryParams.start_date || 1;
+        const end_date = queryParams.end_date || 1;
+        const topic = queryParams.topic || 1;
+        const author = queryParams.author || 1;
+        const picture = queryParams.picture || 1;
+        const content = queryParams.content || 1;
         try {
             const service = new adminService();
             const updateService = await service.updateAnnounces(title,start_date,end_date,topic,author,picture,content)
@@ -193,9 +193,9 @@ class adminController {
 
     async addUser(req,res){
         const queryParams = parse(req.url, true).query;
-        const username = parseInt(queryParams.username) || 1;
-        const password = parseInt(queryParams.password) || 1;
-        const email = parseInt(queryParams.email) || 1;
+        const username = queryParams.username || 1;
+        const password = queryParams.password || 1;
+        const email = queryParams.email || 1;
         try {
             const service = new adminService();
             const addService = await service.addUser(username,password,email)
@@ -210,7 +210,7 @@ class adminController {
 
     async deleteUser(req,res){
         const queryParams = parse(req.url, true).query;
-        const username = parseInt(queryParams.username) || 1;
+        const username = queryParams.username || 1;
         try {
             const service = new adminService();
             const deleteService = await service.deleteUsers(username)
@@ -225,9 +225,9 @@ class adminController {
 
     async updateUser(req,res){
         const queryParams = parse(req.url, true).query;
-        const username = parseInt(queryParams.username) || 1;
-        const password = parseInt(queryParams.password) || 1;
-        const email = parseInt(queryParams.email) || 1;
+        const username = queryParams.username || 1;
+        const password = queryParams.password || 1;
+        const email = queryParams.email || 1;
         try {
             const service = new adminService();
             const updateService = await service.updateUsers(username,password,email)
