@@ -3,7 +3,7 @@ const config = require('../configuration/config.js')
 const AdminModel = require('../model/adminModel')
 const querystring = require("querystring");
 const homeModel = require("../../MainPages/model/home/homeFeederModel");
-const {Password} = require("../modules/password");
+const Password = require('../modules/password');
 class adminService {
     constructor() {
     }
@@ -98,14 +98,15 @@ class adminService {
         let hashPassword = '';
         if (password) {
             hashPassword = await Password.crypt(password)
-        }
+        } //aici trb parola initiala sa nu fie schimbata
         const adminModel = new AdminModel();
-        return await adminModel.updateUsers(username,hashPassword,email);
+        return await adminModel.updateUsers(username,hashPassword,email,lastusername);
     }
 
     async addUser(username,password,email)
     {
         let hashPassword = ''
+        console.log(password)
         if (password){
             hashPassword = await Password.crypt(password)
         }

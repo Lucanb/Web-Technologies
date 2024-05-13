@@ -196,9 +196,10 @@ class adminController {
         const username = queryParams.username || 1;
         const password = queryParams.password || 1;
         const email = queryParams.email || 1;
+        const lastusername = queryParams.lastusername || 1;
         try {
             const service = new adminService();
-            const addService = await service.addUser(username,password,email)
+            const addService = await service.addUser(username,password,email,lastusername)
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(addService))
         } catch (error) {

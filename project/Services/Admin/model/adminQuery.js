@@ -5,13 +5,9 @@ const adminSQL = {
     addAnnounces: `INSERT INTO announces(start_date, end_date, topic, title, author, picture, content) 
                     VALUES ($1,$2,$3,$4,$5,$6,$7)`,
     getUsers : `SELECT username,email FROM users`,
+    getUserID : `SELECT username,email,id FROM users WHERE username = $1`,
     deleteUsers: `DELETE FROM users WHERE username = $1`,
-    updateUser: `UPDATE announces 
-                        SET username = $1, 
-                            password = $2, 
-                            email = $3, 
-                        WHERE username = $4`,
-    addUser: `INSERT INTO announces(username, password, email)
-                    VALUES ($1,$2,$3)`
+    updateUser: `UPDATE users SET username = $1, password = $2, email = $3 WHERE id = $4`,
+    addUser: `INSERT INTO users(username, password, email) VALUES ($1,$2,$3)`
 }
 module.exports = adminSQL;

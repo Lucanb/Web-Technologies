@@ -92,18 +92,18 @@ class AdminModel {
         }
     }
 
-    async updateUsers(username,password,email){
+    async updateUsers(username,password,email,lastusername){
         const values = [username,password,email,username]
         try{
             if (verifPass(values)) {
-                const {rows} = await pool.query(adminSQL.getUsers, values);
+                const {rows} = await pool.query(adminSQL.getUserID,[lastusername]);
                 if (rows.length > 0) {
                     const dbRow = rows[0];
                     const values = [
                         username || dbRow.username,
                         password || dbRow.password,
                         email || dbRow.email,
-                        username || dbRow.username
+                        dbRow.id
                     ];
                     const result = await pool.query(adminSQL.updateUser, values);
                     return rows;
