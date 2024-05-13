@@ -160,9 +160,9 @@ class adminController {
         const title = parseInt(queryParams.title) || 1;
         try {
             const service = new adminService();
-            const getService = await service.deleteAnnounces(title)
+            const deleteService = await service.deleteAnnounces(title)
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(getService))
+            res.end(JSON.stringify(deleteService))
         } catch (error) {
             console.log(error);
             res.writeHead(500, {'Content-Type': 'application/json'});
@@ -181,9 +181,58 @@ class adminController {
         const content = parseInt(queryParams.content) || 1;
         try {
             const service = new adminService();
-            const getService = await service.updateAnnounces(title,start_date,end_date,topic,author,picture,content)
+            const updateService = await service.updateAnnounces(title,start_date,end_date,topic,author,picture,content)
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(getService))
+            res.end(JSON.stringify(updateService))
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
+
+    async addUser(req,res){
+        const queryParams = parse(req.url, true).query;
+        const username = parseInt(queryParams.username) || 1;
+        const password = parseInt(queryParams.password) || 1;
+        const email = parseInt(queryParams.email) || 1;
+        try {
+            const service = new adminService();
+            const addService = await service.addUser(username,password,email)
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(addService))
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
+
+    async deleteUser(req,res){
+        const queryParams = parse(req.url, true).query;
+        const username = parseInt(queryParams.username) || 1;
+        try {
+            const service = new adminService();
+            const deleteService = await service.deleteUsers(username)
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(deleteService))
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
+
+    async updateUser(req,res){
+        const queryParams = parse(req.url, true).query;
+        const username = parseInt(queryParams.username) || 1;
+        const password = parseInt(queryParams.password) || 1;
+        const email = parseInt(queryParams.email) || 1;
+        try {
+            const service = new adminService();
+            const updateService = await service.updateUsers(username,password,email)
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(updateService))
         } catch (error) {
             console.log(error);
             res.writeHead(500, {'Content-Type': 'application/json'});

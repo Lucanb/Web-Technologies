@@ -125,7 +125,7 @@ const internalRoutes = [
             }
         });
     }),
-    new Router("GET", "/getUsers", async (req, res) => {
+    new Router("GET", "/users", async (req, res) => {
         try {
             const controller = new adminController();
             return await controller.getUsers(req,res)
@@ -467,8 +467,37 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
+    }),
+    new Router("DELETE","/user",async (req,res)=>{
+        try {
+            const controller = new adminController();
+            return await controller.deleteUser(req,res)
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
+    new Router("PUT","/user",async (req,res)=>{
+        try {
+            const controller = new adminController();
+            return await controller.updateUser(req,res)
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
+    new Router("POST","/user",async (req,res)=>{
+        try {
+            const controller = new adminController();
+            return await controller.addUser(req,res)
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
     })
-
 ];
 
 

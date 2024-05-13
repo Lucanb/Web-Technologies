@@ -3,6 +3,7 @@ const config = require('../configuration/config.js')
 const AdminModel = require('../model/adminModel')
 const querystring = require("querystring");
 const homeModel = require("../../MainPages/model/home/homeFeederModel");
+const {Password} = require("../modules/password");
 class adminService {
     constructor() {
     }
@@ -86,6 +87,31 @@ class adminService {
         const limitedUsers = users.slice(offset, offset + limit);
 
         return limitedUsers;
+    }
+
+    async deleteUsers(username){
+        const offset = (page - 1) * limit;
+        const adminModel = new AdminModel();
+        return  await adminModel.deleteUsers(username)
+    }
+
+    async updateUsers(username,password,email){
+        let hashPassword = '';
+        if (password) {
+            hashPassword = await Password.crypt(password)
+        }
+        const adminModel = new AdminModel();
+        return await adminModel.updateUsers(username,hashPassword,email);
+    }
+
+    async addUser(username,password,email)
+    {
+        let hashPassword = ''
+        if (password){
+            hashPassword = await Password.crypt(password)
+        }
+        const adminModel = new AdminModel()
+        return await adminModel.addUsers(username,hashPassword,email)
     }
 }
 module.exports = adminService;

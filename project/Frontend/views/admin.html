@@ -170,7 +170,7 @@
     function fetchUsers() {
         const limit = 5;
 
-        fetch(`http://localhost:3002/getUsers?page=${currentPage}&limit=${limit}`)
+        fetch(`http://localhost:3002/users?page=${currentPage}&limit=${limit}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch users');
