@@ -60,6 +60,7 @@ class AdminModel {
 
     async deleteUsers(username){
         const values = [username]
+        console.log(username)
         try{
             if (verifPass(values)) {
                 const {rows} = await pool.query(adminSQL.deleteUsers, values);

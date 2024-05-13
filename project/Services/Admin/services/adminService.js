@@ -90,9 +90,8 @@ class adminService {
     }
 
     async deleteUsers(username){
-        const offset = (page - 1) * limit;
         const adminModel = new AdminModel();
-        return  await adminModel.deleteUsers(username)
+        return await adminModel.deleteUsers(username)
     }
 
     async updateUsers(username,password,email){
