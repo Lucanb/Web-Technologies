@@ -2,7 +2,6 @@ const Token = require("../../Authentication/modules/token");
 const config = require('../configuration/config.js')
 const AdminModel = require('../model/adminModel')
 const querystring = require("querystring");
-const homeModel = require("../../MainPages/model/home/homeFeederModel");
 const Password = require('../modules/password');
 class adminService {
     constructor() {
@@ -10,20 +9,20 @@ class adminService {
 
     async announces(page,limit) {
             const offset = (page - 1) * limit;
-            const announceModel = new homeModel();
+            const announceModel = new AdminModel();
             const rows = await announceModel.getAnnouncesNews()
             const limitedAnnounces = rows.slice(offset, offset + limit);
             return limitedAnnounces
     }
 
     async deleteAnnounces(title) {
-        const announceModel = new homeModel();
+        const announceModel = new AdminModel();
         const rows = await announceModel.DeleteAnnouncesNews(title)
         return rows
     }
 
     async updateAnnounces(title,start_date,end_date,topic,author,picture,content) {
-        const announceModel = new homeModel();
+        const announceModel = new AdminModel();
         const rows = await announceModel.updateAnnouncesNews(title,start_date,end_date,topic,author,picture,content)
         return rows
     }
@@ -113,5 +112,7 @@ class adminService {
         const adminModel = new AdminModel()
         return await adminModel.addUsers(username,hashPassword,email)
     }
+
+
 }
 module.exports = adminService;
