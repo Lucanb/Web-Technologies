@@ -1,7 +1,6 @@
 const { config, pool } = require("../configuration/configApplication");
 const adminSQL = require('./adminQuery')
 const {verifChar,verifPass} = require('../modules/verifChar')
-const homeQuerries = require("../../MainPages/model/home/homeFeederQuery");
 
 class AdminModel {
     constructor(username, password, email) {
@@ -126,7 +125,7 @@ class AdminModel {
         const values = [title]
         try {
             if (verifChar(values)) {
-                const {rows} = await pool.query(homeQuerries.deleteAnnounce, values);
+                const {rows} = await pool.query(adminSQL.deleteAnnounce, values);
                 return rows
             }else {
                 console.error('Eroare la verificarea email-ului', error);
@@ -142,7 +141,7 @@ class AdminModel {
         const values = []
         try {
             if (verifChar(values)) {
-                const {rows} = await pool.query(homeQuerries.getAnnounces, values);
+                const {rows} = await pool.query(adminSQL.getAnnounces, values);
                 return rows
             }else {
                 console.error('Eroare la verificarea email-ului', error);
@@ -169,7 +168,7 @@ class AdminModel {
                     content || dbRow.content,
                     title
                 ];
-                const result = await pool.query(homeQuerries.updateAnnouncesQuery, values);
+                const result = await pool.query(adminSQL.updateAnnouncesQuery, values);
                 return result.rows;
             } else {
                 console.error('Anuntul cu titlul specificat nu exista în baza de date.');

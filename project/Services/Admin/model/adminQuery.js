@@ -8,6 +8,18 @@ const adminSQL = {
     getUserID : `SELECT username,email,id FROM users WHERE username = $1`,
     deleteUsers: `DELETE FROM users WHERE username = $1`,
     updateUser: `UPDATE users SET username = $1, password = $2, email = $3 WHERE id = $4`,
-    addUser: `INSERT INTO users(username, password, email) VALUES ($1,$2,$3)`
+    addUser: `INSERT INTO users(username, password, email) VALUES ($1,$2,$3)`,
+    deleteAnnounce:`DELETE FROM announces WHERE title = $1`,
+    getAnnounces:`SELECT start_date, end_date, topic, title, author, picture, content
+                    FROM announces
+                    WHERE CURRENT_DATE BETWEEN start_date AND end_date;`,
+    updateAnnouncesQuery:`UPDATE announces 
+                        SET start_date = $2, 
+                            end_date = $3, 
+                            topic = $4, 
+                            author = $5, 
+                            picture = $6, 
+                            content = $7 
+                        WHERE title = $1`
 }
 module.exports = adminSQL;
