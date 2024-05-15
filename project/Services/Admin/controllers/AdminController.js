@@ -171,6 +171,28 @@ class adminController {
             res.end(JSON.stringify({success: false, message: 'Internal error'}));
         }
     }
+
+    async importcsv(req,res){
+        try {
+            const service = new adminService();
+            const updateService = await service.importcsv(req)
+            if (updateService === 'No CSV file was uploaded.')
+            {
+                res.writeHead(400, {'Content-Type': 'text/plain'});
+                res.end('No CSV file was uploaded.');
+            }else if(updateService === 'File path is undefined'){
+                res.writeHead(500, {'Content-Type': 'text/plain'});
+                res.end('File path is undefined');
+            }else {
+                res.writeHead(200, {'Content-Type': 'text/plain'});
+                res.end(JSON.stringify({message: 'File uploaded and processed'}));
+            }
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
 }
 
 module.exports = {adminController: adminController}

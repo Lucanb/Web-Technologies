@@ -3,6 +3,8 @@ const config = require('../configuration/config.js')
 const AdminModel = require('../model/adminModel')
 const querystring = require("querystring");
 const Password = require('../modules/password');
+const formidable = require('formidable');
+const fs = require('fs')
 class adminService {
     constructor() {
     }
@@ -108,5 +110,35 @@ class adminService {
     }
 
 
+    async importcsv(req)
+    {
+        const form = new formidable.IncomingForm();
+        form.parse(req, (err, fields, files) => {
+            if (err) {
+                console.error(err);
+                return 'An error occurred';
+            }
+
+            const csvFile = files.csvFile[0];
+
+            if (!csvFile) {
+                return 'No CSV file was uploaded.';
+            }
+
+            const filePath = csvFile.filepath;
+            if (!filePath) {
+                return 'File path is undefined';
+            }
+
+            fs.readFile(filePath, 'utf8', (err, data) => {
+                if (err) {
+                    console.error(err);
+                    return 'Failed to read file';
+                }
+                console.log(data)
+                return 'File uploaded and processed'
+            });
+        });
+    }
 }
 module.exports = adminService;

@@ -646,44 +646,45 @@ const internalRoutes = [
                         `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
                     );
                 }
-
-                const form = new formidable.IncomingForm();
-                form.parse(req, (err, fields, files) => {
-                    if (err) {
-                        console.error(err);
-                        res.writeHead(500, {'Content-Type': 'text/plain'});
-                        res.end('An error occurred');
-                        return;
-                    }
-
-                    console.log(files.csvFile);
-                    const csvFile = files.csvFile[0];
-
-                    if (!csvFile) {
-                        res.writeHead(400, {'Content-Type': 'text/plain'});
-                        res.end('No CSV file was uploaded.');
-                        return;
-                    }
-
-                    const filePath = csvFile.filepath;
-                    if (!filePath) {
-                        res.writeHead(500, {'Content-Type': 'text/plain'});
-                        res.end('File path is undefined');
-                        return;
-                    }
-
-                    fs.readFile(filePath, 'utf8', (err, data) => {
-                        if (err) {
-                            console.error(err);
-                            res.writeHead(500, {'Content-Type': 'text/plain'});
-                            res.end('Failed to read file');
-                            return;
-                        }
-
-                        res.writeHead(200, {'Content-Type': 'text/plain'});
-                        res.end(JSON.stringify({ message: 'File uploaded and processed' }));
-                    });
-                });
+                const controller = new adminController();
+                return await controller.importcsv(req,res);
+                // const form = new formidable.IncomingForm();
+                // form.parse(req, (err, fields, files) => {
+                //     if (err) {
+                //         console.error(err);
+                //         res.writeHead(500, {'Content-Type': 'text/plain'});
+                //         res.end('An error occurred');
+                //         return;
+                //     }
+                //
+                //     console.log(files.csvFile);
+                //     const csvFile = files.csvFile[0];
+                //
+                //     if (!csvFile) {
+                //         res.writeHead(400, {'Content-Type': 'text/plain'});
+                //         res.end('No CSV file was uploaded.');
+                //         return;
+                //     }
+                //
+                //     const filePath = csvFile.filepath;
+                //     if (!filePath) {
+                //         res.writeHead(500, {'Content-Type': 'text/plain'});
+                //         res.end('File path is undefined');
+                //         return;
+                //     }
+                //
+                //     fs.readFile(filePath, 'utf8', (err, data) => {
+                //         if (err) {
+                //             console.error(err);
+                //             res.writeHead(500, {'Content-Type': 'text/plain'});
+                //             res.end('Failed to read file');
+                //             return;
+                //         }
+                //
+                //         res.writeHead(200, {'Content-Type': 'text/plain'});
+                //         res.end(JSON.stringify({ message: 'File uploaded and processed' }));
+                //     });
+                // });
             }
 
         } catch (error) {
