@@ -52,14 +52,6 @@ class adminService {
             });
         });
 
-        console.log(data.start_date);
-        console.log(data.end_date);
-        console.log(data.topic);
-        console.log(data.title);
-        console.log(data.author);
-        console.log(data.picture);
-        console.log(data.content);
-
         const adminModel = new AdminModel();
         const results = await adminModel.addAnnounce(
             data.start_date,

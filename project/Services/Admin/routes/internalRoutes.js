@@ -6,7 +6,7 @@ const {adminController} = require("../../Admin/controllers/AdminController");
 const Parser = require('rss-parser');
 const { URL } = require('url');
 const RSS = require('rss');
-const {feedController} = require("../../MainPages/controllers/feedController");
+const getTokenStatus = require('../modules/protected')
 
 const internalRoutes = [
     new Router("GET", "/altaRuta", async (req, res) => {
@@ -53,76 +53,84 @@ const internalRoutes = [
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-            //     res.writeHead(401, {'Content-Type': 'text/html'});
-            //     return res.end('Authorization header missing or invalid');
-            // }
 
             const cookies = req.headers.cookie;
-            let accessToken = null;
-            let refreshToken = null;
-            if (cookies) {
-                const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-                    const parts = cookie.split('=');
-                    acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-                    return acc;
-                }, {});
-                accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-                refreshToken = cookieObj['refreshToken'];
-            }
-
-            // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-            // try {
-            //     const decoded = await JWToken.validate(token);
-            //     if (!decoded) {
-            //         res.writeHead(401, {'Content-Type': 'text/html'});
-            //         return res.end('Invalid token');
-            //     }
-            if (!accessToken) {
-                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                return res.end('Authorization cookie missing or invalid');
-            }
-
-            try {
-                const decoded = await JWToken.validate(accessToken);
-                if (!decoded) {
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
                     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                    return res.end('Invalid token');
-                } ///aici o sa fac si cu refresh
-
+                    res.end(tokenStatus.message);
+                }
+            }else{
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
-            } catch (error) {
-                try {
-                    const decoded = await JWToken.validate(refreshToken);
-                    console.log(decoded)
-                    if (!decoded) {
-                        res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                        return res.end();
-                    } else {
-                        const accessToken = await Token.generateKey({
-                            userId: decoded[0].userId,
-                            role: decoded[0].role,
-                            username: decoded[0].username,
-                            fresh: true,
-                            type: 'access'
-                        }, {
-                            expiresIn: '1h'
-                        })
-                        console.log( accessToken)
-                        res.setHeader('Set-Cookie',
-                            `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-                        );
-                        res.writeHead(200, {'Content-Type': 'text/html'});
-                        res.end(html);
-                    }
-                }catch (error)
-                {
-                    console.error('Error validating token:', error);
-                    res.writeHead(500, {'Content-Type': 'text/html'});
-                    res.end('Internal server error');
-                }
             }
+            // let accessToken = null;
+            // let refreshToken = null;
+            // if (cookies) {
+            //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+            //         const parts = cookie.split('=');
+            //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+            //         return acc;
+            //     }, {});
+            //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
+            //     refreshToken = cookieObj['refreshToken'];
+            // }
+
+            // if (!accessToken) {
+            //     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            //     return res.end('Authorization cookie missing or invalid');
+            // }
+            //
+            // try {
+            //     const decoded = await JWToken.validate(accessToken);
+            //     if (!decoded) {
+            //         res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            //         return res.end('Invalid token');
+            //     } ///aici o sa fac si cu refresh
+            //
+            //     res.writeHead(200, {'Content-Type': 'text/html'});
+            //     res.end(html);
+            // } catch (error) {
+            //     try {
+            //         const decoded = await JWToken.validate(refreshToken);
+            //         console.log(decoded)
+            //         if (!decoded) {
+            //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            //             return res.end();
+            //         } else {
+            //             const accessToken = await Token.generateKey({
+            //                 userId: decoded[0].userId,
+            //                 role: decoded[0].role,
+            //                 username: decoded[0].username,
+            //                 fresh: true,
+            //                 type: 'access'
+            //             }, {
+            //                 expiresIn: '1h'
+            //             })
+            //             console.log( accessToken)
+            //             res.setHeader('Set-Cookie',
+            //                 `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+            //             );
+            //             res.writeHead(200, {'Content-Type': 'text/html'});
+            //             res.end(html);
+            //         }
+            //     }catch (error)
+            //     {
+            //         console.error('Error validating token:', error);
+            //         res.writeHead(500, {'Content-Type': 'text/html'});
+            //         res.end('Internal server error');
+            //     }
+            // }
         });
     }),
     new Router("GET", "/users", async (req, res) => {
@@ -175,76 +183,91 @@ const internalRoutes = [
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-            //     res.writeHead(401, {'Content-Type': 'text/html'});
-            //     return res.end('Authorization header missing or invalid');
-            // }
 
             const cookies = req.headers.cookie;
-            let accessToken = null;
-            let refreshToken = null;
-            if (cookies) {
-                const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-                    const parts = cookie.split('=');
-                    acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-                    return acc;
-                }, {});
-                accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-                refreshToken = cookieObj['refreshToken'];
-            }
-
-            // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-            // try {
-            //     const decoded = await JWToken.validate(token);
-            //     if (!decoded) {
-            //         res.writeHead(401, {'Content-Type': 'text/html'});
-            //         return res.end('Invalid token');
-            //     }
-            if (!accessToken) {
-                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                return res.end('Authorization cookie missing or invalid');
-            }
-
-            try {
-                const decoded = await JWToken.validate(accessToken);
-                if (!decoded) {
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
                     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                    return res.end('Invalid token');
-                } ///aici o sa fac si cu refresh
-
+                    res.end(tokenStatus.message);
+                }
+            }else{
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
-            } catch (error) {
-                try {
-                    const decoded = await JWToken.validate(refreshToken);
-                    console.log(decoded)
-                    if (!decoded) {
-                        res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                        return res.end();
-                    } else {
-                        const accessToken = await Token.generateKey({
-                            userId: decoded[0].userId,
-                            role: decoded[0].role,
-                            username: decoded[0].username,
-                            fresh: true,
-                            type: 'access'
-                        }, {
-                            expiresIn: '1h'
-                        })
-                        console.log( accessToken)
-                        res.setHeader('Set-Cookie',
-                            `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-                        );
-                        res.writeHead(200, {'Content-Type': 'text/html'});
-                        res.end(html);
-                    }
-                }catch (error)
-                {
-                    console.error('Error validating token:', error);
-                    res.writeHead(500, {'Content-Type': 'text/html'});
-                    res.end('Internal server error');
-                }
             }
+            // let accessToken = null;
+            // let refreshToken = null;
+            // if (cookies) {
+            //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+            //         const parts = cookie.split('=');
+            //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+            //         return acc;
+            //     }, {});
+            //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
+            //     refreshToken = cookieObj['refreshToken'];
+            // }
+            //
+            // // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
+            // // try {
+            // //     const decoded = await JWToken.validate(token);
+            // //     if (!decoded) {
+            // //         res.writeHead(401, {'Content-Type': 'text/html'});
+            // //         return res.end('Invalid token');
+            // //     }
+            // if (!accessToken) {
+            //     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            //     return res.end('Authorization cookie missing or invalid');
+            // }
+            //
+            // try {
+            //     const decoded = await JWToken.validate(accessToken);
+            //     if (!decoded) {
+            //         res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            //         return res.end('Invalid token');
+            //     } ///aici o sa fac si cu refresh
+            //
+            //     res.writeHead(200, {'Content-Type': 'text/html'});
+            //     res.end(html);
+            // } catch (error) {
+            //     try {
+            //         const decoded = await JWToken.validate(refreshToken);
+            //         console.log(decoded)
+            //         if (!decoded) {
+            //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            //             return res.end();
+            //         } else {
+            //             const accessToken = await Token.generateKey({
+            //                 userId: decoded[0].userId,
+            //                 role: decoded[0].role,
+            //                 username: decoded[0].username,
+            //                 fresh: true,
+            //                 type: 'access'
+            //             }, {
+            //                 expiresIn: '1h'
+            //             })
+            //             console.log( accessToken)
+            //             res.setHeader('Set-Cookie',
+            //                 `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+            //             );
+            //             res.writeHead(200, {'Content-Type': 'text/html'});
+            //             res.end(html);
+            //         }
+            //     }catch (error)
+            //     {
+            //         console.error('Error validating token:', error);
+            //         res.writeHead(500, {'Content-Type': 'text/html'});
+            //         res.end('Internal server error');
+            //     }
+            // }
         });
     }),
     new Router("GET", "/get-news/:actor", async (req, res) => {
@@ -348,23 +371,38 @@ const internalRoutes = [
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-            //     res.writeHead(401, {'Content-Type': 'text/html'});
-            //     return res.end('Authorization header missing or invalid');
-            // }
 
             const cookies = req.headers.cookie;
-            let accessToken = null;
-            let refreshToken = null;
-            if (cookies) {
-                const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-                    const parts = cookie.split('=');
-                    acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-                    return acc;
-                }, {});
-                accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-                refreshToken = cookieObj['refreshToken'];
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else{
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.end(html);
             }
+            // let accessToken = null;
+            // let refreshToken = null;
+            // if (cookies) {
+            //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+            //         const parts = cookie.split('=');
+            //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+            //         return acc;
+            //     }, {});
+            //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
+            //     refreshToken = cookieObj['refreshToken'];
+            // }
 
             // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
             // try {
@@ -373,56 +411,56 @@ const internalRoutes = [
             //         res.writeHead(401, {'Content-Type': 'text/html'});
             //         return res.end('Invalid token');
             //     }
-            if (!accessToken) {
-                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                return res.end('Authorization cookie missing or invalid');
-            }
-
-            try {
-                const decoded = await JWToken.validate(accessToken);
-                if (!decoded) {
-                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                    return res.end('Invalid token');
-                } ///aici o sa fac si cu refresh
-                if (!decoded[0].role)
-                {
-                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                    return res.end('Invalid token');
-                }
-
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                res.end(html);
-            } catch (error) {
-                try {
-                    const decoded = await JWToken.validate(refreshToken);
-                    console.log(decoded)
-                    if (!decoded) {
-                        res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                        return res.end();
-                    } else {
-                        const accessToken = await Token.generateKey({
-                            userId: decoded[0].userId,
-                            role: decoded[0].role,
-                            username: decoded[0].username,
-                            fresh: true,
-                            type: 'access'
-                        }, {
-                            expiresIn: '1h'
-                        })
-                        console.log( accessToken)
-                        res.setHeader('Set-Cookie',
-                            `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-                        );
-                        res.writeHead(200, {'Content-Type': 'text/html'});
-                        res.end(html);
-                    }
-                }catch (error)
-                {
-                    console.error('Error validating token:', error);
-                    res.writeHead(500, {'Content-Type': 'text/html'});
-                    res.end('Internal server error');
-                }
-            }
+            // if (!accessToken) {
+            //     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            //     return res.end('Authorization cookie missing or invalid');
+            // }
+            //
+            // try {
+            //     const decoded = await JWToken.validate(accessToken);
+            //     if (!decoded) {
+            //         res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            //         return res.end('Invalid token');
+            //     } ///aici o sa fac si cu refresh
+            //     if (!decoded[0].role)
+            //     {
+            //         res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            //         return res.end('Invalid token');
+            //     }
+            //
+            //     res.writeHead(200, {'Content-Type': 'text/html'});
+            //     res.end(html);
+            // } catch (error) {
+            //     try {
+            //         const decoded = await JWToken.validate(refreshToken);
+            //         console.log(decoded)
+            //         if (!decoded) {
+            //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+            //             return res.end();
+            //         } else {
+            //             const accessToken = await Token.generateKey({
+            //                 userId: decoded[0].userId,
+            //                 role: decoded[0].role,
+            //                 username: decoded[0].username,
+            //                 fresh: true,
+            //                 type: 'access'
+            //             }, {
+            //                 expiresIn: '1h'
+            //             })
+            //             console.log( accessToken)
+            //             res.setHeader('Set-Cookie',
+            //                 `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+            //             );
+            //             res.writeHead(200, {'Content-Type': 'text/html'});
+            //             res.end(html);
+            //         }
+            //     }catch (error)
+            //     {
+            //         console.error('Error validating token:', error);
+            //         res.writeHead(500, {'Content-Type': 'text/html'});
+            //         res.end('Internal server error');
+            //     }
+            // }
         });
     }),
     new Router("GET", "/styles/admin.css", async (req, res) => {
