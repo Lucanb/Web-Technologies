@@ -13,13 +13,10 @@ const adminSQL = {
     getAnnounces:`SELECT start_date, end_date, topic, title, author, picture, content
                     FROM announces
                     WHERE CURRENT_DATE BETWEEN start_date AND end_date;`,
-    updateAnnouncesQuery:`UPDATE announces 
-                        SET start_date = $2, 
-                            end_date = $3, 
-                            topic = $4, 
-                            author = $5, 
-                            picture = $6, 
-                            content = $7 
-                        WHERE title = $1`
+    updateAnnouncesQuery:`UPDATE announces
+                          SET start_date = $1, end_date = $2, topic = $3, author = $4, 
+                          picture = $5, content = $6, title = $7
+                          WHERE title = $8
+                          RETURNING *;`
 }
 module.exports = adminSQL;

@@ -4,77 +4,6 @@ const {parse} = require("url");
 
 class adminController {
 
-    // async addFavorite(req, res) {
-    //     try {
-    //         const service = new favoritesService();
-    //         const getService = await service.add(req,res)
-    //         if (getService) {
-    //             res.writeHead(200, { 'Content-Type': 'application/json' });
-    //             res.write(JSON.stringify(getService))
-    //             res.end()
-    //         } else {
-    //             res.end()
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //         res.writeHead(500, {'Content-Type': 'application/json'});
-    //         res.end(JSON.stringify({success: false, message: 'Internal error'}));
-    //     }
-    // }
-    //
-    // async getAllFavorites(req, res) {
-    //     try {
-    //         const service = new favoritesService();
-    //         const getService = await service.getAllFavorites(req,res)
-    //         if (getService) {
-    //             res.writeHead(200, { 'Content-Type': 'application/json' });
-    //             // res.write(JSON.stringify(getService))
-    //             res.end()
-    //         } else {
-    //             res.end()
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //         res.writeHead(500, {'Content-Type': 'application/json'});
-    //         res.end(JSON.stringify({success: false, message: 'Internal error'}));
-    //     }
-    // }
-    //
-    // async getTopPicks(req, res) {
-    //     try {
-    //         const service = new favoritesService();
-    //         const getService = await service.getTopWeekPicks(req,res)
-    //         if (getService) {
-    //             res.writeHead(200, { 'Content-Type': 'application/json' });
-    //             res.write(JSON.stringify(getService))
-    //             res.end()
-    //         } else {
-    //             res.end()
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //         res.writeHead(500, {'Content-Type': 'application/json'});
-    //         res.end(JSON.stringify({success: false, message: 'Internal error'}));
-    //     }
-    // }
-    //
-    // async getTopFavorites(req, res) {
-    //     try {
-    //         const service = new favoritesService();
-    //         const getService = await service.getTopFavorites(req,res)
-    //         if (getService) {
-    //             res.writeHead(200, { 'Content-Type': 'application/json' });
-    //             res.write(JSON.stringify(getService))
-    //             res.end()
-    //         } else {
-    //             res.end()
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //         res.writeHead(500, {'Content-Type': 'application/json'});
-    //         res.end(JSON.stringify({success: false, message: 'Internal error'}));
-    //     }
-    // }
 
     async logout(req,res){
         const message = req.headers['logout-message'];
@@ -158,6 +87,7 @@ class adminController {
     async deleteFeedAnnounces(req, res) {
         const queryParams = parse(req.url, true).query;
         const title = queryParams.title || 1;
+        console.log(title)
         try {
             const service = new adminService();
             const deleteService = await service.deleteAnnounces(title)
@@ -172,16 +102,18 @@ class adminController {
 
     async UpdateFeedAnnounces(req, res) {
         const queryParams = parse(req.url, true).query;
-        const title = queryParams.title || 1;
-        const start_date = queryParams.start_date || 1;
-        const end_date = queryParams.end_date || 1;
-        const topic = queryParams.topic || 1;
-        const author = queryParams.author || 1;
-        const picture = queryParams.picture || 1;
-        const content = queryParams.content || 1;
+        const lasttitle = queryParams.lasttitle || '';
+        const title = queryParams.title || '';
+        const start_date = queryParams.start_date || '';
+        const end_date = queryParams.end_date || '';
+        const topic = queryParams.topic || '';
+        const author = queryParams.author || '';
+        const picture = queryParams.picture || '';
+        const content = queryParams.content || '';
+        console.log(title,start_date,end_date,topic,author,picture,content,lasttitle)
         try {
             const service = new adminService();
-            const updateService = await service.updateAnnounces(title,start_date,end_date,topic,author,picture,content)
+            const updateService = await service.updateAnnounces(lasttitle,title,start_date,end_date,topic,author,picture,content)
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(updateService))
         } catch (error) {
@@ -196,10 +128,9 @@ class adminController {
         const username = queryParams.username || 1;
         const password = queryParams.password || 1;
         const email = queryParams.email || 1;
-        const lastusername = queryParams.lastusername || 1;
         try {
             const service = new adminService();
-            const addService = await service.addUser(username,password,email,lastusername)
+            const addService = await service.addUser(username,password,email)
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(addService))
         } catch (error) {
@@ -229,9 +160,10 @@ class adminController {
         const username = queryParams.username || 1;
         const password = queryParams.password || 1;
         const email = queryParams.email || 1;
+        const lastusername = queryParams.lastusername || 1;
         try {
             const service = new adminService();
-            const updateService = await service.updateUsers(username,password,email)
+            const updateService = await service.updateUsers(username,password,email,lastusername)
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(updateService))
         } catch (error) {

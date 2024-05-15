@@ -13,9 +13,9 @@
         <input type="text" placeholder="Search">
     </div>
     <button id="seeUsersBtn" class="tabs">See Users</button>
-    <button class="tabs">Add user</button>
+    <button class="tabs" onclick="showAddUserForm()">Add user</button>
     <button class="tabs" onclick="showAddAnnounceForm()">Add Announce</button>
-    <button id ="seeAnnouncesBtn" class="tabs">See Announces</button>
+    <button id="seeAnnouncesBtn" class="tabs">See Announces</button>
     <button onclick="handleLogout()" class="tabs">Log Out</button>
 </div>
 
@@ -23,6 +23,16 @@
     <h2 class="title">Admin Panel</h2>
     <div class="admin-container">
 </div>
+</div>
+
+<div class="form-addUser">
+    <form id="userForm" style="display:none;" onsubmit="submitUser(event)">
+        <h2>Add New User</h2>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Submit User</button>
+    </form>
 </div>
 
 <div class="form-addAnnounce">
@@ -59,11 +69,12 @@
 <script>
     let currentPage = 1;
     let currentPage2 = 1;
+
     document.getElementById('seeUsersBtn').addEventListener('click', function() {
-        currentPage = 1; // Resetăm pagina la prima pagină când se apasă butonul "See Users"
+        currentPage = 1;
         fetchUsers();
         document.querySelector('.paginationAnnounces').style.display = 'none';
-        document.querySelector('.paginationUsers').style.display = 'block'; // Afișăm paginarea
+        document.querySelector('.paginationUsers').style.display = 'block';
     });
 
     document.getElementById('prevPageBtn').addEventListener('click', function() {
@@ -94,12 +105,12 @@
         currentPage2 = 1;
         fetchAnnouncements();
         document.querySelector('.paginationUsers').style.display = 'none';
-        document.querySelector('.paginationAnnounces').style.display = 'block'; // Afișăm paginarea
+        document.querySelector('.paginationAnnounces').style.display = 'block';
     });
 
     function fetchAnnouncements() {
         const limit = 5;
-        fetch(`http://localhost:3002/announces?page=${currentPage}&limit=${limit}`)
+        fetch(`http://localhost:3002/announces?page=${currentPage2}&limit=${limit}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch announcements');
@@ -108,7 +119,6 @@
             })
             .then(announcements => {
                 const adminColumn = document.querySelector('.admin-container');
-
                 adminColumn.innerHTML = '';
 
                 const announcementList = document.createElement('div');
@@ -139,7 +149,7 @@
                     announcementItem.appendChild(author);
 
                     const picture = document.createElement('p');
-                    picture.textContent = `Picture: ${announcement.picture}`
+                    picture.textContent = `Picture: ${announcement.picture}`;
                     announcementItem.appendChild(picture);
 
                     const content = document.createElement('p');
@@ -151,10 +161,16 @@
 
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'Delete';
+                    deleteBtn.addEventListener('click', function() {
+                        deleteAnnouncement(announcement.title);
+                    });
                     actions.appendChild(deleteBtn);
 
                     const updateBtn = document.createElement('button');
                     updateBtn.textContent = 'Update';
+                    updateBtn.addEventListener('click', function() {
+                        updateAnnouncement(announcement.title);
+                    });
                     actions.appendChild(updateBtn);
                     announcementItem.appendChild(actions);
                     announcementList.appendChild(announcementItem);
@@ -204,10 +220,16 @@
 
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'Delete';
+                    deleteBtn.addEventListener('click', function() {
+                        deleteUser(user.username);
+                    });
                     actions.appendChild(deleteBtn);
 
                     const updateBtn = document.createElement('button');
                     updateBtn.textContent = 'Update';
+                    updateBtn.addEventListener('click', function() {
+                        updateUser(user.username);
+                    });
                     actions.appendChild(updateBtn);
 
                     userItem.appendChild(userInfo);
@@ -224,32 +246,122 @@
             });
     }
 
+    function showAddUserForm() {
+        document.getElementById('userForm').style.display = 'block';
+        document.getElementById('announceForm').style.display = 'none';
+    }
 
     function showAddAnnounceForm() {
         document.getElementById('announceForm').style.display = 'block';
+        document.getElementById('userForm').style.display = 'none';
+    }
+
+    function handleLogout() {
+        fetch('http://localhost:3002/logout')
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'http://localhost:3002/login';
+                } else {
+                    alert('Logout failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during logout: ' + error.message);
+            });
+    }
+
+    function submitUser(event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        const url = `http://localhost:3002/user?username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+
+        fetch(url, {
+            method: 'POST',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to submit user');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('User added successfully');
+                document.getElementById('userForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the user: ' + error.message);
+            });
+    }
+
+    function deleteUser(username) {
+        const url = `http://localhost:3002/user?username=${encodeURIComponent(username)}`;
+
+        fetch(url, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete user');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('User deleted successfully');
+                fetchUsers();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the user: ' + error.message);
+            });
+    }
+
+    function updateUser(lastusername) {
+        const username = prompt('Enter new username:');
+        const email = prompt('Enter new email:');
+        const password = prompt('Enter new password:');
+
+        const url = `http://localhost:3002/user?lastusername=${encodeURIComponent(lastusername)}&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+
+        fetch(url, {
+            method: 'PUT',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update user');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('User updated successfully');
+                fetchUsers();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the user: ' + error.message);
+            });
     }
 
     function submitAnnounce(event) {
         event.preventDefault();
-        const formData = {
-            start_date: document.getElementById('startdate').value,
-            end_date: document.getElementById('enddate').value,
-            topic: document.getElementById('topic').value,
-            title: document.getElementById('title').value,
-            author: document.getElementById('author').value,
-            picture: document.getElementById('picture').value,
-            content: document.getElementById('content').value
-        };
 
-        // Log the formData to the console to ensure all values are captured
-        console.log('Form Data:', formData);
+        const start_date = document.getElementById('startdate').value;
+        const end_date = document.getElementById('enddate').value;
+        const topic = document.getElementById('topic').value;
+        const title = document.getElementById('title').value;
+        const author = document.getElementById('author').value;
+        const picture = document.getElementById('picture').value;
+        const content = document.getElementById('content').value;
 
-        fetch('http://localhost:3002/addAnnounce', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: JSON.stringify(formData)
+        const url = `http://localhost:3002/addAnnounce?start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}&topic=${encodeURIComponent(topic)}&title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}&picture=${encodeURIComponent(picture)}&content=${encodeURIComponent(content)}`;
+
+        fetch(url, {
+            method: 'GET',
         })
             .then(response => {
                 if (!response.ok) {
@@ -258,33 +370,65 @@
                 return response.json();
             })
             .then(data => {
-                alert('Announcement added successfully!');
+                alert('Announcement added successfully');
                 document.getElementById('announceForm').reset();
-                document.getElementById('announceForm').style.display = 'none';
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred: ' + error.message);
+                alert('An error occurred while submitting the announcement: ' + error.message);
             });
     }
 
-    function handleLogout() {
-        fetch('http://localhost:3002/logout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'logout-message': 'LogOut'
-            }
+    function deleteAnnouncement(announcementtitle) {
+        const url = `http://localhost:3002/announces?title=${encodeURIComponent(announcementtitle)}`;
+
+        fetch(url, {
+            method: 'DELETE',
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Failed to log out');
+                    throw new Error('Failed to delete announcement');
                 }
-                window.location.href = 'http://localhost:3000/login';
+                return response.json();
+            })
+            .then(data => {
+                alert('Announcement deleted successfully');
+                fetchAnnouncements();
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred during logout: ' + error.message);
+                alert('An error occurred while deleting the announcement: ' + error.message);
+            });
+    }
+
+    function updateAnnouncement(announcementtitle) {
+        const start_date = prompt('Enter new start date (YYYY-MM-DD):');
+        const end_date = prompt('Enter new end date (YYYY-MM-DD):');
+        const topic = prompt('Enter new topic:');
+        const title = prompt('Enter new title:');
+        const author = prompt('Enter new author:');
+        const picture = prompt('Enter new picture URL:');
+        const content = prompt('Enter new content:');
+        const lasttitle = announcementtitle
+
+        const url = `http://localhost:3002/announces?title=${title}&lasttitle=${encodeURIComponent(lasttitle)}&start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}&topic=${encodeURIComponent(topic)}&title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}&picture=${encodeURIComponent(picture)}&content=${encodeURIComponent(content)}`;
+
+        fetch(url, {
+            method: 'PUT',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update announcement');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Announcement updated successfully');
+                fetchAnnouncements();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the announcement: ' + error.message);
             });
     }
 </script>

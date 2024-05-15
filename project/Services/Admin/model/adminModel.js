@@ -93,10 +93,10 @@ class AdminModel {
     }
 
     async updateUsers(username,password,email,lastusername){
-        const values = [username,password,email,username]
+        const values = [lastusername]
         try{
             if (verifPass(values)) {
-                const {rows} = await pool.query(adminSQL.getUserID,[lastusername]);
+                const {rows} = await pool.query(adminSQL.getUserID,values);
                 if (rows.length > 0) {
                     const dbRow = rows[0];
                     const values = [
@@ -153,21 +153,26 @@ class AdminModel {
         }
     }
 
-    async updateAnnouncesNews(title, start_date, end_date, topic, author, picture, content) {
+    async updateAnnouncesNews(lasttitle,title, start_date, end_date, topic, author, picture, content) {
         try {
-            const { rows } = await pool.query("SELECT * FROM announces WHERE title = $1 LIMIT 1", [title]);
-
+            const { rows } = await pool.query("SELECT * FROM announces WHERE title = $1 LIMIT 1", [lasttitle]);
+            console.log(JSON.stringify(rows))
             if (rows.length > 0) {
                 const dbRow = rows[0];
+                const startDateValue = start_date ? new Date(start_date) : dbRow.start_date;
+                const endDateValue = end_date ? new Date(end_date) : dbRow.end_date;
+
                 const values = [
-                    start_date || dbRow.start_date,
-                    end_date || dbRow.end_date,
+                    startDateValue,
+                    endDateValue,
                     topic || dbRow.topic,
                     author || dbRow.author,
                     picture || dbRow.picture,
                     content || dbRow.content,
-                    title
+                    title || dbRow.title,
+                    lasttitle
                 ];
+
                 const result = await pool.query(adminSQL.updateAnnouncesQuery, values);
                 return result.rows;
             } else {

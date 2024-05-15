@@ -93,7 +93,7 @@ class adminService {
         return await adminModel.deleteUsers(username)
     }
 
-    async updateUsers(username,password,email){
+    async updateUsers(username,password,email,lastusername){
         let hashPassword = '';
         if (password) {
             hashPassword = await Password.crypt(password)
@@ -105,7 +105,9 @@ class adminService {
     async addUser(username,password,email)
     {
         let hashPassword = ''
+        console.log(username)
         console.log(password)
+        console.log(email)
         if (password){
             hashPassword = await Password.crypt(password)
         }
