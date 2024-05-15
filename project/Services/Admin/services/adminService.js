@@ -21,9 +21,9 @@ class adminService {
         return rows
     }
 
-    async updateAnnounces(title,start_date,end_date,topic,author,picture,content) {
+    async updateAnnounces(lasttitle,title,start_date,end_date,topic,author,picture,content) {
         const announceModel = new AdminModel();
-        const rows = await announceModel.updateAnnouncesNews(title,start_date,end_date,topic,author,picture,content)
+        const rows = await announceModel.updateAnnouncesNews(lasttitle,title,start_date,end_date,topic,author,picture,content)
         return rows
     }
 
