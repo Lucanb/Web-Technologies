@@ -179,4 +179,26 @@ body {
   background-color: #ccac00;
 }
 
+.csv-import-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #fff;
+  width: 100%;
+  margin-top: 60px;
+}
+.csv-import-section button {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.csv-import-section button:hover {
+  background-color: #ffd700;
+}
+
 /*# sourceMappingURL=admin.css.map */

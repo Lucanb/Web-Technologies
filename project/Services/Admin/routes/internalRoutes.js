@@ -5,6 +5,7 @@ const Token = require("../../Authentication/modules/token");
 const {adminController} = require("../../Admin/controllers/AdminController");
 const Parser = require('rss-parser');
 const { URL } = require('url');
+const formidable = require('formidable');
 const RSS = require('rss');
 const getTokenStatus = require('../modules/protected')
 
@@ -618,6 +619,71 @@ const internalRoutes = [
                 }
                 const controller = new adminController();
                 return await controller.addUser(req, res)
+            }
+
+        } catch (error) {
+            console.error(error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
+    new Router("POST","/import-csv",async (req,res)=>{
+        try {
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+
+                const form = new formidable.IncomingForm();
+                form.parse(req, (err, fields, files) => {
+                    if (err) {
+                        console.error(err);
+                        res.writeHead(500, {'Content-Type': 'text/plain'});
+                        res.end('An error occurred');
+                        return;
+                    }
+
+                    console.log(files.csvFile);
+                    const csvFile = files.csvFile[0];
+
+                    if (!csvFile) {
+                        res.writeHead(400, {'Content-Type': 'text/plain'});
+                        res.end('No CSV file was uploaded.');
+                        return;
+                    }
+
+                    const filePath = csvFile.filepath;
+                    if (!filePath) {
+                        res.writeHead(500, {'Content-Type': 'text/plain'});
+                        res.end('File path is undefined');
+                        return;
+                    }
+
+                    fs.readFile(filePath, 'utf8', (err, data) => {
+                        if (err) {
+                            console.error(err);
+                            res.writeHead(500, {'Content-Type': 'text/plain'});
+                            res.end('Failed to read file');
+                            return;
+                        }
+
+                        res.writeHead(200, {'Content-Type': 'text/plain'});
+                        res.end(JSON.stringify({ message: 'File uploaded and processed' }));
+                    });
+                });
             }
 
         } catch (error) {

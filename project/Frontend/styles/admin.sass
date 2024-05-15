@@ -160,3 +160,23 @@ body
 
 .actions
   @include action-buttons
+
+.csv-import-section
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  padding: 20px
+  background-color: $secondary-color
+  width: 100%
+  margin-top: $bar-height // Așează secțiunea chiar sub bara de tab-uri
+
+  button
+    padding: 10px 20px
+    background-color: $primary-color
+    color: $secondary-color
+    border: none
+    cursor: pointer
+    transition: background-color 0.3s ease
+    &:hover
+      background-color: $button-bg-hover
