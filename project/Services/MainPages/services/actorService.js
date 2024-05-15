@@ -208,7 +208,7 @@ class actorService {
                         reject(error);
                     }
                 });
-            })
+            });
             const id = data.id;
             const decoded = await JWToken.validate(id);
             const actor_id = decoded[0].movieID;
@@ -222,7 +222,7 @@ class actorService {
 
             const responseJSON = await response.json();
             const genreIds = [...new Set(responseJSON.cast.flatMap(item => item.genre_ids))];
-            const genreMap = new Map();
+            const genreMap = {};
 
             for (const genreId of genreIds) {
                 const urlGenre = `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${apiKey}`;
@@ -236,16 +236,12 @@ class actorService {
                 const genreObject = responseGenreJSON.genres.find(genre => genre.id === genreId);
                 const genreName = genreObject ? genreObject.name : "Unknown Genre";
 
-                genreMap.set(genreName, responseJSON.cast.filter(item =>
+                genreMap[genreName] = responseJSON.cast.filter(item =>
                     item.genre_ids.includes(genreId)).map(item =>
-                    item.original_title));
+                    item.original_title);
             }
 
-            const jsonGenreMap = Object.fromEntries(genreMap);
-            const jsonString = JSON.stringify(jsonGenreMap);
-
-            return jsonString
-
+            return genreMap;
         } catch (error) {
             console.error('Eroare interna la obținerea informațiilor despre actor:', error);
             res.end(error)
