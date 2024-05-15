@@ -110,7 +110,6 @@ class adminController {
         const author = queryParams.author || '';
         const picture = queryParams.picture || '';
         const content = queryParams.content || '';
-        console.log(title,start_date,end_date,topic,author,picture,content,lasttitle)
         try {
             const service = new adminService();
             const updateService = await service.updateAnnounces(lasttitle,title,start_date,end_date,topic,author,picture,content)

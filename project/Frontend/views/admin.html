@@ -411,7 +411,7 @@
         const content = prompt('Enter new content:');
         const lasttitle = announcementtitle
 
-        const url = `http://localhost:3002/announces?title=${title}&lasttitle=${encodeURIComponent(lasttitle)}&start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}&topic=${encodeURIComponent(topic)}&title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}&picture=${encodeURIComponent(picture)}&content=${encodeURIComponent(content)}`;
+        const url = `http://localhost:3002/announces?lasttitle=${encodeURIComponent(lasttitle)}&start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}&topic=${encodeURIComponent(topic)}&title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}&picture=${encodeURIComponent(picture)}&content=${encodeURIComponent(content)}`;
 
         fetch(url, {
             method: 'PUT',
