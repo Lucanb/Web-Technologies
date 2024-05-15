@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACVIS</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div style="width: 50%; margin: auto; padding-top: 50px;">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script>
+    const path = window.location.pathname;
+    var lastIndex = path.lastIndexOf("/");
+    var id = path.substring(lastIndex + 1);
+    console.log(id);
+    let formData = new URLSearchParams();
+    formData.append('id', id);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('http://localhost:3001/statisticGenre/:', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const ctx = document.getElementById('myChart').getContext('2d');
+
+                const labels = Object.keys(data);
+                const values = Object.values(data);
+
+                // Funcția pentru generarea unei palete de culori unice
+                function generateRandomColors(numColors) {
+                    const colors = [];
+                    for (let i = 0; i < numColors; i++) {
+                        const r = Math.floor(Math.random() * 256);
+                        const g = Math.floor(Math.random() * 256);
+                        const b = Math.floor(Math.random() * 256);
+                        colors.push(`rgba(${r}, ${g}, ${b}, 0.2)`);
+                    }
+                    return colors;
+                }
+
+                const numGenres = labels.length; // Numărul total de genuri disponibile
+                const backgroundColors = generateRandomColors(numGenres);
+
+                const config = {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Genre Distribution',
+                            data: values,
+                            backgroundColor: backgroundColors,
+                            borderColor: backgroundColors.map(color => color.replace('0.2', '1')),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Genre Distribution Chart'
+                            }
+                        },
+                    },
+                };
+
+                new Chart(ctx, config);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+    });
+
+</script>
+</body>
+</html>
