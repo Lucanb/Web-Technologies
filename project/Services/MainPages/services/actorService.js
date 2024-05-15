@@ -244,13 +244,7 @@ class actorService {
             const jsonGenreMap = Object.fromEntries(genreMap);
             const jsonString = JSON.stringify(jsonGenreMap);
 
-            if (response.status !== 200) {
-                throw new Error('Nu am putut obține informațiile despre actor.');
-            }
-
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write(jsonString);
-            res.end();
+            return jsonString
 
         } catch (error) {
             console.error('Eroare interna la obținerea informațiilor despre actor:', error);
