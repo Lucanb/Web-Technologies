@@ -136,15 +136,55 @@ const internalRoutes = [
                 return res.end('404 Not Found');
             }
 
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end(html);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else{
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.end(html);
+            }
+            // res.writeHead(200, {'Content-Type': 'text/html'});
+            // res.end(html);
 
         });
     }),
     new Router("GET", '/getnotifications', async (req, res) => {
         try {
-            const controller = new feedController();
-            const feedDone = await controller.getnotifications(req,res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else{
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                const feedDone = await controller.getnotifications(req,res);
+            }
+            // const controller = new feedController();
+            // const feedDone = await controller.getnotifications(req,res);
 
         } catch (error) {
             console.error("Error forgot password user", error);
@@ -154,8 +194,29 @@ const internalRoutes = [
     }),
     new Router("GET", '/announces', async (req, res) => {
         try {
-            const controller = new feedController();
-            const feedDone = await controller.feedAnnounces(req,res);
+
+            // const controller = new feedController();
+            // const feedDone = await controller.feedAnnounces(req,res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else{
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                const feedDone = await controller.feedAnnounces(req,res);
+            }
 
         } catch (error) {
             console.error("Error forgot password user", error);
@@ -165,9 +226,30 @@ const internalRoutes = [
     }),
     new Router("POST","/send-actor-id",async (req,res)=>{
         try {
-            const controller = new feedController();
-            const sendId = await controller.sendId(req,res);
-            return sendId;
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else{
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                const sendId = await controller.sendId(req,res);
+                return sendId;
+            }
+            // const controller = new feedController();
+            // const sendId = await controller.sendId(req,res);
+            // return sendId;
 
         } catch (error) {
             console.error("Error forgot password user", error);
@@ -178,10 +260,30 @@ const internalRoutes = [
 
     new Router("POST","/actor-profile-info",async (req,res)=>{
         try {
-            const controller = new feedController();
-            const sendId = await controller.sendIdInformations(req,res);
-            return sendId;
-
+            // const controller = new feedController();
+            // const sendId = await controller.sendIdInformations(req,res);
+            // return sendId;
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                const sendId = await controller.sendIdInformations(req,res);
+                return sendId;
+            }
         } catch (error) {
             console.error("Error forgot password user", error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -191,9 +293,28 @@ const internalRoutes = [
 
     new Router("GET", '/toppicks', async (req, res) => {
         try {
-            const controller = new feedController();
-            const feedDone = await controller.feedTopPicks(req,res);
-
+            // const controller = new feedController();
+            // const feedDone = await controller.feedTopPicks(req,res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                const feedDone = await controller.feedTopPicks(req,res);
+            }
         } catch (error) {
             console.error("Error forgot password user", error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -202,9 +323,28 @@ const internalRoutes = [
     }),
     new Router("GET", '/todayActors', async (req, res) => {
         try {
-            const controller = new feedController();
-            const feedDone = await controller.feedTodayActors(req,res);
-
+            // const controller = new feedController();
+            // const feedDone = await controller.feedTodayActors(req,res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                const feedDone = await controller.feedTodayActors(req,res);
+            }
         } catch (error) {
             console.error("Error forgot password user", error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -213,9 +353,26 @@ const internalRoutes = [
     }),
     new Router("GET", '/commingSoon', async (req, res) => {
         try {
-            const controller = new feedController();
-            const feedDone = await controller.feedCommingSoon(req,res);
-
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                const feedDone = await controller.feedCommingSoon(req, res);
+            }
         } catch (error) {
             console.error("Error forgot password user", error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -706,8 +863,26 @@ const internalRoutes = [
 
     new Router("POST","/add-favorites",async (req,res)=>{
         try {
-            const controller = new favoritesController();
-            return await controller.addFavorite(req, res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new favoritesController();
+                return await controller.addFavorite(req, res);
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -717,8 +892,26 @@ const internalRoutes = [
 
     new Router("GET","/all-favorites",async (req,res)=>{
         try {
-            const controller = new favoritesController();
-            return await controller.getAllFavorites(req, res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new favoritesController();
+                return await controller.getAllFavorites(req, res);
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -727,8 +920,26 @@ const internalRoutes = [
     }),
     new Router("GET","/topPicksWeek",async (req,res)=>{
         try {
-            const controller = new favoritesController();
-            return await controller.getTopPicks(req, res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new favoritesController();
+                return await controller.getTopPicks(req, res);
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -738,8 +949,26 @@ const internalRoutes = [
 
     new Router("GET","/topFavorites",async (req,res)=>{
         try {
-            const controller = new favoritesController();
-            return await controller.getTopFavorites(req, res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new favoritesController();
+                return await controller.getTopFavorites(req, res);
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -748,9 +977,26 @@ const internalRoutes = [
     }),
     new Router("GET","/exploreActors",async (req,res)=>{
         try {
-
-            const controller = new feedController();
-            return await controller.exploreActorsTypes(req, res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                return await controller.exploreActorsTypes(req, res);
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -759,9 +1005,26 @@ const internalRoutes = [
     }),
     new Router("DELETE","/delete-actor",async (req,res)=>{
         try {
-
-            const controller = new favoritesController();
-            return await controller.deleteFavorites(req, res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new favoritesController();
+                return await controller.deleteFavorites(req, res);
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -770,9 +1033,26 @@ const internalRoutes = [
     }),
     new Router("POST","/logout",async (req,res)=>{
         try {
-
-            const controller = new feedController();
-            return await controller.logout(req, res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                return await controller.logout(req, res);
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -781,9 +1061,26 @@ const internalRoutes = [
     }),
     new Router("POST", "/search", async(req,res) =>{
         try {
-
-            const controller = new feedController();
-            return await controller.searchBar(req, res);
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                return await controller.searchBar(req, res);
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});

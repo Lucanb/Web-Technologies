@@ -487,9 +487,26 @@ const internalRoutes = [
     }),
     new Router("POST","/logout",async (req,res)=>{
         try {
-
-            const controller = new adminController();
-            return await controller.logout(req,res)
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new adminController();
+                return await controller.logout(req, res)
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -498,8 +515,26 @@ const internalRoutes = [
     }),
     new Router("GET","/nominatedActors",async (req,res)=>{
         try {
-            const controller = new adminController();
-            return await controller.nominated(req,res)
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new adminController();
+                return await controller.nominated(req, res)
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -508,8 +543,26 @@ const internalRoutes = [
     }),
     new Router("DELETE","/user",async (req,res)=>{
         try {
-            const controller = new adminController();
-            return await controller.deleteUser(req,res)
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new adminController();
+                return await controller.deleteUser(req, res)
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -518,8 +571,26 @@ const internalRoutes = [
     }),
     new Router("PUT","/user",async (req,res)=>{
         try {
-            const controller = new adminController();
-            return await controller.updateUser(req,res)
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new adminController();
+                return await controller.updateUser(req, res)
+            }
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -528,8 +599,27 @@ const internalRoutes = [
     }),
     new Router("POST","/user",async (req,res)=>{
         try {
-            const controller = new adminController();
-            return await controller.addUser(req,res)
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new adminController();
+                return await controller.addUser(req, res)
+            }
+
         } catch (error) {
             console.error(error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
