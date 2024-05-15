@@ -17,6 +17,7 @@ const adminSQL = {
                           SET start_date = $1, end_date = $2, topic = $3, author = $4, 
                           picture = $5, content = $6, title = $7
                           WHERE title = $8
-                          RETURNING *;`
+                          RETURNING *;`,
+    insertCsv:`INSERT INTO guildawards (year, category, full_name, show, won) VALUES ($1, $2, $3, $4, $5)`
 }
 module.exports = adminSQL;

@@ -130,12 +130,14 @@ class adminService {
                 return 'File path is undefined';
             }
 
-            fs.readFile(filePath, 'utf8', (err, data) => {
+            fs.readFile(filePath, 'utf8', async (err, data) => {
                 if (err) {
                     console.error(err);
                     return 'Failed to read file';
                 }
                 console.log(data)
+                const adminModel = new AdminModel()
+                await adminModel.importCsv(data)
                 return 'File uploaded and processed'
             });
         });

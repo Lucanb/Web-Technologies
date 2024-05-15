@@ -1,6 +1,8 @@
 const { config, pool } = require("../configuration/configApplication");
 const adminSQL = require('./adminQuery')
 const {verifChar,verifPass} = require('../modules/verifChar')
+const { parse } = require('csv-parse/sync');
+
 
 class AdminModel {
     constructor(username, password, email) {
@@ -185,5 +187,45 @@ class AdminModel {
         }
     }
 
+    async importCsv(csvData) {
+        try {
+            const records = parse(csvData, {
+                columns: false,
+                skip_empty_lines: true,
+                trim: true,
+                relax_column_count: true
+            });
+
+            await pool.query('BEGIN');
+
+            for (const item of records) {
+                if (!Array.isArray(item) || item.length < 5) {
+                    console.error('Invalid item format:', item);
+                    continue;
+                }
+
+                console.log('Processing:', item);
+                const [year, category, fullName, show, won] = item.map(field =>
+                    field.trim() === '' ? null : field.trim()
+                );
+
+                const wonBoolean = (won !== null) ? (won.toLowerCase() === 'true') : null;
+                const values = [year, category, fullName, show, wonBoolean]
+
+                await pool.query(
+                    adminSQL.insertCsv,
+                    values
+                );
+            }
+
+            await pool.query('COMMIT');
+            console.log('CSV data has been successfully uploaded and inserted into the database.');
+            return 'CSV data has been successfully uploaded and inserted into the database.';
+        } catch (error) {
+            await pool.query('ROLLBACK');
+            console.error('Failed to insert CSV data:', error);
+            throw error;
+        }
+    }
 }
 module.exports = AdminModel;
