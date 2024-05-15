@@ -39,7 +39,6 @@
                 const labels = Object.keys(data);
                 const values = Object.values(data);
 
-                // Funcția pentru generarea unei palete de culori unice
                 function generateRandomColors(numColors) {
                     const colors = [];
                     for (let i = 0; i < numColors; i++) {
@@ -51,7 +50,7 @@
                     return colors;
                 }
 
-                const numGenres = labels.length; // Numărul total de genuri disponibile
+                const numGenres = labels.length;
                 const backgroundColors = generateRandomColors(numGenres);
 
                 const config = {

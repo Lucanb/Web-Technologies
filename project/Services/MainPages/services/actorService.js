@@ -211,9 +211,7 @@ class actorService {
             })
             const id = data.id;
             const decoded = await JWToken.validate(id);
-            console.log(decoded)
             const actor_id = decoded[0].movieID;
-            console.log(actor_id)
             const apiKey = config.api_key;
             const url = `https://api.themoviedb.org/3/person/${actor_id}/combined_credits?language=en-US&api_key=${apiKey}`;
             const response = await fetch(url);
@@ -246,16 +244,12 @@ class actorService {
             const jsonGenreMap = Object.fromEntries(genreMap);
             const jsonString = JSON.stringify(jsonGenreMap);
 
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write(jsonString);
-            res.end();
-
             if (response.status !== 200) {
                 throw new Error('Nu am putut obține informațiile despre actor.');
             }
 
             res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write(responseJSON);
+            res.write(jsonString);
             res.end();
 
         } catch (error) {
