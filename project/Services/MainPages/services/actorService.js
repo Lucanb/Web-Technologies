@@ -193,6 +193,76 @@ class actorService {
             res.end(error)
         }
     }
+
+    async statisticGenre(req,res){
+        try {
+            let body= '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            const data = await new Promise(async (resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            })
+            const id = data.id;
+            const decoded = await JWToken.validate(id);
+            console.log(decoded)
+            const actor_id = decoded[0].movieID;
+            console.log(actor_id)
+            const apiKey = config.api_key;
+            const url = `https://api.themoviedb.org/3/person/${actor_id}/combined_credits?language=en-US&api_key=${apiKey}`;
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error('Error');
+            }
+
+            const responseJSON = await response.json();
+            const genreIds = [...new Set(responseJSON.cast.flatMap(item => item.genre_ids))];
+            const genreMap = new Map();
+
+            for (const genreId of genreIds) {
+                const urlGenre = `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${apiKey}`;
+                const responseGenre = await fetch(urlGenre);
+
+                if (!responseGenre.ok) {
+                    throw new Error('Error');
+                }
+
+                const responseGenreJSON = await responseGenre.json();
+                const genreObject = responseGenreJSON.genres.find(genre => genre.id === genreId);
+                const genreName = genreObject ? genreObject.name : "Unknown Genre";
+
+                genreMap.set(genreName, responseJSON.cast.filter(item =>
+                    item.genre_ids.includes(genreId)).map(item =>
+                    item.original_title));
+            }
+
+            const jsonGenreMap = Object.fromEntries(genreMap);
+            const jsonString = JSON.stringify(jsonGenreMap);
+
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(jsonString);
+            res.end();
+
+            if (response.status !== 200) {
+                throw new Error('Nu am putut obține informațiile despre actor.');
+            }
+
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(responseJSON);
+            res.end();
+
+        } catch (error) {
+            console.error('Eroare interna la obținerea informațiilor despre actor:', error);
+            res.end(error)
+        }
+    }
 }
 
 module.exports = actorService;

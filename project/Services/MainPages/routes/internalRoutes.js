@@ -115,6 +115,81 @@ const internalRoutes = [
             // }
         });
     }),
+    new Router("GET", "/diagrams/:", async (req, res, next) => {
+
+        fs.readFile("Frontend/views/diagrams.html", 'utf-8', async (err, html) => {
+            if (err) {
+                console.error('Error reading file:', err);
+                res.writeHead(404, {'Content-Type': 'text/html'});
+                return res.end('404 Not Found');
+            }
+            // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
+            //     res.writeHead(401, {'Content-Type': 'text/html'});
+            //     return res.end('Authorization header missing or invalid');
+            // }
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else{
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.end(html);
+            }
+            // const cookies = req.headers.cookie;
+            // let accessToken = null;
+            // let refreshToken = null;
+            // if (cookies) {
+            //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+            //         const parts = cookie.split('=');
+            //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+            //         return acc;
+            //     }, {});
+            //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
+            //     refreshToken = cookieObj['refreshToken'];
+            // }
+
+            // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
+            // try {
+            //     const decoded = await JWToken.validate(token);
+            //     if (!decoded) {
+            //         res.writeHead(401, {'Content-Type': 'text/html'});
+            //         return res.end('Invalid token');
+            //     }
+
+            /*
+            if (!accessToken) {
+                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                return res.end('Authorization cookie missing or invalid');
+            }
+
+            try {
+                const decoded = await JWToken.validate(accessToken);
+                if (!decoded) {
+                    res.writeHead(401, {'Content-Type': 'text/html'});
+                    return res.end('Invalid token');
+                } ///aici o sa fac si cu refresh
+            */
+            // res.writeHead(200, {'Content-Type': 'text/html'});
+            // res.end(html);
+            // } catch (error) {
+            //     console.error('Error validating token:', error);
+            //     res.writeHead(500, {'Content-Type': 'text/html'});
+            //     res.end('Internal server error');
+            // }
+        });
+    }),
     new Router("GET", '/actvis', async (req, res) => {
         fs.readFile("Frontend/views/home_unauthenticated.html", 'utf-8', async (err, html) => {
             if (err) {
@@ -918,6 +993,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
+
     new Router("GET","/topPicksWeek",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
@@ -1086,7 +1162,38 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    })
+    }),
+    new Router("POST","/statisticGenre/:",async (req,res)=>{
+        try {
+            // const controller = new feedController();
+            // const sendId = await controller.sendIdInformations(req,res);
+            // return sendId;
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                return await controller.statisticGenre(req, res);
+            }
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
 ];
 
 
