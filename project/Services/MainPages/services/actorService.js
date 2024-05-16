@@ -9,6 +9,7 @@ const homeModel = require("../model/home/homeFeederModel")
 const JWToken = require("../modules/token");
 const {rows} = require("pg/lib/defaults");
 const actorModel = require('../model/actor/actorModel')
+const {get} = require("http");
 
 class actorService {
     constructor() {
@@ -240,8 +241,70 @@ class actorService {
                     item.genre_ids.includes(genreId)).map(item =>
                     item.original_title);
             }
-
+            console.log(genreMap)
             return genreMap;
+        } catch (error) {
+            console.error('Eroare interna la obținerea informațiilor despre actor:', error);
+            res.end(error)
+        }
+    }
+
+    async statisticAwards(req,res){
+        try {
+            let body= '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            const data = await new Promise(async (resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            });
+            const id = data.id;
+            const decoded = await JWToken.validate(id);
+            const actor_id = decoded[0].movieID;
+            const apiKey = config.api_key;
+            const url = `https://api.themoviedb.org/3/person/${actor_id}?language=en-US&api_key=${apiKey}`;
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error('Error');
+            }
+
+            const responseJSON = await response.json();
+            const full_name = responseJSON.name;
+            const actor = new actorModel();
+            const awards = await actor.searchAwardsByName(full_name);
+            const awardsByYear = new Map();
+
+            console.log(awards)
+
+            awards.forEach(award => {
+                const year = award.year.substring(0, 4);
+                if (!awardsByYear.has(year)) {
+                    awardsByYear.set(year, {
+                        won: 0,
+                        shows: []
+                    });
+                }
+
+                if (award.won){
+                    const current = awardsByYear.get(year);
+                    current.won++;
+                    current.shows.push(award.show);
+                    awardsByYear.set(year,current);
+                }
+            });
+
+            const awardsYearObject = Object.assign({}, ...Array.from(awardsByYear.entries())
+                .map(([key, value]) => ({ [key]: value })));
+            console.log(awardsYearObject);
+            return awardsYearObject
+
         } catch (error) {
             console.error('Eroare interna la obținerea informațiilor despre actor:', error);
             res.end(error)
