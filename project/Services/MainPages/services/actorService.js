@@ -35,32 +35,6 @@ class actorService {
                    return id;
                 }
                 else return null;
-            /*
-                const apiKey = config.api_key;
-                const apiUrl = `https://api.themoviedb.org/3/person/${id}?language=en-US&api_key=${apiKey}`;
-                const response = await axios.get(apiUrl);
-
-                if (response.status !== 200) {
-                    throw new Error('Nu am putut obține informațiile despre actor.');
-                }
-                if (response.data.name != null) {
-                    const apiKey = config.api_key;
-                    const apiUrl = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1&query=${response.data.name}&api_key=${apiKey}`;
-                    const new_response = await axios.get(apiUrl);
-
-                    if (new_response.status !== 200) {
-                        throw new Error('Nu am putut obține informațiile despre actor.');
-                    }
-                    res.writeHead(200, {'Content-Type': 'application/json'});
-                const json = {
-                        success: true,
-                        data: new_response.data
-                    }
-                    res.write(JSON.stringify(json))
-                    res.end()
-                } else {
-                    console.error('Eroare interna la ruta - ales nasol');
-                }*/
         } catch (error) {
             console.error('Eroare interna la obținerea informațiilor despre actor:', error);
         }
@@ -85,8 +59,6 @@ class actorService {
             const decoded = await JWToken.validate(id);
             const actor_id = decoded[0].movieID;
             const apiKey = config.api_key;
-                // const apiUrl = `https://api.themoviedb.org/3/person/${actor_id}?language=en-US&api_key=${apiKey}`;
-                // const response = await fetch(apiUrl);
             const apiUrl = `https://api.themoviedb.org/3/person/${actor_id}?language=en-US&api_key=${apiKey}`;
             const response = await fetch(apiUrl);
             const responseJSON = await response.json()
@@ -97,23 +69,14 @@ class actorService {
             if (responseJSON.name != null) {
                 const apiKey = config.api_key;
                 const apiUrl = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1&query=${responseJSON.name}&api_key=${apiKey}`;
-                // const initialResponse = await axios.get(apiUrl);
                 const initialResponse = await fetch(apiUrl);
                 const initialResponseJSON = await initialResponse.json()
                 if (initialResponse.status !== 200) {
                     throw new Error('Nu am putut obține informațiile despre actor.');
                 }
-
-                // const totalPages = initialResponse.data.total_pages;
-                // const results = initialResponse.data.results;
-
                 const totalPages = initialResponseJSON.total_pages;
                 const results = initialResponseJSON.results;
-
-                // Stocăm toate rezultatele într-un array
                 let allResults = [...results];
-
-                // Parcurgem restul paginilor și adăugăm rezultatele în array-ul nostru
                 for (let page = 2; page <= totalPages; page++) {
                     const nextPageUrl = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=${page}&query=${responseJSON.name}&api_key=${apiKey}`;
                     const nextPageResponse = await fetch(nextPageUrl);
@@ -281,8 +244,6 @@ class actorService {
             const awards = await actor.searchAwardsByName(full_name);
             const awardsByYear = new Map();
 
-            console.log(awards)
-
             awards.forEach(award => {
                 const year = award.year.substring(0, 4);
                 if (!awardsByYear.has(year)) {
@@ -292,9 +253,13 @@ class actorService {
                     });
                 }
 
+                const current = awardsByYear.get(year);
                 if (award.won){
-                    const current = awardsByYear.get(year);
                     current.won++;
+                    current.shows.push(award.show);
+                    awardsByYear.set(year,current);
+                }
+                else{
                     current.shows.push(award.show);
                     awardsByYear.set(year,current);
                 }
@@ -302,7 +267,6 @@ class actorService {
 
             const awardsYearObject = Object.assign({}, ...Array.from(awardsByYear.entries())
                 .map(([key, value]) => ({ [key]: value })));
-            console.log(awardsYearObject);
             return awardsYearObject
 
         } catch (error) {

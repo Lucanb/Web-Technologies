@@ -25,17 +25,12 @@ class actorModel {
     async searchAwardsByName(full_name) {
         const values = [full_name];
         try {
-            if (verifChar(values)) {
-                const { rows } = await pool.query(actorQuerries.searchAwardsByName, values);
-                return rows.map(row => ({
-                    year: row.year,
-                    won: row.won,
-                    show: row.show
-                }));
-            } else {
-                console.error(error);
-                throw error;
-            }
+            const { rows } = await pool.query(actorQuerries.searchAwardsByName, values);
+            return rows.map(row => ({
+                year: row.year,
+                won: row.won,
+                show: row.show
+            }));
         } catch (error) {
             console.error(error);
             throw error;

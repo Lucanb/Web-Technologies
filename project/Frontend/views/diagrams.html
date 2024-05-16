@@ -68,7 +68,6 @@
     const path = window.location.pathname;
     var lastIndex = path.lastIndexOf("/");
     var id = path.substring(lastIndex + 1);
-    console.log(id);
     let formData = new URLSearchParams();
     formData.append('id', id);
 
@@ -87,55 +86,54 @@
                 return response.json();
             })
             .then(data => {
-                    const backgroundColors = [];
-                    const canvasId = `genreChart`;
-                    const ctx = document.getElementById(canvasId).getContext('2d');
-                    const labels = [];
-                    const values = [];
+                const canvasId = `genreChart`;
+                const ctx = document.getElementById(canvasId).getContext('2d');
+                const labels = [];
+                const values = [];
+                const backgroundColors = [];
 
-                    function generateRandomColor() {
-                        const r = Math.floor(Math.random() * 256);
-                        const g = Math.floor(Math.random() * 256);
-                        const b = Math.floor(Math.random() * 256);
-                        return `rgba(${r}, ${g}, ${b}, 0.2)`;
+                function generateRandomColor() {
+                    const r = Math.floor(Math.random() * 256);
+                    const g = Math.floor(Math.random() * 256);
+                    const b = Math.floor(Math.random() * 256);
+                    return `rgba(${r}, ${g}, ${b}, 0.2)`;
+                }
+
+                for (const genre in data) {
+                    if (data.hasOwnProperty(genre)) {
+                        const genreName = genre.split(':')[0];
+                        labels.push(genreName);
+                        values.push(data[genre].length);
+                        backgroundColors.push(generateRandomColor());
                     }
+                }
 
-                    for (const genre in data) {
-                        if (data.hasOwnProperty(genre)) {
-                            const genreName = genre.split(':')[0];
-                            labels.push(genreName);
-                            values.push(data[genre].length);
-                        }
-                    }
-
-                    backgroundColors.push(Array.from({ length: labels.length }, () => generateRandomColor()));
-
-                    const config = {
-                        type: 'pie',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: 'Genre Distribution',
-                                data: values,
-                                backgroundColor: backgroundColors,
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top',
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Genre Distribution Chart'
-                                }
+                const config = {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Genre Distribution',
+                            data: values,
+                            backgroundColor: backgroundColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
                             },
+                            title: {
+                                display: true,
+                                text: 'Genre Distribution Chart'
+                            }
                         },
-                    };
+                    },
+                };
 
-                    new Chart(ctx, config);
+                new Chart(ctx, config);
             })
             .catch(error => {
                 console.error('Error:', error);
