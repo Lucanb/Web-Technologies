@@ -69,7 +69,7 @@
     var lastIndex = path.lastIndexOf("/");
     var id = path.substring(lastIndex + 1);
     let formData = new URLSearchParams();
-    formData.append('id', id);
+    formData.append('id', id)
 
     document.addEventListener('DOMContentLoaded', function() {
         fetch('http://localhost:3001/statisticGenre/:', {
