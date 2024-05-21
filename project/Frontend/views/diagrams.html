@@ -39,16 +39,13 @@
 </div>
 
 <div class="chart-container">
-    <canvas id="myChart0"></canvas>
+    <canvas id="genreChart"></canvas>
 </div>
 
-<div class="chart-container">
-    <canvas id="myChart1"></canvas>
+<div class="chart-container" style="margin-top: 10%;">
+    <canvas id="awardChart"></canvas>
 </div>
 
-<div class="chart-container">
-    <canvas id="myChart2"></canvas>
-</div>
 
 <div class="low-bar">
     <div class="follow-bar">
@@ -71,9 +68,8 @@
     const path = window.location.pathname;
     var lastIndex = path.lastIndexOf("/");
     var id = path.substring(lastIndex + 1);
-    console.log(id);
     let formData = new URLSearchParams();
-    formData.append('id', id);
+    formData.append('id', id)
 
     document.addEventListener('DOMContentLoaded', function() {
         fetch('http://localhost:3001/statisticGenre/:', {
@@ -90,58 +86,120 @@
                 return response.json();
             })
             .then(data => {
+                const canvasId = `genreChart`;
+                const ctx = document.getElementById(canvasId).getContext('2d');
+                const labels = [];
+                const values = [];
                 const backgroundColors = [];
 
-                for (let i = 0; i < 3; i++) {
-                    const canvasId = `myChart${i}`;
-                    const ctx = document.getElementById(canvasId).getContext('2d');
-                    const labels = [];
-                    const values = [];
+                function generateRandomColor() {
+                    const r = Math.floor(Math.random() * 256);
+                    const g = Math.floor(Math.random() * 256);
+                    const b = Math.floor(Math.random() * 256);
+                    return `rgba(${r}, ${g}, ${b}, 0.2)`;
+                }
 
-                    function generateRandomColor() {
-                        const r = Math.floor(Math.random() * 256);
-                        const g = Math.floor(Math.random() * 256);
-                        const b = Math.floor(Math.random() * 256);
-                        return `rgba(${r}, ${g}, ${b}, 0.2)`;
+                for (const genre in data) {
+                    if (data.hasOwnProperty(genre)) {
+                        const genreName = genre.split(':')[0];
+                        labels.push(genreName);
+                        values.push(data[genre].length);
+                        backgroundColors.push(generateRandomColor());
                     }
+                }
 
-                    for (const genre in data) {
-                        if (data.hasOwnProperty(genre)) {
-                            const genreName = genre.split(':')[0];
-                            labels.push(genreName);
-                            values.push(data[genre].length);
+                const config = {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Genre Distribution',
+                            data: values,
+                            backgroundColor: backgroundColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Genre Distribution Chart'
+                            }
+                        },
+                    },
+                };
+
+                new Chart(ctx, config);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+
+        fetch('http://localhost:3001/statisticAwards/:', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const years = Object.keys(data);
+                const wonData = [];
+                const showsData = [];
+
+                years.forEach(year => {
+                    wonData.push(data[year].won);
+                    showsData.push(data[year].shows.length);
+                });
+
+                const ctx = document.getElementById('awardChart').getContext('2d');
+
+                const config = {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: 'Awards Won',
+                            data: wonData,
+                            borderColor: 'blue',
+                            backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                            fill: true,
+                            tension: 0.4
+                        }, {
+                            label: 'Number of Shows',
+                            data: showsData,
+                            borderColor: 'green',
+                            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Awards and Shows Over the Years'
+                            }
                         }
                     }
+                };
 
-                    backgroundColors.push(Array.from({ length: labels.length }, () => generateRandomColor()));
-
-                    const config = {
-                        type: 'pie',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: 'Genre Distribution',
-                                data: values,
-                                backgroundColor: backgroundColors[i],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top',
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Genre Distribution Chart'
-                                }
-                            },
-                        },
-                    };
-
-                    new Chart(ctx, config);
-                }
+                new Chart(ctx, config);
             })
             .catch(error => {
                 console.error('Error:', error);

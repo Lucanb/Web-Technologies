@@ -1163,11 +1163,36 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
+    new Router("POST","/statisticAwards/:",async (req,res)=>{
+        try {
+            const cookies = req.headers.cookie;
+            const tokenStatus = await getTokenStatus(cookies)
+            if (!tokenStatus.valid){
+                if(tokenStatus.message === 'Internal server error')
+                {
+                    res.writeHead(500, {'Content-Type': 'text/html'});
+                    res.end(tokenStatus.message)
+                }else{
+                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.end(tokenStatus.message);
+                }
+            }else {
+                if (tokenStatus.newAccessToken) {
+                    res.setHeader('Set-Cookie',
+                        `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    );
+                }
+                const controller = new feedController();
+                return await controller.statisticAwards(req, res);
+            }
+        } catch (error) {
+            console.error("Error forgot password user", error);
+            res.writeHead(500, {'Content-Type': 'text/plain'});
+            res.end("Internal Error");
+        }
+    }),
     new Router("POST","/statisticGenre/:",async (req,res)=>{
         try {
-            // const controller = new feedController();
-            // const sendId = await controller.sendIdInformations(req,res);
-            // return sendId;
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
             if (!tokenStatus.valid){
@@ -1193,7 +1218,7 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    })
 ];
 
 
