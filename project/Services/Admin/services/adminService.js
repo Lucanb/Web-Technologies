@@ -38,39 +38,55 @@ class adminService {
         res.end()
     }
 
-    async addAnnounce(req,res){
+    async addAnnounce(req, res) {
         let body = '';
         req.on('data', chunk => {
             body += chunk.toString(); // convert Buffer to string
         });
-        const data = await new Promise((resolve, reject) => {
-            req.on('end', () => {
-                try {
-                    // Parse the string body as JSON
-                    resolve(JSON.parse(body));
-                } catch (error) {
-                    reject(error);
+
+        req.on('end', async () => {
+            try {
+                // Check if the body is empty before attempting to parse it
+                if (!body) {
+                    throw new Error('Request body is empty');
                 }
-            });
+
+                // Parse the string body as JSON
+                const data = JSON.parse(body);
+
+                // Validate the required fields
+                const requiredFields = ['start_date', 'end_date', 'topic', 'title', 'author', 'picture', 'content'];
+                for (let field of requiredFields) {
+                    if (!data.hasOwnProperty(field)) {
+                        throw new Error(`Missing required field: ${field}`);
+                    }
+                }
+
+                const adminModel = new AdminModel();
+                const results = await adminModel.addAnnounce(
+                    data.start_date,
+                    data.end_date,
+                    data.topic,
+                    data.title,
+                    data.author,
+                    data.picture,
+                    data.content
+                );
+
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: true, results }));
+            } catch (error) {
+                console.error('Error in addAnnounce:', error);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: error.message }));
+            }
         });
 
-        const adminModel = new AdminModel();
-        const results = await adminModel.addAnnounce(
-            data.start_date,
-            data.end_date,
-            data.topic,
-            data.title,
-            data.author,
-            data.picture,
-            data.content
-        );
-
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({success: true, results}));
-    } catch (error) {
-        console.error('Error in addAnnounce:', error);
-        res.writeHead(500, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({success: false, error: error.message}));
+        req.on('error', error => {
+            console.error('Error receiving data:', error);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: error.message }));
+        });
     }
 
     async getUsers(page, limit){

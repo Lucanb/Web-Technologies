@@ -366,10 +366,24 @@
         const picture = document.getElementById('picture').value;
         const content = document.getElementById('content').value;
 
-        const url = `http://luca-app:5000/luca-app/admin/addAnnounce?start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}&topic=${encodeURIComponent(topic)}&title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}&picture=${encodeURIComponent(picture)}&content=${encodeURIComponent(content)}`;
+        const url = `http://luca-app:5000/luca-app/admin/addAnnounce`;
+
+        const data = {
+            start_date,
+            end_date,
+            topic,
+            title,
+            author,
+            picture,
+            content
+        };
 
         fetch(url, {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         })
             .then(response => {
                 if (!response.ok) {
