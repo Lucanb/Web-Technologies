@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACVIS</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="../styles/home.css">
+    <link rel="stylesheet" href="/luca-app/main/styles/home.css">
     <style>
         canvas {
             max-width: 100%;
@@ -31,10 +31,10 @@
         <input type="text" placeholder="Search">
         <div class="autocomplete-options-container result"></div>
     </div>
-    <button onclick="location.href='/notifications';" class="tabs">Notifications</button>
-    <button onclick="location.href='/favorites';" class="tabs">Favorites</button>
+    <button onclick="location.href='/luca-app/main/notifications';" class="tabs">Notifications</button>
+    <button onclick="location.href='/luca-app/main/favorites';" class="tabs">Favorites</button>
     <button onclick="handleLogout()" class="tabs">Log Out</button>
-    <button onclick="location.href='http://localhost:3002/news';" class="tabs">See News</button>
+    <button onclick="location.href='http://luca-app:5000/luca-app/admin/news';" class="tabs">See News</button>
     <!--        location.href='http://localhost:3000/login-->
 </div>
 
@@ -57,9 +57,9 @@
         </div>
     </div>
     <div class = "references">
-        <label onclick="location.href='/about';" class="references-element">About</label>
-        <label onclick="location.href='/help';" class="references-element">Help</label>
-        <label onclick="location.href='/index';" class="references-element">Site Index</label>
+        <label onclick="location.href='/luca-app/main/about';" class="references-element">About</label>
+        <label onclick="location.href='/luca-app/main/help';" class="references-element">Help</label>
+        <label onclick="location.href='/luca-app/main/index';" class="references-element">Site Index</label>
     </div>
 </div>
 <div class="result"></div>
@@ -72,7 +72,7 @@
     formData.append('id', id)
 
     document.addEventListener('DOMContentLoaded', function() {
-        fetch('http://localhost:3001/statisticGenre/:', {
+        fetch('http://luca-app:5000/luca-app/mai/statisticGenre/:', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -140,7 +140,7 @@
                 alert('Error: ' + error.message);
             });
 
-        fetch('http://localhost:3001/statisticAwards/:', {
+        fetch('http://luca-app:5000/luca-app/main/statisticAwards/:', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
