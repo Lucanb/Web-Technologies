@@ -38,29 +38,7 @@ class adminService {
         res.end()
     }
 
-    async addAnnounce(req, res) {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString(); // convert Buffer to string
-        });
-
-        req.on('end', async () => {
-            try {
-                // Check if the body is empty before attempting to parse it
-                if (!body) {
-                    throw new Error('Request body is empty');
-                }
-
-                // Parse the string body as JSON
-                const data = JSON.parse(body);
-
-                // Validate the required fields
-                const requiredFields = ['start_date', 'end_date', 'topic', 'title', 'author', 'picture', 'content'];
-                for (let field of requiredFields) {
-                    if (!data.hasOwnProperty(field)) {
-                        throw new Error(`Missing required field: ${field}`);
-                    }
-                }
+    async addAnnounce(data) {
 
                 const adminModel = new AdminModel();
                 const results = await adminModel.addAnnounce(
@@ -72,21 +50,7 @@ class adminService {
                     data.picture,
                     data.content
                 );
-
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ success: true, results }));
-            } catch (error) {
-                console.error('Error in addAnnounce:', error);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ success: false, error: error.message }));
-            }
-        });
-
-        req.on('error', error => {
-            console.error('Error receiving data:', error);
-            res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: false, error: error.message }));
-        });
+                return results
     }
 
     async getUsers(page, limit){
@@ -126,15 +90,8 @@ class adminService {
     }
 
 
-    async importcsv(req)
+    async importcsv(err, fields, files)
     {
-        const form = new formidable.IncomingForm();
-        form.parse(req, (err, fields, files) => {
-            if (err) {
-                console.error(err);
-                return 'An error occurred';
-            }
-
             const csvFile = files.csvFile[0];
 
             if (!csvFile) {
@@ -156,7 +113,6 @@ class adminService {
                 await adminModel.importCsv(data)
                 return 'File uploaded and processed'
             });
-        });
     }
 }
 module.exports = adminService;
