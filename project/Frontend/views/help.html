@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACVIS</title>
-    <link rel="stylesheet" href="../styles/help.css">
+    <link rel="stylesheet" href="/luca-app/main/styles/help.css">
 </head>
 <body>
 <div class="tab">
-    <button onclick="location.href='/home';" class="tabs">Home</button>
+    <button onclick="location.href='/luca-app/main/home';" class="tabs">Home</button>
     <div class="search-bar">
         <input type="text" placeholder="Search">
     </div>
-    <button onclick="location.href='http://localhost:3000/login';" class="tabs">Sign In</button>
+    <button onclick="location.href='/luca-app/main/login';" class="tabs">Sign In</button>
 </div>
 
 <div class="main-content">
     <div class="main-content">
         <h1>Welcome to Help Menu</h1>
-        <form id="helpForm" action="/help" method="POST">
+        <form id="helpForm" action="/luca-app/main/help" method="POST">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             <label for="content">Descriere Problema:</label>
@@ -30,8 +30,8 @@
 
 <div class="low-bar">
     <div class="references">
-        <label onclick="location.href='/about';" class="references-element">About</label>
-        <label onclick="location.href='/index';" class="references-element">Site Index</label>
+        <label onclick="location.href='/luca-app/main/about';" class="references-element">About</label>
+        <label onclick="location.href='/luca-app/main/index';" class="references-element">Site Index</label>
     </div>
 </div>
 <script>
@@ -43,7 +43,7 @@
             content: document.getElementById('content').value
         };
 
-        fetch('http://localhost:3001/help', {
+        fetch('http://luca-app:5000/luca-app/main/help', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

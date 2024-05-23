@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACVIS</title>
-    <link rel="stylesheet" href="../styles/actor-profile.css">
+    <link rel="stylesheet" href="/luca-app/main/styles/actor-profile.css">
 </head>
 <body>
 <div class="tab">
-    <button onclick="location.href='/home';" class="tabs">Home</button>
+    <button onclick="location.href='/luca-app/main/home';" class="tabs">Home</button>
     <div class="search-bar">
         <input type="text" placeholder="Search">
     </div>
     <button onclick="openForm()" class="tabs">News</button>
-    <button onclick="location.href='/favorites';" class="tabs">Favorites</button>
+    <button onclick="location.href='/luca-app/main/favorites';" class="tabs">Favorites</button>
     <button class="tabs" id="add" >Add to Favourites</button>
     <button onclick="handleLogout()" class="tabs">Log Out</button>
 </div>
@@ -87,9 +87,9 @@
 </div>
 <div class="low-bar">
     <div class="references">
-        <label onclick="location.href='/about';" class="references-element">About</label>
-        <label onclick="location.href='/help';" class="references-element">Help</label>
-        <label onclick="location.href='/index';" class="references-element">Site Index</label>
+        <label onclick="location.href='/luca-app/main/about';" class="references-element">About</label>
+        <label onclick="location.href='/luca-app/main/help';" class="references-element">Help</label>
+        <label onclick="location.href='/luca-app/main/index';" class="references-element">Site Index</label>
     </div>
 </div>
 </div>
@@ -145,7 +145,7 @@
     }
 
     function handleLogout() {
-        fetch('http://localhost:3001/logout', {
+        fetch('http://luca-app:5000/luca-app/main/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -156,7 +156,7 @@
                 if (!response.ok) {
                     throw new Error('Failed to log out');
                 }
-                window.location.href = 'http://localhost:3000/login';
+                window.location.href = 'http://luca-app:5000/luca-app/auth/login';
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -175,7 +175,7 @@
     const addToFavoritesBtn = document.getElementById('add');
     addToFavoritesBtn.addEventListener('click', async () => {
         try {
-            const response = await fetch('http://localhost:3001/add-favorites', {
+            const response = await fetch('http://luca-app:5000/luca-app/main/add-favorites', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -191,7 +191,7 @@
         }
     });
 
-    fetch('http://localhost:3001/actor-profile-info', {
+    fetch('http://luca-app:5000/luca-app/main/actor-profile-info', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

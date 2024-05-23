@@ -10,7 +10,7 @@ const RSS = require('rss');
 const getTokenStatus = require('../modules/protected')
 
 const internalRoutes = [
-    new Router("GET", "/altaRuta", async (req, res) => {
+    new Router("GET", "/luca-app/admin/altaRuta", async (req, res) => {
         fs.readFile("Frontend/index.html", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -21,7 +21,7 @@ const internalRoutes = [
             res.end();
         });
     }),
-    new Router("GET", "/news/RSS", async (req, res) => {
+    new Router("GET", "/luca-app/admin/news/RSS", async (req, res) => {
         fs.readFile("Frontend/views/newsrss.html", (err, data) => {
             if (err) {
                 console.log(err)
@@ -34,7 +34,7 @@ const internalRoutes = [
         });
     })
     ,
-    new Router("POST", "/addAnnounce", async (req, res) => {
+    new Router("POST", "/luca-app/admin/addAnnounce", async (req, res) => {
         try {
 
             const controller = new adminController();
@@ -46,7 +46,7 @@ const internalRoutes = [
         }
     })
     ,
-    new Router("GET", "/news", async (req, res, next) => {
+    new Router("GET", "/luca-app/admin/news", async (req, res, next) => {
 
         fs.readFile("Frontend/views/news.html", 'utf-8', async (err, html) => {
             if (err) {
@@ -134,7 +134,7 @@ const internalRoutes = [
             // }
         });
     }),
-    new Router("GET", "/users", async (req, res) => {
+    new Router("GET", "/luca-app/admin/users", async (req, res) => {
         try {
             const controller = new adminController();
             return await controller.getUsers(req,res)
@@ -144,7 +144,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
-    new Router("GET", '/announces', async (req, res) => {
+    new Router("GET", '/luca-app/admin/announces', async (req, res) => {
         try {
             const controller = new adminController();
             const feedDone = await controller.feedAnnounces(req,res);
@@ -155,7 +155,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
-    new Router("PUT", '/announces', async (req, res) => {
+    new Router("PUT", '/luca-app/admin/announces', async (req, res) => {
         try {
             const controller = new adminController();
             return await controller.UpdateFeedAnnounces(req,res);
@@ -165,7 +165,7 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),    new Router("DELETE", '/announces', async (req, res) => {
+    }),    new Router("DELETE", '/luca-app/admin/announces', async (req, res) => {
         try {
             const controller = new adminController();
             const feedDone = await controller.deleteFeedAnnounces(req,res);
@@ -176,7 +176,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
-    new Router("GET", "/news/:", async (req, res, next) => {
+    new Router("GET", "/luca-app/admin/news/:", async (req, res, next) => {
 
         fs.readFile("Frontend/views/newsActor.html", 'utf-8', async (err, html) => {
             if (err) {
@@ -271,7 +271,7 @@ const internalRoutes = [
             // }
         });
     }),
-    new Router("GET", "/get-news/:actor", async (req, res) => {
+    new Router("GET", "/luca-app/admin/get-news/:actor", async (req, res) => {
         const cookies = req.headers.cookie;
         let source = null;
         if (cookies) {
@@ -309,7 +309,7 @@ const internalRoutes = [
             res.end('Internal server error');
         }
     }),
-    new Router("GET", "/RSS/:actor", async (req, res) => {
+    new Router("GET", "/luca-app/admin/RSS/:actor", async (req, res) => {
         const cookies = req.headers.cookie;
         let source = null;
         if (cookies) {
@@ -364,7 +364,7 @@ const internalRoutes = [
         }
     })
 ,
-    new Router("GET", "/admin", async (req, res, next) => {
+    new Router("GET", "/luca-app/admin/admin", async (req, res, next) => {
 
         fs.readFile("Frontend/views/admin.html", 'utf-8', async (err, html) => {
             if (err) {
@@ -464,7 +464,7 @@ const internalRoutes = [
             // }
         });
     }),
-    new Router("GET", "/styles/admin.css", async (req, res) => {
+    new Router("GET", "/luca-app/admin/styles/admin.css", async (req, res) => {
         fs.readFile("Frontend/styles/admin.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
@@ -475,7 +475,7 @@ const internalRoutes = [
             res.end();
         });
     }),
-    new Router("GET", "/styles/news.css", async (req, res) => {
+    new Router("GET", "/luca-app/admin/styles/news.css", async (req, res) => {
         fs.readFile("Frontend/styles/news.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
@@ -486,7 +486,7 @@ const internalRoutes = [
             res.end();
         });
     }),
-    new Router("POST","/logout",async (req,res)=>{
+    new Router("POST","/luca-app/admin/logout",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
@@ -514,7 +514,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
-    new Router("GET","/nominatedActors",async (req,res)=>{
+    new Router("GET","/luca-app/admin/nominatedActors",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
@@ -542,7 +542,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
-    new Router("DELETE","/user",async (req,res)=>{
+    new Router("DELETE","/luca-app/admin/user",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
@@ -570,7 +570,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
-    new Router("PUT","/user",async (req,res)=>{
+    new Router("PUT","/luca-app/admin/user",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
@@ -598,7 +598,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
-    new Router("POST","/user",async (req,res)=>{
+    new Router("POST","/luca-app/admin/user",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
@@ -627,7 +627,7 @@ const internalRoutes = [
             res.end("Internal Error");
         }
     }),
-    new Router("POST","/import-csv",async (req,res)=>{
+    new Router("POST","/luca-app/admin/import-csv",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)

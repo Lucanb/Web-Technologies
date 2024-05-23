@@ -10,6 +10,7 @@ const JWToken = require("../modules/token");
 const {rows} = require("pg/lib/defaults");
 const actorModel = require('../model/actor/actorModel')
 const {get} = require("http");
+const AdminModel = require("../../Admin/model/adminModel");
 
 class actorService {
     constructor() {
@@ -273,6 +274,15 @@ class actorService {
             console.error('Eroare interna la obținerea informațiilor despre actor:', error);
             res.end(error)
         }
+    }
+
+    async getNominated(req,res){
+        const actor = new actorModel()
+        const results = await actor.getNominated()
+
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.write(JSON.stringify(results))
+        res.end()
     }
 }
 

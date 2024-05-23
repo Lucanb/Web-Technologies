@@ -37,5 +37,22 @@ class actorModel {
         }
     }
 
+    async getNominated() {
+        const year = 2020
+        const values = [year]
+        try {
+            if (verifChar(values)) {
+                const {rows} = await pool.query(actorQuerries.getNominatedActors, values);
+                return rows;
+            }else {
+                console.error('Folositi doar caractere normale', error);
+                throw error;
+            }
+        } catch (error) {
+            console.error('Eroare la verificarea email-ului', error);
+            throw error;
+        }
+    }
+
 }
 module.exports = actorModel

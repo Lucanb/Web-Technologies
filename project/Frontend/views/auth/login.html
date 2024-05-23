@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ACVIS</title>
-  <link rel="stylesheet" href="../../styles/authentification.css">
+  <link rel="stylesheet" href="/luca-app/auth/styles/authentification.css">
 </head>
 <body>
 <div class="tab">
-  <button onclick="location.href='http://localhost:3001/actvis';" class="tabs">Home</button>
+  <button onclick="location.href='/luca-app/main/actvis';" class="tabs">Home</button>
 </div>
 <div class="sign-in">
   <h2>Sign In</h2>
-  <form id="loginForm" method="post" action="http://localhost:3000/login">
+  <form id="loginForm" method="post" action="/luca-app/auth/login">
     <label>
       <input type="text" id="username" name="username" placeholder="Username" required>
     </label>
@@ -21,21 +21,21 @@
     </label>
     <button type="submit">Sign In</button>
   </form>
-  <p>Don't have an account? <a href="/register">Register</a></p>
-  <p>Forgot your password? <a href="/forgot">Reset</a></p>
+  <p>Don't have an account? <a href="/luca-app/auth/register">Register</a></p>
+  <p>Forgot your password? <a href="/luca-app/auth/forgot">Reset</a></p>
 </div>
 <div class="low-bar">
   <div class="references">
-    <label onclick="location.href='http://localhost:3001/about';" class="references-element">About</label>
-    <label onclick="location.href='http://localhost:3001/help';" class="references-element">Help</label>
-    <label onclick="location.href='http://localhost:3001/index';" class="references-element">Site Index</label>
+    <label onclick="location.href='/luca-app/main/about';" class="references-element">About</label>
+    <label onclick="location.href='/luca-app/main/help';" class="references-element">Help</label>
+    <label onclick="location.href='/luca-app/main/index';" class="references-element">Site Index</label>
   </div>
 </div>
 </div>
 
 <script>
   document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();  // Previne reîncărcarea paginii posibil sa imi faca pb
+    event.preventDefault();
 
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
@@ -44,7 +44,7 @@
     formData.append('username', username);
     formData.append('password', password);
 
-    fetch('http://localhost:3000/login', {
+    fetch('http://luca-app:5000/luca-app/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -77,6 +77,7 @@
 
                 alert('Login successful! Tokens are stored and authorization header is set.');
                 window.location.href = data.data.redirectUrl;
+                console.log(data.data.redirectUrl)
               } else {
                 // console.error('Server response does not contain the required tokens.');
                 window.location.href = data.redirectUrl;

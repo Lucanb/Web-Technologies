@@ -1,5 +1,6 @@
 const homeFeedService = require('../services/homeFeedService')
 const actorService = require('../services/actorService')
+const adminService = require("../../Admin/services/adminService");
 
 class feedController {
     async feedAnnounces(req, res) {
@@ -111,6 +112,17 @@ class feedController {
         }
     }
 
+    async nominated(req,res){
+        try {
+            const service = new actorService();
+            await service.getNominated(req,res)
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
+
     async exploreActorsTypes(req,res){
         try {
             const service = new homeFeedService();
@@ -137,8 +149,8 @@ class feedController {
             if(message === 'LogOut')
             {
                 res.setHeader('Set-Cookie', [
-                    `accessToken=''; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`,
-                    `refreshToken=''; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    `accessToken=; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`,
+                    `refreshToken=; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`
                 ]);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end()

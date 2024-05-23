@@ -11,7 +11,7 @@ indexRouterController.routes.forEach(route => {
 });
 
 routerController.addRoute(
-    new Router("GET", "/styles/authentification.css", async (req, res) => {
+    new Router("GET", "/luca-app/auth/styles/authentification.css", async (req, res) => {
         fs.readFile("Frontend/styles/authentification.css", (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
@@ -24,7 +24,7 @@ routerController.addRoute(
     })
 );
 
-routerController.addRoute(new Router("GET","/login",async (req,res)=>{
+routerController.addRoute(new Router("GET","/luca-app/auth/login",async (req,res)=>{
     fs.readFile("Frontend/views/auth/login.html",(err, data)=>{
         if(err){
             res.writeHead(404, {'Content-Type': 'text/html'});
@@ -38,7 +38,7 @@ routerController.addRoute(new Router("GET","/login",async (req,res)=>{
 })
 );
 
-routerController.addRoute(new Router("POST","/login",async (req,res,next)=>{
+routerController.addRoute(new Router("POST","/luca-app/auth/login",async (req,res,next)=>{
     try{
         const controller = new authController();
         await controller.login(req, res,next);
@@ -52,7 +52,7 @@ routerController.addRoute(new Router("POST","/login",async (req,res,next)=>{
 }));
 
 
-routerController.addRoute(new Router("GET","/register",async (req,res)=>{
+routerController.addRoute(new Router("GET","/luca-app/auth/register",async (req,res)=>{
         fs.readFile("Frontend/views/auth/register.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -65,7 +65,7 @@ routerController.addRoute(new Router("GET","/register",async (req,res)=>{
     })
 )
 
-routerController.addRoute(new Router("POST","/register",async (req,res,next)=>{
+routerController.addRoute(new Router("POST","/luca-app/auth/register",async (req,res,next)=>{
     try {
         const controller = new authController();
         const registered = await controller.register(req,res,next);
@@ -79,7 +79,7 @@ routerController.addRoute(new Router("POST","/register",async (req,res,next)=>{
     })
 )
 
-routerController.addRoute(new Router("POST","/register_userCredentialsExists",async (req,res,next)=>{
+routerController.addRoute(new Router("POST","/luca-app/auth/register_userCredentialsExists",async (req,res,next)=>{
         try {
             const controller = new authController();
             const registered = await controller.userNameEmailExists(req,res,next);
@@ -93,7 +93,7 @@ routerController.addRoute(new Router("POST","/register_userCredentialsExists",as
     })
 )
 
-routerController.addRoute(new Router("GET","/forgot",async (req,res)=>{
+routerController.addRoute(new Router("GET","/luca-app/auth/forgot",async (req,res)=>{
         fs.readFile("Frontend/views/auth/forgot.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -106,7 +106,7 @@ routerController.addRoute(new Router("GET","/forgot",async (req,res)=>{
     })
 )
 
-routerController.addRoute(new Router("POST","/forgot",async (req,res)=>{
+routerController.addRoute(new Router("POST","/luca-app/auth/forgot",async (req,res)=>{
         try {
             const controller = new authController();
             const sendEmail = await controller.sendEmail(req,res);
@@ -120,7 +120,7 @@ routerController.addRoute(new Router("POST","/forgot",async (req,res)=>{
     })
 )
 
-routerController.addRoute(new Router("GET","/update-password/:",async (req,res)=>{
+routerController.addRoute(new Router("GET","/luca-app/auth/update-password/:",async (req,res)=>{
         fs.readFile("Frontend/views/auth/update-password.html",(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -133,7 +133,7 @@ routerController.addRoute(new Router("GET","/update-password/:",async (req,res)=
     })
 )
 
-routerController.addRoute(new Router("POST","/update-password/:",async (req, res)=>{
+routerController.addRoute(new Router("POST","/luca-app/auth/update-password/:",async (req, res)=>{
         try {
             const controller = new authController();
             const updatePassword = await controller.changePassword(req,res);

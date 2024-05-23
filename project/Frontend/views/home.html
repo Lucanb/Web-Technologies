@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACVIS</title>
-    <link rel="stylesheet" href="../styles/home.css">
+    <link rel="stylesheet" href="/luca-app/main/styles/home.css">
 </head>
 <body>
 <div class="tab">
@@ -13,10 +13,10 @@
         <input type="text" placeholder="Search">
         <div class="autocomplete-options-container result"></div>
     </div>
-    <button onclick="location.href='/notifications';" class="tabs">Notifications</button>
-    <button onclick="location.href='/favorites';" class="tabs">Favorites</button>
+    <button onclick="location.href='/luca-app/main/notifications';" class="tabs">Notifications</button>
+    <button onclick="location.href='/luca-app/main/favorites';" class="tabs">Favorites</button>
     <button onclick="handleLogout()" class="tabs">Log Out</button>
-    <button onclick="location.href='http://localhost:3002/news';" class="tabs">See News</button>
+    <button onclick="location.href='/luca-app/main/news';" class="tabs">See News</button>
     <!--        location.href='http://localhost:3000/login-->
 </div>
 <div class="main-content">
@@ -93,9 +93,9 @@
         </div>
     </div>
     <div class = "references">
-        <label onclick="location.href='/about';" class="references-element">About</label>
-        <label onclick="location.href='/help';" class="references-element">Help</label>
-        <label onclick="location.href='/index';" class="references-element">Site Index</label>
+        <label onclick="location.href='/luca-app/main/about';" class="references-element">About</label>
+        <label onclick="location.href='/luca-app/main/help';" class="references-element">Help</label>
+        <label onclick="location.href='/luca-app/main/index';" class="references-element">Site Index</label>
     </div>
 </div>
 <div class="result"></div>
@@ -140,7 +140,7 @@
     });
 
     function handleLogout() {
-        fetch('http://localhost:3001/logout', {
+        fetch('http://luca-app:5000/luca-app/main/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -151,7 +151,7 @@
                 if (!response.ok) {
                     throw new Error('Failed to log out');
                 }
-                window.location.href = 'http://localhost:3000/login';
+                window.location.href = '/luca-app/auth/login';
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -175,7 +175,7 @@
         let formData = new URLSearchParams();
         formData.append('id', id);
 
-        fetch('http://localhost:3001/send-actor-id', {
+        fetch('http://luca-app:5000/luca-app/main/send-actor-id', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -186,7 +186,7 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                window.location.href = `/actor-profile/${id}`
+                window.location.href = `/luca-app/main/actor-profile/${id}`
                 return response;
             })
             .catch(error => {
@@ -195,7 +195,7 @@
             });
     }
 
-    fetch('http://localhost:3001/announces', {
+    fetch('http://luca-app:5000/luca-app/main/announces', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -226,7 +226,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('http://localhost:3001/exploreActors', {
+    fetch('http://luca-app:5000/luca-app/main/exploreActors', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -260,7 +260,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('http://localhost:3001/toppicks', {
+    fetch('http://luca-app:5000/luca-app/main/toppicks', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -292,7 +292,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('http://localhost:3001/todayActors', {
+    fetch('http://luca-app:5000/luca-app/main/todayActors', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -324,7 +324,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('http://localhost:3001/topPicksWeek', {
+    fetch('http://luca-app:5000/luca-app/main/topPicksWeek', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -361,7 +361,7 @@
             alert('An error occurred: ' + error.message);
         });
 
-    fetch('http://localhost:3001/topFavorites', {
+    fetch('http://luca-app:5000/luca-app/main/topFavorites', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -398,7 +398,7 @@
             alert('An error occurred: ' + error.message);
         });
 
-    fetch('http://localhost:3001/commingSoon', {
+    fetch('http://luca-app:5000/luca-app/main/commingSoon', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -440,7 +440,7 @@
         try {
             let formData = new URLSearchParams();
             formData.append('full_name', searchText);
-            const response = await fetch(`http://localhost:3001/search`,{
+            const response = await fetch(`http://luca-app:5000/luca-app/main/search`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

@@ -17,17 +17,17 @@ class authController {
                 //     `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict`
                 // ]);
                 res.setHeader('Set-Cookie', [
-                    `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`,
-                    `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
+                    `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`,
+                    `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`
                 ]);
                     res.writeHead(200, {
                         'Content-Type': 'application/json',
                     });
                     let redirectUrl = ''
                     if (role === true){
-                        redirectUrl = 'http://localhost:3002/admin'
+                        redirectUrl = 'http://luca-app:5000/luca-app/admin/admin'
                     }else {
-                        redirectUrl = 'http://localhost:3001/home'
+                        redirectUrl = 'http://luca-app:5000/luca-app/main/home'
                     }
                 res.end(JSON.stringify({
                     success: true,
@@ -45,7 +45,7 @@ class authController {
                 res.writeHead(200, {
                     'Content-Type': 'application/json',
                 });
-                res.end(JSON.stringify({ success: false, message: 'Authentication failed', redirectUrl: '/login' }));
+                res.end(JSON.stringify({ success: false, message: 'Authentication failed', redirectUrl: '/luca-app/main/login' }));
             }
         } catch (error) {
             console.error('Error during login:', error);
