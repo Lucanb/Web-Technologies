@@ -8,11 +8,11 @@
 </head>
 <body>
 <div class="tab">
-    <button onclick="location.href='http://localhost:3001/actvis';" class="tabs">Home</button>
+    <button onclick="location.href='/luca-app/main/actvis';" class="tabs">Home</button>
 </div>
 <div class="register">
     <h2>Sign Up</h2>
-    <form id="registerForm" method="post" action="http://localhost:3000/register">
+    <form id="registerForm" method="post" action="/luca-app/auth/register">
         <label>
             <input type="text" id="email" name="email" placeholder="Email" required>
             <p id="error-message1" style="color: red; display: none;">Email already exists!</p>
@@ -29,13 +29,13 @@
         </label>
         <button type="submit">Sign Up</button>
     </form>
-    <p>Already have an account? <a href="/login">Login</a></p>
+    <p>Already have an account? <a href="/luca-app/auth/login">Login</a></p>
 </div>
 <div class="low-bar">
     <div class="references">
-        <label onclick="location.href='http://localhost:3001/about';" class="references-element">About</label>
-        <label onclick="location.href='http://localhost:3001/help';" class="references-element">Help</label>
-        <label onclick="location.href='http://localhost:3001/index';" class="references-element">Site Index</label>
+        <label onclick="location.href='/luca-app/main/about';" class="references-element">About</label>
+        <label onclick="location.href='/luca-app/main/help';" class="references-element">Help</label>
+        <label onclick="location.href='/luca-app/main/index';" class="references-element">Site Index</label>
     </div>
 </div>
 <script>
@@ -44,7 +44,7 @@
         checkFormData.append(field, value);
 
         try {
-            const checkResponse = await fetch('http://localhost:3000/register_userCredentialsExists', {
+            const checkResponse = await fetch('http://luca-app:5000/luca-app/auth/register_userCredentialsExists', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -92,7 +92,7 @@
         formData.append('password', password);
         formData.append('passwordCheck', password2);
 
-        fetch('http://localhost:3000/register', {
+        fetch('http://luca-app:5000/luca-app/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

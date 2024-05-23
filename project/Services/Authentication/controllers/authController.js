@@ -1,67 +1,98 @@
 const userService = require('../services/authentificationService')
+const querystring = require("querystring");
+const url = require("url");
+const Token = require("../modules/token");
 class authController {
-    async login(req, res, next){
+    async login(req, res, next) {
         try {
-            const loginService = new userService();
-            const result = await loginService.loginUser(req, res);
-            if (result) {
-                const accessToken = result[0];
-                const refreshToken = result[1];
-                const role = result[2]
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            req.on('end', async () => {
+                try {
+                    const data = querystring.parse(body);
+                    const loginService = new userService();
+                    const result = await loginService.loginUser(data,body);
 
-                // Setează cookie-uri sau header-uri necesare aici dacă este necesar
-                // De exemplu, setarea unui cookie pentru token-ul de acces
-                // res.setHeader('Set-Cookie', `accessToken=${accessToken}; HttpOnly`);
-                // res.setHeader('Set-Cookie', [
-                //     `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict`,
-                //     `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict`
-                // ]);
-                res.setHeader('Set-Cookie', [
-                    `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`,
-                    `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`
-                ]);
-                    res.writeHead(200, {
-                        'Content-Type': 'application/json',
-                    });
-                    let redirectUrl = ''
-                    if (role === true){
-                        redirectUrl = 'http://luca-app:5000/luca-app/admin/admin'
-                    }else {
-                        redirectUrl = 'http://luca-app:5000/luca-app/main/home'
-                    }
-                res.end(JSON.stringify({
-                    success: true,
-                    message: 'Login success!',
-                    data: {
-                        tokens: {
-                            accessToken: accessToken,
-                            refreshToken: refreshToken
-                        },
-                        redirectUrl: redirectUrl
-                    }
-                }));
+                    if (result) {
+                        const accessToken = result[0];
+                        const refreshToken = result[1];
+                        const role = result[2];
 
-            } else {
-                res.writeHead(200, {
-                    'Content-Type': 'application/json',
-                });
-                res.end(JSON.stringify({ success: false, message: 'Authentication failed', redirectUrl: '/luca-app/main/login' }));
-            }
+                        res.setHeader('Set-Cookie', [
+                            `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`,
+                            `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`
+                        ]);
+                        res.writeHead(200, {
+                            'Content-Type': 'application/json',
+                        });
+                        let redirectUrl = '';
+                        if (role === true) {
+                            redirectUrl = 'http://luca-app:5000/luca-app/admin/admin';
+                        } else {
+                            redirectUrl = 'http://luca-app:5000/luca-app/main/home';
+                        }
+                        res.end(JSON.stringify({
+                            success: true,
+                            message: 'Login success!',
+                            data: {
+                                tokens: {
+                                    accessToken: accessToken,
+                                    refreshToken: refreshToken
+                                },
+                                redirectUrl: redirectUrl
+                            }
+                        }));
+                    } else {
+                        res.writeHead(200, {
+                            'Content-Type': 'application/json',
+                        });
+                        res.end(JSON.stringify({
+                            success: false,
+                            message: 'Authentication failed',
+                            redirectUrl: '/luca-app/main/login'
+                        }));
+                    }
+                } catch (error) {
+                    console.error('Error during login:', error);
+                    res.writeHead(500, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({
+                        success: false,
+                        message: 'Internal server error',
+                        error: error.toString()
+                    }));
+                }
+            });
         } catch (error) {
             console.error('Error during login:', error);
             res.writeHead(500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({
                 success: false,
                 message: 'Internal server error',
-                error: error.toString()  // Este mai sigur să trimiți doar mesajul erorii
+                error: error.toString()
             }));
         }
     }
 
     async register(req, res, next){
         try {
+            let body= '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            const data = await new Promise((resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            });
+            console.log(data)
             const registerService = new userService();
-            const registered = await registerService.registerUser(req, res);
+            const registered = await registerService.registerUser(data);
             if(registered) {
                 res.writeHead(200, {
                     'Content-Type': 'application/json',
@@ -69,7 +100,7 @@ class authController {
                 res.end(JSON.stringify({
                     success: true,
                     message: 'Successfully registered',
-                    redirectUrl: '/login'
+                    redirectUrl: '/luca-app/auth/login'
                 }));
 
             } else {
@@ -97,8 +128,21 @@ class authController {
 
     async userNameEmailExists(req, res, next){
         try {
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            const data = await new Promise((resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            });
             const registerService = new userService();
-            const registered = await registerService.userNameEmailExists(req, res);
+            const registered = await registerService.userNameEmailExists(data);
                 res.writeHead(200, {
                     'Content-Type': 'application/json',
                 });
@@ -121,72 +165,109 @@ class authController {
         }
     }
 
-    async changePassword(req, res) {
+    async changePassword (req, res) {
         try {
-            const changePass = new userService();
-            const newpass = await changePass.updatePassword(req, res);
-            if (newpass) {
-                console.log('Schimbat parola cu succes!');
-                res.writeHead(200, {'Content-Type': 'application/json'});
-                res.end(JSON.stringify({success: true, message: 'Parola schimbata cu succes!'}));
+            const parsedUrl = url.parse(req.url, true);
+            const path = parsedUrl.pathname;
+            const segments = path.split('/');
+
+            console.log(segments.length)
+            console.log(segments[3])
+            if (segments.length >= 4 && segments[3] === "update-password") {
+                const userToken = segments[4];
+                const decode = await Token.validate(userToken);
+
+                if (!decode || !decode[1]) {
+                    console.error('Internal error with route - bad token');
+                    res.writeHead(401, {'Content-Type': 'application/json'});
+                    res.end(JSON.stringify({success: false, message: 'Invalid token'}));
+                    return;
+                }
+
+                let body = '';
+                req.on('data', chunk => {
+                    body += chunk.toString();
+                });
+
+                req.on('end', async () => {
+                    try {
+                        const data = querystring.parse(body);
+                        console.log(data.password)
+                        const changePassService = new userService();
+                        const newpass = await changePassService.updatePassword(decode[0].email, data);
+
+                        if (newpass) {
+                            res.writeHead(200, {'Content-Type': 'application/json'});
+                            res.end(JSON.stringify({success: true, message: 'Password successfully changed'}));
+                        } else {
+                            res.writeHead(400, {'Content-Type': 'application/json'});
+                            res.end(JSON.stringify({success: false, message: 'Password change failed'}));
+                            console.log('a')
+                        }
+                    } catch (error) {
+                        console.error('Error processing the password change:', error);
+                        res.writeHead(500, {'Content-Type': 'application/json'});
+                        res.end(JSON.stringify({success: false, message: 'Error processing the password change'}));
+                    }
+                });
             } else {
-                console.log('Parola nu a fost schimbata cu succes!');
-                res.writeHead(200, {'Content-Type': 'application/json'}); // Using 400 for client-side logical errors
-                res.end(JSON.stringify({success: false, message: 'Parola nu a fost schimbata'}));
+                res.writeHead(404, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({success: false, message: 'Resource not found'}));
             }
         } catch (error) {
             console.error('Error in changePassword:', error);
-            res.writeHead(500, {'Content-Type': 'application/json'}); // Ensure the error status code is set properly
+            res.writeHead(500, {'Content-Type': 'application/json'});
             res.end(JSON.stringify({success: false, message: 'Internal error'}));
-            console.log('Parola nu a fost schimbata cu succes!');
         }
-    }
+    };
 
 
-     async sendEmail(req, res){
+    async sendEmail(req, res) {
         try {
-            const sendEmail = new userService();
-            const verify = await sendEmail.verifyEmail(req, res)
-            if (verify.success) {
-              try {
-                    const emailSent = await sendEmail.sendResetPasswordEmail(verify.email)
-                    if (emailSent.success) {
-                        console.log('S-a trimis cu succes')
-                        res.writeHead(200, {
-                            'Content-Type': 'application/json',
-                        });
-                        res.end(JSON.stringify({success: true, message: 'Enter email link for change password'}));
-                    }else {
-                        res.writeHead(200, {
-                            'Content-Type': 'application/json',
-                        });
-                        res.end(JSON.stringify({success: false, message: 'Email not sended '}));
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            const data = await new Promise((resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
                     }
-              }catch (error){
-                  console.error('Error forgot email sending:', error);
-                  res.writeHead(500, { 'Content-Type': 'application/json' });
-                  res.end(JSON.stringify({
-                      success: false,
-                      message: 'Error forgot email sending:',
-                      error: error.toString()
-                  }));
-              }
-            } else {
-                res.writeHead(200, {
-                    'Content-Type': 'application/json',
                 });
-                res.end(JSON.stringify({success: false, message: 'email not found'}));
+            });
+
+            const sendEmailService = new userService();
+            const verify = await sendEmailService.verifyEmail(data);
+
+            if (!verify.success) {
+                res.status(404).json({ success: false, message: 'Email not found' });
+                return;
             }
-        }catch (error){
+
+            try {
+                const emailSent = await sendEmailService.sendResetPasswordEmail(verify.email);
+                if (!emailSent.success) {
+                    throw new Error(emailSent.message);
+                }
+                res.status(200).json({ success: true, message: 'Enter email link for change password' });
+            } catch (error) {
+                console.error('Error forgot email sending:', error);
+                res.status(500).json({
+                    success: false,
+                    message: 'Error forgot email sending:',
+                    error: error.toString()
+                });
+            }
+        } catch (error) {
             console.error('Error at forgot:', error);
-            res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
+            res.status(500).json({
                 success: false,
                 message: 'Internal server error',
                 error: error.toString()
-            }));
+            });
         }
-
     }
 }
 module.exports = {authController}

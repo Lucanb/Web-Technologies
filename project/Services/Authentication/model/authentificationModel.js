@@ -155,7 +155,7 @@ class UserModel
             console.log('this email : ', this.email)
             try {
                 if (verifCharMessage(values)) {
-                    const result = await pool.query(userSQL.getUserIDAfterEmail, values);
+                    var result = await pool.query(userSQL.getUserIDAfterEmail, values);
                 }else {
                     console.error('Eroare la verificarea email-ului', error);
                     throw error;

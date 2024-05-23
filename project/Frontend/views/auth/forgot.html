@@ -8,22 +8,22 @@
 </head>
 <body>
 <div class="tab">
-    <button onclick="location.href='/home';" class="tabs">Home</button>
-    <button onclick="location.href='/login';" class="tabs">Sign In</button>
+    <button onclick="location.href='/luca-app/main/home';" class="tabs">Home</button>
+    <button onclick="location.href='/luca-app/auth/login';" class="tabs">Sign In</button>
 </div>
 <div class="forget">
     <h2>Forget password</h2>
-    <form id="forgetForm" method="post" action="http://localhost:3000/forgot">
+    <form id="forgetForm" method="post" action="http://luca-app:5000/luca-app/auth/forgot">
         <input type="text" id="email" name="email" placeholder="Email" required>
         <button type="submit">Submit</button>
     </form>
-    <p>Remembered your password? <a href="/login">Sign In</a></p>
+    <p>Remembered your password? <a href="/luca-app/auth/login">Sign In</a></p>
 </div>
 <div class="low-bar">
     <div class="references">
-        <label onclick="location.href='http://localhost:3001/about';" class="references-element" >About</label>
-        <label onclick="location.href='http://localhost:3001/help';" class="references-element">Help</label>
-        <label onclick="location.href='http://localhost:3001/index';" class="references-element">Site Index</label>
+        <label onclick="location.href='/luca-app/main/about';" class="references-element" >About</label>
+        <label onclick="location.href='/luca-app/main/help';" class="references-element">Help</label>
+        <label onclick="location.href='/luca-app/main/index';" class="references-element">Site Index</label>
     </div>
 </div>
 <script>
@@ -34,7 +34,7 @@
         let formData = new URLSearchParams();
         formData.append('email', email);
 
-        fetch('http://localhost:3000/forgot', {
+        fetch('http://luca-app:5000/luca-app/auth/forgot', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
