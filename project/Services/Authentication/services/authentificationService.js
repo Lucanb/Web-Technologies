@@ -32,11 +32,6 @@ class UserService {
             }
         } catch (error) {
             console.error('Eroare la înregistrarea utilizatorului:', error);
-            res.statusCode = 500;
-            res.end(JSON.stringify({
-                success: false,
-                message: 'Eroare la înregistrarea utilizatorului.'
-            }));
             return false;
         }
     }
@@ -53,11 +48,6 @@ class UserService {
             return [usernameExists,emailExists]
         }catch (error){
             console.error('Eroare la înregistrarea utilizatorului:', error);
-            res.statusCode = 500;
-            res.end(JSON.stringify({
-                success: false,
-                message: 'Eroare la înregistrarea utilizatorului.'
-            }));
             return [false,false];
         }
     }
