@@ -6,6 +6,320 @@
     "description": "This is the API documentation for our project."
   },
   "paths": {
+    "/luca-app/admin/altaRuta": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/admin/altaRuta",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/admin/addAnnounce": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/admin/addAnnounce",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/admin/users": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/admin/users",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/admin/announces": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/admin/announces",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "API"
+        ],
+        "summary": "PUT /luca-app/admin/announces",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "API"
+        ],
+        "summary": "DELETE /luca-app/admin/announces",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/admin/get-news/:actor": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/admin/get-news/:actor",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/admin/RSS/:actor": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/admin/RSS/:actor",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/admin/logout": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/admin/logout",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/admin/nominatedActors": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/admin/nominatedActors",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/admin/user": {
+      "delete": {
+        "tags": [
+          "API"
+        ],
+        "summary": "DELETE /luca-app/admin/user",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "API"
+        ],
+        "summary": "PUT /luca-app/admin/user",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/admin/user",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/admin/import-csv": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/admin/import-csv",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/index": {
       "get": {
         "tags": [

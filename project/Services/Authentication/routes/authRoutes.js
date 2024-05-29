@@ -147,6 +147,6 @@ routerController.addRoute(new Router("POST","/luca-app/auth/update-password/:",a
         }
     })
 )
-generateSwaggerDoc(routerController, 'Services/Authentication/routes/authSwagger.json');
+generateSwaggerDoc(routerController, 'Services/Authentication/authSwagger.json');
 
 module.exports = { routerController };

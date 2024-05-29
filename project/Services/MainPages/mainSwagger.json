@@ -6,12 +6,12 @@
     "description": "This is the API documentation for our project."
   },
   "paths": {
-    "/luca-app/front/styles/authentification.css": {
+    "/luca-app/main/altaRuta": {
       "get": {
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/styles/authentification.css",
+        "summary": "GET /luca-app/main/altaRuta",
         "description": "",
         "responses": {
           "200": {
@@ -29,12 +29,12 @@
         }
       }
     },
-    "/luca-app/front/login": {
+    "/luca-app/main/getnotifications": {
       "get": {
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/login",
+        "summary": "GET /luca-app/main/getnotifications",
         "description": "",
         "responses": {
           "200": {
@@ -52,12 +52,12 @@
         }
       }
     },
-    "/luca-app/front/register": {
+    "/luca-app/main/announces": {
       "get": {
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/register",
+        "summary": "GET /luca-app/main/announces",
         "description": "",
         "responses": {
           "200": {
@@ -75,12 +75,12 @@
         }
       }
     },
-    "/luca-app/front/forgot": {
-      "get": {
+    "/luca-app/main/send-actor-id": {
+      "post": {
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/forgot",
+        "summary": "POST /luca-app/main/send-actor-id",
         "description": "",
         "responses": {
           "200": {
@@ -98,12 +98,587 @@
         }
       }
     },
-    "/luca-app/front/update-password/:": {
+    "/luca-app/main/actor-profile-info": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/main/actor-profile-info",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/toppicks": {
       "get": {
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/update-password/:",
+        "summary": "GET /luca-app/main/toppicks",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/todayActors": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/todayActors",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/commingSoon": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/commingSoon",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/news": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/news",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/help": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/main/help",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/styles/home.css": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/styles/home.css",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/styles/favourites.css": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/styles/favourites.css",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/styles/about.css": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/styles/about.css",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/styles/help.css": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/styles/help.css",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/styles/index.css": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/styles/index.css",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/styles/news.css": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/styles/news.css",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/styles/actor-profile.css": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/styles/actor-profile.css",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/styles/admin.css": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/styles/admin.css",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/add-favorites": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/main/add-favorites",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/all-favorites": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/all-favorites",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/topPicksWeek": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/topPicksWeek",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/topFavorites": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/topFavorites",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/exploreActors": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/exploreActors",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/delete-actor": {
+      "delete": {
+        "tags": [
+          "API"
+        ],
+        "summary": "DELETE /luca-app/main/delete-actor",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/logout": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/main/logout",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/search": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/main/search",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/statisticAwards/:": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/main/statisticAwards/:",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/nominatedActors": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/main/nominatedActors",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/main/statisticGenre/:": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/main/statisticGenre/:",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/index": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /index",
         "description": "",
         "responses": {
           "200": {

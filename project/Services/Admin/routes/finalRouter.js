@@ -8,7 +8,7 @@ indexRouterController.routes.forEach(route => {
     routerController.addRoute(route);
 });
 
-generateSwaggerDoc(indexRouterController, 'Services/Admin/routes/adminSwagger.json');
+generateSwaggerDoc(routerController, 'Services/Admin/adminSwagger.json');
 
 module.exports = { routerController };
 

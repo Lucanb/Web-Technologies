@@ -9,5 +9,5 @@ indexRouterController.routes.forEach(route => {
     routerController.addRoute(route);
 });
 
-generateSwaggerDoc(authRouterController, 'Services/MainPages/routes/mainSwagger.json');
+generateSwaggerDoc(routerController, 'Services/MainPages/mainSwagger.json');
 module.exports = { routerController };

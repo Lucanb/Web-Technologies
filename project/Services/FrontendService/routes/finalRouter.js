@@ -23,6 +23,6 @@ authRouterController.routes.forEach(route => {
     routerController.addRoute(route);
 });
 
-generateSwaggerDoc(authRouterController, 'Services/FrontendService/routes/frontSwagger.json');
+generateSwaggerDoc(routerController, 'Services/FrontendService/frontSwagger.json');
 
 module.exports = { routerController };
