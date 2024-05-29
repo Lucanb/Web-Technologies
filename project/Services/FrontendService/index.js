@@ -11,6 +11,13 @@ const index = http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // The methods you want to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // The headers you want to allow
     res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+    if (req.headers['x-gateway-auth'] !== 'expected_secret_value') {
+        res.writeHead(403, { 'Content-Type': 'text/plain' });
+        res.end('Access Denied: Invalid Gateway Credentials');
+        return;
+    }
+
     routerController.handleRequest(req, res);
 });
 

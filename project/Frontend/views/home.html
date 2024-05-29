@@ -186,7 +186,7 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                window.location.href = `/luca-app/main/actor-profile/${id}`
+                window.location.href = `/luca-app/front/actor-profile/${id}`
                 return response;
             })
             .catch(error => {
