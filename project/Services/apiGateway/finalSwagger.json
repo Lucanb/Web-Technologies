@@ -1,0 +1,286 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Gateway Documentation",
+    "version": "1.0.0",
+    "description": "This is the consolidated API documentation for all services."
+  },
+  "paths": {
+    "/luca-app/auth/index": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/auth/index",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/auth/login": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/auth/login",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/auth/register": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/auth/register",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/auth/register_userCredentialsExists": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/auth/register_userCredentialsExists",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/auth/forgot": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/auth/forgot",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/auth/update-password/:": {
+      "post": {
+        "tags": [
+          "API"
+        ],
+        "summary": "POST /luca-app/auth/update-password/:",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/front/styles/authentification.css": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/front/styles/authentification.css",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/front/login": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/front/login",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/front/register": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/front/register",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/front/forgot": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/front/forgot",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/luca-app/front/update-password/:": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /luca-app/front/update-password/:",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/index": {
+      "get": {
+        "tags": [
+          "API"
+        ],
+        "summary": "GET /index",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}
