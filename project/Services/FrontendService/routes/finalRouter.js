@@ -5,6 +5,7 @@ const { routerController: adminRouterController  } = require('./adminRoutes');
 const {routerController: authRouterController } = require("./authRoutes")
 const {routerController: mainPageRouterController } = require("./mainPageRoutes")
 const { routerController: indexRouterController } = require('./index');
+const {generateSwaggerDoc} = require("./frontSwagger");
 
 indexRouterController.routes.forEach(route => {
     routerController.addRoute(route);
@@ -21,5 +22,7 @@ adminRouterController.routes.forEach(route => {
 authRouterController.routes.forEach(route => {
     routerController.addRoute(route);
 });
+
+generateSwaggerDoc(authRouterController, 'Services/FrontendService/routes/frontSwagger.json');
 
 module.exports = { routerController };

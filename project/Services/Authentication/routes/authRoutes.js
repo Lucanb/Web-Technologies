@@ -5,6 +5,7 @@ const { internalRoutes } = require('./internalRoutes');
 const routerController = new RouterController(internalRoutes);
 const { routerController: indexRouterController } = require('./index');
 const {authController} = require("../controllers/authController")
+const {generateSwaggerDoc} = require("./authSwagger");
 
 indexRouterController.routes.forEach(route => {
     routerController.addRoute(route);
@@ -146,5 +147,6 @@ routerController.addRoute(new Router("POST","/luca-app/auth/update-password/:",a
         }
     })
 )
+generateSwaggerDoc(routerController, 'Services/Authentication/routes/authSwagger.json');
 
 module.exports = { routerController };

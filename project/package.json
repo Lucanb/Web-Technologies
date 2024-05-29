@@ -27,6 +27,8 @@
     "querystring": "^0.2.1",
     "rss": "^1.2.2",
     "rss-parser": "^3.13.0",
-    "shared": "^0.2.0"
+    "shared": "^0.2.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-dist": "^5.17.14"
   }
 }
