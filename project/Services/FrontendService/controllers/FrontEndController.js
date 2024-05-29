@@ -1,10 +1,10 @@
 // const favoritesService = require('../services/favoritesService');
-const adminService = require('../services/adminService');
+const adminService = require('../services/FrontService');
 const {parse} = require("url");
 const AdminModel = require("../model/adminModel");
 const formidable = require("formidable");
 
-class adminController {
+class frontEndController {
 
 
     async logout(req,res){
@@ -240,4 +240,4 @@ class adminController {
     }
 }
 
-module.exports = {adminController: adminController}
+module.exports = {adminController: frontEndController}

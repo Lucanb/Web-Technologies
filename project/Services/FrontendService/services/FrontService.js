@@ -5,7 +5,7 @@ const querystring = require("querystring");
 const Password = require('../modules/password');
 const formidable = require('formidable');
 const fs = require('fs')
-class adminService {
+class frontService {
     constructor() {
     }
 
@@ -115,4 +115,4 @@ class adminService {
             });
     }
 }
-module.exports = adminService;
+module.exports = frontService;

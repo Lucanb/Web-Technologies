@@ -29,9 +29,9 @@ class authController {
                         });
                         let redirectUrl = '';
                         if (role === true) {
-                            redirectUrl = 'http://luca-app:5000/luca-app/admin/admin';
+                            redirectUrl = 'http://luca-app:5000/luca-app/front/admin';
                         } else {
-                            redirectUrl = 'http://luca-app:5000/luca-app/main/home';
+                            redirectUrl = 'http://luca-app:5000/luca-app/front/home';
                         }
                         res.end(JSON.stringify({
                             success: true,
@@ -51,7 +51,7 @@ class authController {
                         res.end(JSON.stringify({
                             success: false,
                             message: 'Authentication failed',
-                            redirectUrl: '/luca-app/main/login'
+                            redirectUrl: '/luca-app/front/login'
                         }));
                     }
                 } catch (error) {
@@ -100,7 +100,7 @@ class authController {
                 res.end(JSON.stringify({
                     success: true,
                     message: 'Successfully registered',
-                    redirectUrl: '/luca-app/auth/login'
+                    redirectUrl: '/luca-app/front/login'
                 }));
 
             } else {
@@ -242,7 +242,8 @@ class authController {
             const verify = await sendEmailService.verifyEmail(data);
 
             if (!verify.success) {
-                res.status(404).json({ success: false, message: 'Email not found' });
+                res.writeHead(404, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({ success: false, message: 'Email not found' }));
                 return;
             }
 
@@ -251,22 +252,25 @@ class authController {
                 if (!emailSent.success) {
                     throw new Error(emailSent.message);
                 }
-                res.status(200).json({ success: true, message: 'Enter email link for change password' });
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({ success: true, message: 'Enter email link for change password' }));
             } catch (error) {
                 console.error('Error forgot email sending:', error);
-                res.status(500).json({
+                res.writeHead(500, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({
                     success: false,
                     message: 'Error forgot email sending:',
                     error: error.toString()
-                });
+                }));
             }
         } catch (error) {
             console.error('Error at forgot:', error);
-            res.status(500).json({
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({
                 success: false,
                 message: 'Internal server error',
                 error: error.toString()
-            });
+            }));
         }
     }
 }

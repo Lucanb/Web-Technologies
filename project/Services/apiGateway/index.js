@@ -15,6 +15,8 @@ const server = http.createServer((req, res) => {
         proxy.web(req, res, {target: 'http://localhost:3001'});
     } else if (req.url.startsWith('/luca-app/admin/')) {
             proxy.web(req, res, { target: 'http://localhost:3002' });
+    }else if (req.url.startsWith('/luca-app/front/')) {
+        proxy.web(req, res, { target: 'http://localhost:3003' });
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('Not Found');

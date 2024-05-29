@@ -10,33 +10,33 @@ indexRouterController.routes.forEach(route => {
     routerController.addRoute(route);
 });
 
-routerController.addRoute(
-    new Router("GET", "/luca-app/auth/styles/authentification.css", async (req, res) => {
-        fs.readFile("Frontend/styles/authentification.css", (err, data) => {
-            if (err) {
-                res.writeHead(404, {'Content-Type': 'text/css'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.write(data);
-            res.end();
-        });
-    })
-);
+// routerController.addRoute(
+//     new Router("GET", "/luca-app/auth/styles/authentification.css", async (req, res) => {
+//         fs.readFile("Frontend/styles/authentification.css", (err, data) => {
+//             if (err) {
+//                 res.writeHead(404, {'Content-Type': 'text/css'});
+//                 return res.end('404 Not Found');
+//             }
+//             res.writeHead(200, {'Content-Type': 'text/css'});
+//             res.write(data);
+//             res.end();
+//         });
+//     })
+// );
 
-routerController.addRoute(new Router("GET","/luca-app/auth/login",async (req,res)=>{
-    fs.readFile("Frontend/views/auth/login.html",(err, data)=>{
-        if(err){
-            res.writeHead(404, {'Content-Type': 'text/html'});
-            // console.log(err)
-            return res.end('404 Not Found');
-        }
-        res.writeHead(200, {'Content-Type' : 'text/html'});
-        res.write(data);
-        res.end();
-    })
-})
-);
+// routerController.addRoute(new Router("GET","/luca-app/auth/login",async (req,res)=>{
+//     fs.readFile("Frontend/views/auth/login.html",(err, data)=>{
+//         if(err){
+//             res.writeHead(404, {'Content-Type': 'text/html'});
+//             // console.log(err)
+//             return res.end('404 Not Found');
+//         }
+//         res.writeHead(200, {'Content-Type' : 'text/html'});
+//         res.write(data);
+//         res.end();
+//     })
+// })
+// );
 
 routerController.addRoute(new Router("POST","/luca-app/auth/login",async (req,res,next)=>{
     try{
@@ -52,18 +52,18 @@ routerController.addRoute(new Router("POST","/luca-app/auth/login",async (req,re
 }));
 
 
-routerController.addRoute(new Router("GET","/luca-app/auth/register",async (req,res)=>{
-        fs.readFile("Frontend/views/auth/register.html",(err, data)=>{
-            if(err){
-                res.writeHead(404, {'Content-Type': 'text/html'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type' : 'text/html'});
-            res.write(data);
-            res.end();
-        })
-    })
-)
+// routerController.addRoute(new Router("GET","/luca-app/auth/register",async (req,res)=>{
+//         fs.readFile("Frontend/views/auth/register.html",(err, data)=>{
+//             if(err){
+//                 res.writeHead(404, {'Content-Type': 'text/html'});
+//                 return res.end('404 Not Found');
+//             }
+//             res.writeHead(200, {'Content-Type' : 'text/html'});
+//             res.write(data);
+//             res.end();
+//         })
+//     })
+// )
 
 routerController.addRoute(new Router("POST","/luca-app/auth/register",async (req,res,next)=>{
     try {
@@ -93,18 +93,18 @@ routerController.addRoute(new Router("POST","/luca-app/auth/register_userCredent
     })
 )
 
-routerController.addRoute(new Router("GET","/luca-app/auth/forgot",async (req,res)=>{
-        fs.readFile("Frontend/views/auth/forgot.html",(err, data)=>{
-            if(err){
-                res.writeHead(404, {'Content-Type': 'text/html'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type' : 'text/html'});
-            res.write(data);
-            res.end();
-        })
-    })
-)
+// routerController.addRoute(new Router("GET","/luca-app/auth/forgot",async (req,res)=>{
+//         fs.readFile("Frontend/views/auth/forgot.html",(err, data)=>{
+//             if(err){
+//                 res.writeHead(404, {'Content-Type': 'text/html'});
+//                 return res.end('404 Not Found');
+//             }
+//             res.writeHead(200, {'Content-Type' : 'text/html'});
+//             res.write(data);
+//             res.end();
+//         })
+//     })
+// )
 
 routerController.addRoute(new Router("POST","/luca-app/auth/forgot",async (req,res)=>{
         try {
@@ -120,18 +120,18 @@ routerController.addRoute(new Router("POST","/luca-app/auth/forgot",async (req,r
     })
 )
 
-routerController.addRoute(new Router("GET","/luca-app/auth/update-password/:",async (req,res)=>{
-        fs.readFile("Frontend/views/auth/update-password.html",(err, data)=>{
-            if(err){
-                res.writeHead(404, {'Content-Type': 'text/html'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type' : 'text/html'});
-            res.write(data);
-            res.end();
-        })
-    })
-)
+// routerController.addRoute(new Router("GET","/luca-app/auth/update-password/:",async (req,res)=>{
+//         fs.readFile("Frontend/views/auth/update-password.html",(err, data)=>{
+//             if(err){
+//                 res.writeHead(404, {'Content-Type': 'text/html'});
+//                 return res.end('404 Not Found');
+//             }
+//             res.writeHead(200, {'Content-Type' : 'text/html'});
+//             res.write(data);
+//             res.end();
+//         })
+//     })
+// )
 
 routerController.addRoute(new Router("POST","/luca-app/auth/update-password/:",async (req, res)=>{
         try {
