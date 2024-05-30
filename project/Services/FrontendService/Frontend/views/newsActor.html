@@ -59,13 +59,13 @@
 
     function getActorFromPath() {
         const pathArray = window.location.pathname.split('/:');
-        return decodeURIComponent(pathArray[pathArray.length - 1]); // Gets the last segment and decodes URI component
+        return decodeURIComponent(pathArray[pathArray.length - 1]);
     }
 
     function redirectToRSS() {
         const actor = getActorFromPath();// Assumes input from a text field
         if(actor) {
-            window.location.href = `/RSS/:${encodeURIComponent(actor)}`; // Redirect to the RSS route with the actor parameter
+            window.location.href = `/luca-app/admin/RSS/:${encodeURIComponent(actor)}`;
         } else {
             alert('Please enter an actor name.');
         }

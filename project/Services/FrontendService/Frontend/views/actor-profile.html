@@ -120,8 +120,10 @@
 
     function createButton(text, source) {
         const button = document.createElement('button');
+        button.type = 'button';  // Previne submit-ul formularului
         button.textContent = text;
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
             saveSource(source)
                 .then(() => redirectActorPage());
         });
@@ -138,8 +140,13 @@
     function redirectActorPage() {
         return new Promise((resolve, reject) => {
             const actorName = document.querySelector('.actress-name h1');
-            const name = actorName.textContent;
-            window.location.href = `http://localhost:3002/news/:${name}`;
+            const name = actorName ? actorName.textContent.trim() : '';
+            if (!name) {
+                console.error("Actor name is missing!");
+                reject("Actor name is missing!");
+                return;
+            }
+            window.location.href = `http://luca-app:5000/luca-app/front/news/:${name}`;
             resolve();
         });
     }

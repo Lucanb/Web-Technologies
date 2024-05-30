@@ -65,7 +65,7 @@
     function redirectToRSS() {
         const actor = getActorFromPath();// Assumes input from a text field
         if(actor) {
-            window.location.href = `/RSS/:${encodeURIComponent(actor)}`; // Redirect to the RSS route with the actor parameter
+            window.location.href = `/luca-app/admin/RSS/:${encodeURIComponent(actor)}`; // Redirect to the RSS route with the actor parameter
         } else {
             alert('Please enter an actor name.');
         }

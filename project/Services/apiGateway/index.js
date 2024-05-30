@@ -84,7 +84,6 @@ const fetchSwaggerDocs = async () => {
         }
     }
 
-    // Write YAML instead of JSON
     const yamlStr = yaml.dump(finalSwaggerDoc);
     fs.writeFileSync(path.join(__dirname, 'finalSwagger.yaml'), yamlStr);
     console.log("Swagger documentation has been successfully combined and converted to YAML!");
