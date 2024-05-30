@@ -4,7 +4,7 @@ const JWToken = require("../modules/token");
 const {feedController} = require("../controllers/feedController");
 const {favoritesController} = require("../controllers/favoritesController");
 const Token = require("../../Authentication/modules/token");
-const getTokenStatus = require("../../Admin/modules/protected");
+const getTokenStatus = require("../modules/protected");
 const {adminController} = require("../../Admin/controllers/AdminController");
 
 const internalRoutes = [

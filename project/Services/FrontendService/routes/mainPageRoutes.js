@@ -1,6 +1,6 @@
 const {RouterController,Router} = require("../app_modules/controllers/routerController");
 const fs = require("fs");
-const getTokenStatus = require("../../Admin/modules/protected");
+const {getTokenStatus,getAdminTokenStatus} = require("../modules/protected");
 const path = require('path')
 const dirPath = path.resolve(__dirname, '../Frontend');
 

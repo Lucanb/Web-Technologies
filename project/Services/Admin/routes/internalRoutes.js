@@ -7,7 +7,7 @@ const Parser = require('rss-parser');
 const { URL } = require('url');
 const formidable = require('formidable');
 const RSS = require('rss');
-const getTokenStatus = require('../modules/protected')
+const {getAdminTokenStatus,getTokenStatus} = require('../modules/protected')
 
 const internalRoutes = [
     new Router("GET", "/luca-app/admin/altaRuta", async (req, res) => {
@@ -489,7 +489,7 @@ const internalRoutes = [
     new Router("POST","/luca-app/admin/logout",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
-            const tokenStatus = await getTokenStatus(cookies)
+            const tokenStatus = await getAdminTokenStatus(cookies)
             if (!tokenStatus.valid){
                 if(tokenStatus.message === 'Internal server error')
                 {
@@ -524,7 +524,7 @@ const internalRoutes = [
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else {
@@ -545,14 +545,14 @@ const internalRoutes = [
     new Router("DELETE","/luca-app/admin/user",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
-            const tokenStatus = await getTokenStatus(cookies)
+            const tokenStatus = await getAdminTokenStatus(cookies)
             if (!tokenStatus.valid){
                 if(tokenStatus.message === 'Internal server error')
                 {
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else {
@@ -573,14 +573,14 @@ const internalRoutes = [
     new Router("PUT","/luca-app/admin/user",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
-            const tokenStatus = await getTokenStatus(cookies)
+            const tokenStatus = await getAdminTokenStatus(cookies)
             if (!tokenStatus.valid){
                 if(tokenStatus.message === 'Internal server error')
                 {
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else {
@@ -601,14 +601,14 @@ const internalRoutes = [
     new Router("POST","/luca-app/admin/user",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
-            const tokenStatus = await getTokenStatus(cookies)
+            const tokenStatus = await getAdminTokenStatus(cookies)
             if (!tokenStatus.valid){
                 if(tokenStatus.message === 'Internal server error')
                 {
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else {
@@ -630,14 +630,14 @@ const internalRoutes = [
     new Router("POST","/luca-app/admin/import-csv",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
-            const tokenStatus = await getTokenStatus(cookies)
+            const tokenStatus = await getAdminTokenStatus(cookies)
             if (!tokenStatus.valid){
                 if(tokenStatus.message === 'Internal server error')
                 {
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else {

@@ -1,6 +1,6 @@
 const {RouterController,Router} = require("../app_modules/controllers/routerController");
 const fs = require("fs");
-const getTokenStatus = require("../../Admin/modules/protected");
+const {getTokenStatus,getAdminTokenStatus} = require("../modules/protected");
 const path = require('path')
 const dirPath = path.resolve(__dirname, '../Frontend');
 
@@ -75,7 +75,7 @@ routerController.addRoute(new Router("GET", "/luca-app/front/news", async (req, 
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else{
@@ -108,7 +108,7 @@ routerController.addRoute(new Router("GET", "/luca-app/front/news/:", async (req
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else{
@@ -135,14 +135,14 @@ routerController.addRoute(    new Router("GET", "/luca-app/front/admin", async (
             }
 
             const cookies = req.headers.cookie;
-            const tokenStatus = await getTokenStatus(cookies)
+            const tokenStatus = await getAdminTokenStatus(cookies)
             if (!tokenStatus.valid){
                 if(tokenStatus.message === 'Internal server error')
                 {
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://localhost:3000/login'});
+                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else{
