@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACVIS</title>
+    <link rel="stylesheet" href="/luca-app/front/styles/actor-profile.css">
+</head>
+<body>
+<div class="tab">
+    <button onclick="location.href='/luca-app/front/home';" class="tabs">Home</button>
+    <div class="search-bar">
+        <input type="text" placeholder="Search">
+    </div>
+    <button onclick="openForm()" class="tabs">News</button>
+    <button onclick="location.href='/luca-app/front/favorites';" class="tabs">Favorites</button>
+    <button class="tabs" id="add" >Add to Favourites</button>
+    <button onclick="handleLogout()" class="tabs">Log Out</button>
+</div>
+<div class="form-container">
+
+</div>
+<div class="intro-container">
+    <div class="actress-name">
+        <h1></h1>
+    </div>
+    <div class="intro-pictures">
+    <div class="actor-picture">
+    </div>
+    <div class="intro-video">
+    </div>
+    </div>
+</div>
+<div class="Actor-Awards">
+    <h1>Actor Awards :</h1>
+    <div class="movie-awards">
+        <div class="movie-container">
+            <div class="movie-details">
+                <div class="year">
+                </div>
+                <div class="category">
+                </div>
+                <div class="movie-name">
+                </div>
+                <div class="Score">
+                </div>
+                <div class="movie-picture">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="upcoming-movies">
+        <h1>Upcoming Movies</h1>
+        <div class="movie-container">
+            <div class="movie-details">
+                <div class="movie-name">
+                </div>
+                <div class="movie-picture">
+                </div>
+                <h3></h3>
+            </div>
+        </div>
+    </div>
+    <div class="all-movies">
+        <button class="see-movies">See All Movies</button>
+        <h1>All Movies:</h1>
+        <div class="movie-container">
+            <div class="movie-details">
+                <div class="movie-name">
+                    <h1></h1>
+                </div>
+                <div class="movie-picture">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="related-news">
+        <h1>Some related News</h1>
+        <div class="movie-details">
+            <div class="movie-name">
+                <h1></h1>
+            </div>
+            <div class="movie-picture">
+            </div>
+    </div>
+</div>
+<div class="low-bar">
+    <div class="references">
+        <label onclick="location.href='/luca-app/front/about';" class="references-element">About</label>
+        <label onclick="location.href='/luca-app/front/help';" class="references-element">Help</label>
+        <label onclick="location.href='/luca-app/front/index';" class="references-element">Site Index</label>
+    </div>
+</div>
+</div>
+<script>
+    function openForm() {
+        const existingForm = document.querySelector('.form-container form');
+        if (existingForm) {
+            existingForm.remove();
+        }
+
+        const form = document.createElement('form');
+        form.setAttribute('id', 'myForm');
+
+        const button1 = createButton('Variety', 'https://variety.com');
+        form.appendChild(button1);
+
+        const button2 = createButton('BBC News', 'https://www.bbc.com/news');
+        form.appendChild(button2);
+
+        const button3 = createButton('CNN', 'https://edition.cnn.com');
+        form.appendChild(button3);
+
+        const button4 = createButton('The New York Times', 'https://www.nytimes.com');
+        form.appendChild(button4);
+
+        document.querySelector('.form-container').appendChild(form);
+    }
+
+    function createButton(text, source) {
+        const button = document.createElement('button');
+        button.textContent = text;
+        button.addEventListener('click', function() {
+            saveSource(source)
+                .then(() => redirectActorPage());
+        });
+        return button;
+    }
+
+    function saveSource(source) {
+        return new Promise((resolve, reject) => {
+            document.cookie = `source=${encodeURIComponent(source)}; expires=${new Date(Date.now() + 86400000).toUTCString()}; path=/`;
+            resolve();
+        });
+    }
+
+    function redirectActorPage() {
+        return new Promise((resolve, reject) => {
+            const actorName = document.querySelector('.actress-name h1');
+            const name = actorName.textContent;
+            window.location.href = `http://localhost:3002/news/:${name}`;
+            resolve();
+        });
+    }
+
+    function handleLogout() {
+        fetch('http://luca-app:5000/luca-app/main/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'logout-message': 'LogOut'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to log out');
+                }
+                window.location.href = 'http://luca-app:5000/luca-app/front/login';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during logout: ' + error.message);
+            });
+    }
+
+    const path = window.location.pathname;
+    var lastIndex = path.lastIndexOf("/");
+    var id = path.substring(lastIndex + 1);
+    // console.log(id);
+    let formData = new URLSearchParams();
+    formData.append('id', id);
+    // console.log(formData)
+
+    const addToFavoritesBtn = document.getElementById('add');
+    addToFavoritesBtn.addEventListener('click', async () => {
+        try {
+            const response = await fetch('http://luca-app:5000/luca-app/main/add-favorites', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add to favourites.');
+            }
+        }catch (error){
+
+        }
+    });
+
+    fetch('http://luca-app:5000/luca-app/main/actor-profile-info', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // console.log('DATA : ', data);
+            const movieContainer = document.querySelector('.all-movies .movie-container');
+            const actorPicture = document.querySelector('.actor-picture');
+            const actorName = document.querySelector('.actress-name h1');
+            const profileImg = document.createElement('img');
+            actorName.textContent = data.data[0].name;
+            profileImg.src = data.data[0].profile_path;
+            actorPicture.innerHTML = '';
+            actorPicture.appendChild(profileImg);
+
+            data.data.forEach(actor => {
+                actor.known_for.forEach(movie => {
+                    const movieDetails = document.createElement('div');
+                    movieDetails.classList.add('movie-details');
+
+                    const movieName = document.createElement('div');
+                    movieName.classList.add('movie-name');
+                    movieName.innerHTML = `<h1>${movie.title}</h1>`;
+
+                    const moviePicture = document.createElement('div');
+                    moviePicture.classList.add('movie-picture');
+                    moviePicture.innerHTML = `<img src="${movie.poster_path}" alt="Poster film">`;
+
+                    movieDetails.appendChild(movieName);
+                    movieDetails.appendChild(moviePicture);
+
+                    const score = document.createElement('div');
+                    score.classList.add('Score');
+                    score.innerHTML = `Score: ${movie.vote_average}`;
+
+                    movieDetails.appendChild(score);
+
+                    movieContainer.appendChild(movieDetails);
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+
+</script>
+</body>
+</html>

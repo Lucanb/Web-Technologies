@@ -1,11 +1,13 @@
-const {RouterController,Router} = require("../../../modules/controllers/routerController");
+const {RouterController,Router} = require("../app_modules/controllers/routerController");
 const fs = require("fs");
 const getTokenStatus = require("../../Admin/modules/protected");
-
+const path = require('path')
+const dirPath = path.resolve(__dirname, '../Frontend');
 
 const routerController = new RouterController([
     new Router("GET", "/luca-app/front/styles/authentification.css", async (req, res) => {
-    fs.readFile("Frontend/styles/authentification.css", (err, data) => {
+        const filePath = path.join(dirPath, 'styles/authentification.css');
+    fs.readFile(filePath, (err, data) => {
         if (err) {
             res.writeHead(404, {'Content-Type': 'text/css'});
             return res.end('404 Not Found');
@@ -16,7 +18,8 @@ const routerController = new RouterController([
     });
 }),
     new Router("GET", "/luca-app/front/styles/admin.css", async (req, res) => {
-    fs.readFile("Frontend/styles/admin.css", (err, data) => {
+        const filePath = path.join(dirPath, 'styles/admin.css');
+    fs.readFile(filePath, (err, data) => {
         if (err) {
             res.writeHead(404, {'Content-Type': 'text/css'});
             return res.end('404 Not Found');
@@ -27,7 +30,8 @@ const routerController = new RouterController([
     });
 }),
     new Router("GET", "/luca-app/front/styles/news.css", async (req, res) => {
-        fs.readFile("Frontend/styles/news.css", (err, data) => {
+        const filePath = path.join(dirPath, 'styles/news.css');
+        fs.readFile(filePath, (err, data) => {
             if (err) {
                 res.writeHead(404, {'Content-Type': 'text/css'});
                 return res.end('404 Not Found');
@@ -40,7 +44,8 @@ const routerController = new RouterController([
 ]);
 
 routerController.addRoute(new Router("GET", "/luca-app/front/news/RSS", async (req, res) => {
-        fs.readFile("Frontend/views/newsrss.html", (err, data) => {
+    const filePath = path.join(dirPath, 'views/newsrss.html');
+        fs.readFile(filePath, (err, data) => {
             if (err) {
                 console.log(err)
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -54,8 +59,8 @@ routerController.addRoute(new Router("GET", "/luca-app/front/news/RSS", async (r
 );
 
 routerController.addRoute(new Router("GET", "/luca-app/front/news", async (req, res, next) => {
-
-        fs.readFile("Frontend/views/news.html", 'utf-8', async (err, html) => {
+    const filePath = path.join(dirPath, 'views/news.html');
+        fs.readFile(filePath, 'utf-8', async (err, html) => {
             if (err) {
                 console.error('Error reading file:', err);
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -87,8 +92,8 @@ routerController.addRoute(new Router("GET", "/luca-app/front/news", async (req, 
 )
 
 routerController.addRoute(new Router("GET", "/luca-app/front/news/:", async (req, res, next) => {
-
-        fs.readFile("Frontend/views/newsActor.html", 'utf-8', async (err, html) => {
+    const filePath = path.join(dirPath, 'views/newsActor.html');
+        fs.readFile(filePath, 'utf-8', async (err, html) => {
             if (err) {
                 console.error('Error reading file:', err);
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -121,8 +126,8 @@ routerController.addRoute(new Router("GET", "/luca-app/front/news/:", async (req
 
 
 routerController.addRoute(    new Router("GET", "/luca-app/front/admin", async (req, res, next) => {
-
-        fs.readFile("Frontend/views/admin.html", 'utf-8', async (err, html) => {
+    const filePath = path.join(dirPath, 'views/admin.html');
+        fs.readFile(filePath, 'utf-8', async (err, html) => {
             if (err) {
                 console.error('Error reading file:', err);
                 res.writeHead(404, {'Content-Type': 'text/html'});

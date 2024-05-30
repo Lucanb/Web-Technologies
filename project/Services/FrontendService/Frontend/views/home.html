@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACVIS</title>
+    <link rel="stylesheet" href="/luca-app/front/styles/home.css">
+</head>
+<body>
+<div class="tab">
+    <button class="tabs">Menu</button>
+    <div class="search-bar">
+        <input type="text" placeholder="Search">
+        <div class="autocomplete-options-container result"></div>
+    </div>
+    <button onclick="location.href='/luca-app/front/notifications';" class="tabs">Notifications</button>
+    <button onclick="location.href='/luca-app/front/favorites';" class="tabs">Favorites</button>
+    <button onclick="handleLogout()" class="tabs">Log Out</button>
+    <button onclick="location.href='/luca-app/front/news';" class="tabs">See News</button>
+    <!--        location.href='http://localhost:3000/login-->
+</div>
+<div class="main-content">
+    <div class="intro">
+        <div class="video-container">
+        </div>
+    </div>
+<!--    <div class="news-container">-->
+<!--        <h2>News</h2>-->
+<!--        <div class="news-element">-->
+<!--        </div>-->
+<!--    </div>-->
+
+</div>
+<div class="announces">
+    <h2>Announces</h2>
+    <div class="announce-element">
+    </div>
+</div>
+<div class="related-actors">
+    <h2>Top Picks For You</h2>
+    <div class="actor-element">
+    </div>
+</div>
+
+<div class="today-actors">
+    <h2>Today's Actors</h2>
+    <div class="actor-element">
+    </div>
+</div>
+<div class="section1">
+    <h1>What to watch</h1>
+</div>
+
+<div class="top-picks-this-week">
+    <h2>Top Actor Picks This Week</h2>
+    <div class="actor-element">
+    </div>
+</div>
+
+<div class="fan-favourites">
+    <h2>Fans Favourites</h2>
+    <div class="actor-element">
+    </div>
+</div>
+
+<div class="explore-actors">
+    <h2>Explore Actors</h2>
+    <div class="dropdown">
+        <button class="genre-button">Genre</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="#">Action</a>
+            <a href="#">Drama</a>
+            <a href="#">Comedy</a>
+            <a href="#">Adventure</a>
+        </div>
+    </div>
+    <div class="actor-element">
+    </div>
+</div>
+
+<div class="Coming-Soon">
+    <h2>Coming Soon</h2>
+    <div class="actor-element">
+    </div>
+</div>
+<div class="low-bar">
+    <div class="follow-bar">
+        <div class="follow-instagram-icon">
+            <button>Instagram</button>
+        </div>
+        <div class="follow-facebook">
+            <button>Facebook</button>
+        </div>
+    </div>
+    <div class = "references">
+        <label onclick="location.href='/luca-app/front/about';" class="references-element">About</label>
+        <label onclick="location.href='/luca-app/front/help';" class="references-element">Help</label>
+        <label onclick="location.href='/luca-app/front/index';" class="references-element">Site Index</label>
+    </div>
+</div>
+<div class="result"></div>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var genreButton = document.querySelector('.genre-button');
+        var dropdownContent = document.getElementById("myDropdown");
+
+        function setCookie(name, value, daysToLive) {
+            const date = new Date();
+            date.setTime(date.getTime() + (daysToLive * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + date.toUTCString();
+            document.cookie = `${name}=${value}; ${expires}; path=/`;
+        }
+
+        document.querySelectorAll('#myDropdown a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const genre = this.textContent;
+                const message = `${genre}`;
+                setCookie('selectedGenre', message, 7);
+                window.location.reload();
+            });
+        });
+
+        genreButton.addEventListener('click', function() {
+            dropdownContent.classList.toggle("show");
+        });
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.genre-button')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    });
+
+    function handleLogout() {
+        fetch('http://luca-app:5000/luca-app/main/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'logout-message': 'LogOut'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to log out');
+                }
+                window.location.href = '/luca-app/front/login';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during logout: ' + error.message);
+            });
+    }
+
+    function getCookie(name) {
+        let cookieArray = document.cookie.split(';');
+        for (let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i].trim();
+            if (cookie.indexOf(name + '=') == 0)
+                return cookie.substring(name.length + 1);
+        }
+        return "";
+    }
+
+    function redirectToActor(event){
+        event.preventDefault();
+        const id = event.target.id;
+        let formData = new URLSearchParams();
+        formData.append('id', id);
+
+        fetch('http://luca-app:5000/luca-app/main/send-actor-id', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.href = `/luca-app/front/actor-profile/${id}`
+                return response;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+    }
+
+    fetch('http://luca-app:5000/luca-app/main/announces', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && Array.isArray(data)) {
+                const announceElement = document.querySelector('.announce-element');
+                data.forEach(item => {
+                    if (item && item.posterUrl) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = item.posterUrl;
+                        imgElement.id = item.id;
+                        imgElement.alt = item.show;
+                        announceElement.appendChild(imgElement);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+
+    fetch('http://luca-app:5000/luca-app/main/exploreActors', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Selected-Genre': getCookie('selectedGenre')
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && Array.isArray(data)) {
+                const actorElement = document.querySelector('.explore-actors .actor-element');
+                console.log(data)
+                data.forEach(item => {
+                    if (item && item.profilePath) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = item.profilePath;
+                        imgElement.id = item.actorId;
+                        imgElement.alt = item.actorName;
+                        imgElement.addEventListener('click', redirectToActor);
+                        actorElement.appendChild(imgElement);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+
+    fetch('http://luca-app:5000/luca-app/main/toppicks', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && Array.isArray(data)) {
+                const actorElement = document.querySelector('.related-actors .actor-element');
+                data.forEach(item => {
+                    if (item && item.posterUrl) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = item.posterUrl;
+                        imgElement.id = item.id;
+                        imgElement.alt = item.full_name;
+                        imgElement.addEventListener('click', redirectToActor);
+                        actorElement.appendChild(imgElement);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+
+    fetch('http://luca-app:5000/luca-app/main/todayActors', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && Array.isArray(data)) {
+                const actorElement = document.querySelector('.today-actors .actor-element');
+                data.forEach(item => {
+                    if (item && item.posterUrl) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = item.posterUrl;
+                        imgElement.id = item.id;
+                        imgElement.alt = item.full_name;
+                        imgElement.addEventListener('click',redirectToActor);
+                        actorElement.appendChild(imgElement);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+
+    fetch('http://luca-app:5000/luca-app/main/topPicksWeek', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return response.json();
+    })
+        .then(data => {
+            if (data.success) {
+
+            } else {
+                if (data && Array.isArray(data)) {
+                    const actorElement = document.querySelector('.top-picks-this-week .actor-element');
+                    data.forEach(item => {
+                        if (item && item.posterUrl) {
+                            const imgElement = document.createElement('img');
+                            imgElement.src = item.posterUrl;
+                            imgElement.id = item.id;
+                            imgElement.alt = item.full_name;
+                            imgElement.addEventListener('click', redirectToActor);
+                            actorElement.appendChild(imgElement);
+                        }
+                    });
+                    // alert('Id not sent. Check if id exists ');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred: ' + error.message);
+        });
+
+    fetch('http://luca-app:5000/luca-app/main/topFavorites', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return response.json();
+    })
+        .then(data => {
+            if (data.success) {
+
+            } else {
+                if (data && Array.isArray(data)) {
+                    const actorElement = document.querySelector('.fan-favourites .actor-element');
+                    data.forEach(item => {
+                        if (item && item.posterUrl) {
+                            const imgElement = document.createElement('img');
+                            imgElement.src = item.posterUrl;
+                            imgElement.id = item.id;
+                            imgElement.alt = item.full_name;
+                            imgElement.addEventListener('click', redirectToActor);
+                            actorElement.appendChild(imgElement);
+                        }
+                    });
+                    // alert('Id not sent. Check if id exists ');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred: ' + error.message);
+        });
+
+    fetch('http://luca-app:5000/luca-app/main/commingSoon', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && Array.isArray(data)) {
+                const announceElement = document.querySelector('.Coming-Soon .actor-element');
+                data.forEach(item => {
+                    if (item && item.posterUrl) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = item.posterUrl;
+                        imgElement.id = item.id;
+                        imgElement.alt = item.show;
+                        announceElement.appendChild(imgElement);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+
+    const searchBar = document.querySelector('.search-bar input');
+
+    searchBar.addEventListener('input', async () => {
+        const searchText = searchBar.value.trim();
+        if (searchText.length === 0) {
+            return;
+        }
+
+        try {
+            let formData = new URLSearchParams();
+            formData.append('full_name', searchText);
+            const response = await fetch(`http://luca-app:5000/luca-app/main/search`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch search results');
+            }
+            const data = await response.json();
+            if (data && Array.isArray(data)) {
+                clearAutocompleteOptions();
+                data.forEach(item => {
+                    addAutocompleteOption(item.full_name);
+                    console.log(item.full_name);
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        }
+    });
+
+    function clearAutocompleteOptions() {
+        var result = document.querySelector('.result');
+        if (result) {
+            result.innerHTML = '';
+        }
+    }
+
+    function addAutocompleteOption(optionText) {
+        const autocompleteContainer = document.querySelector('.result');
+        if (autocompleteContainer) {
+            const optionElement = document.createElement('div');
+            optionElement.textContent = optionText;
+            optionElement.classList.add('autocomplete-option');
+            autocompleteContainer.appendChild(optionElement);
+
+            optionElement.addEventListener('click', () => {
+                searchBar.value = optionText;
+                clearAutocompleteOptions();
+            });
+        } else {
+            console.error('Elementul cu clasa ".result" nu a fost găsit.');
+        }
+    }
+
+</script>
+</body>
+</html>

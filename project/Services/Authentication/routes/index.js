@@ -1,4 +1,4 @@
-const {RouterController,Router} = require("../../../modules/controllers/routerController");
+const {RouterController,Router} = require("../app_modules/controllers/routerController");
 const fs = require("fs");
 const routerController = new RouterController([
     new Router("GET","/luca-app/auth/index",async (req,res)=>{

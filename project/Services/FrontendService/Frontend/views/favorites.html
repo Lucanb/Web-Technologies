@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACVIS</title>
+    <link rel="stylesheet" href="/luca-app/front/styles/favourites.css">
+</head>
+<body>
+<div class="tab">
+    <button onclick="location.href='/luca-app/front/home';" class="tabs">Home</button>
+    <div class="search-bar">
+        <button>Option</button>
+        <input type="text" placeholder="Search">
+    </div>
+    <button onclick="location.href='/luca-app/front/favorites';" class="tabs">Favorites</button>
+    <button onclick="handleLogout()" class="tabs">Log Out</button>
+</div>
+<div class="main-content">
+    <h1 class="favourites-page">Your Favourites</h1>
+    <div class="your-favourites-actors">
+        <h2>Your Favourites Actors</h2>
+    </div>
+</div>
+<div class="low-bar">
+    <div class = "references">
+        <label onclick="location.href='/luca-app/front/about';" class="references-element">About</label>
+        <label onclick="location.href='/luca-app/front/help';" class="references-element">Help</label>
+        <label onclick="location.href='/luca-app/front/index';" class="references-element">Site Index</label>
+    </div>
+</div>
+<script>
+    function handleLogout() {
+        fetch('http://luca-app:5000/luca-app/main/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'logout-message': 'LogOut'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to log out');
+                }
+                window.location.href = 'http://luca-app:5000/luca-app/front/login';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during logout: ' + error.message);
+            });
+    }
+
+    function redirectToActor(event){
+        event.preventDefault();
+        const id = event.target.id;
+        let formData = new URLSearchParams();
+        formData.append('id', id);
+        console.log(formData)
+
+        fetch('http://luca-app:5000/luca-app/main/send-actor-id', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData
+        })
+            .then(response => {
+                // console.log('Raw Response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.href = `/luca-app/main/actor-profile/${id}`
+                console.log('Raw Response:', response);
+                return response;
+            })
+            /*.then(data => {
+                if (data.success) {
+
+                } else {
+                    console.log('DATA : ',data)
+                    alert('Id not sent. Check if id exists ');
+                }
+            })*/
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
+            });
+    }
+
+    function deleteActor(id) {
+        if (confirm('Are you sure you want to delete this actor from your favorites?')) {
+            console.log('Deleting actor with ID:', id);
+            fetch(`http://luca-app:5000/luca-app/main/delete-actor`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'id': id
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to delete the actor');
+                    }
+                    alert('Actor deleted successfully');
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                });
+        }
+    }
+
+
+    fetch('http://luca-app:5000/luca-app/main/all-favorites', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const ids = data.map(item => item.id_actor);
+            ids.forEach(id => {
+                console.log(id);
+                let formData = new URLSearchParams();
+                formData.append('id', id);
+                console.log(formData);
+                fetch('http://luca-app:5000/luca-app/main/actor-profile-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData,
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const actorDetailsDiv = document.createElement('div');
+                        actorDetailsDiv.classList.add('actor-details');
+
+                        const actorNameDiv = document.createElement('div');
+                        actorNameDiv.classList.add('actor-name');
+                        const actorNameH2 = document.createElement('h2');
+                        actorNameH2.textContent = data.data[0].name;
+                        actorNameDiv.appendChild(actorNameH2);
+                        actorDetailsDiv.appendChild(actorNameDiv);
+
+                        const actorPictureDiv = document.createElement('div');
+                        actorPictureDiv.classList.add('actor-picture');
+                        const actorImg = document.createElement('img');
+                        actorImg.src = data.data[0].profile_path;
+                        actorImg.id = id;
+                        actorPictureDiv.appendChild(actorImg);
+                        actorDetailsDiv.appendChild(actorPictureDiv);
+                        const actorContainer = document.querySelector('.your-favourites-actors');
+                        actorContainer.appendChild(actorDetailsDiv);
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.textContent = 'Delete';
+                        deleteButton.onclick = () => deleteActor(id);
+                        actorDetailsDiv.appendChild(deleteButton);
+
+                        actorImg.addEventListener('click',redirectToActor);
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error: ' + error.message);
+                    });
+            })
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+
+
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-const { Router } = require("../../../modules/controllers/routerController");
+const { Router } = require("../app_modules/controllers/routerController");
 const fs = require("fs");
 const JWToken = require("../modules/token");
 const getTokenStatus = require("../../Admin/modules/protected");

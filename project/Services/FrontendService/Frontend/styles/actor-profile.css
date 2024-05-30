@@ -1,0 +1,254 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+}
+
+.tab {
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  justify-content: space-between;
+  height: 60px;
+  z-index: 10;
+}
+@media (max-width: 700px) {
+  .tab {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+  }
+}
+
+.tabs, .menu-toggle {
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.tabs:hover, .menu-toggle:hover {
+  background-color: #ffd700;
+}
+
+.search-bar {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  position: relative;
+}
+.search-bar input[type=text] {
+  border: 1px solid #ccc;
+  width: calc(100% - 20px);
+  padding: 10px 10px 10px 40px;
+}
+.search-bar input[type=text]:hover {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: calc(60px + 20px);
+  margin-left: auto;
+  margin-right: auto;
+}
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-container form input[type=text] {
+  border: 1px solid #ccc;
+  width: calc(100% - 20px);
+  padding: 10px 10px 10px 40px;
+  background-color: #000;
+  color: #fff;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+.form-container form input[type=text]:hover {
+  background-color: #ffd700;
+  border-radius: 10px;
+}
+.form-container form button[type=submit] {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+.form-container form button[type=submit]:hover {
+  background-color: #ffd700;
+}
+.form-container:hover {
+  background-color: #ffd700;
+}
+
+@media (max-width: 700px) {
+  .form-container {
+    margin-top: calc(2 * 60px + 250px);
+  }
+}
+.intro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: calc(60px + 10px);
+  z-index: 15;
+}
+.intro-container .actress-name {
+  margin-top: 30px;
+}
+
+@media (max-width: 700px) {
+  .intro-container {
+    margin-top: calc(2 * 60px + 250px);
+  }
+}
+.intro-pictures {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 70px;
+  padding: 20px;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+@media (max-width: 600px) {
+  .intro-pictures {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media (max-width: 700px) {
+  .intro-pictures {
+    margin-top: 20px;
+  }
+}
+
+.actor-picture, .intro-video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actor-picture img, .intro-video img {
+  max-height: 300px;
+  width: auto;
+  object-fit: cover;
+}
+@media (max-width: 800px) {
+  .actor-picture img, .intro-video img {
+    max-width: 100%;
+  }
+}
+
+.movie-awards .movie-container, .upcoming-movies .movie-container, .all-movies .movie-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+}
+@media (max-width: 600px) {
+  .movie-awards .movie-container, .upcoming-movies .movie-container, .all-movies .movie-container {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.movie-details {
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 200px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.movie-details .movie-picture img {
+  width: 100%;
+  display: block;
+}
+.movie-details h2, .movie-details h3 {
+  margin: 10px 0;
+}
+
+.see-movies {
+  display: block;
+  width: fit-content;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.see-movies:hover {
+  background-color: #ffd700;
+}
+
+.low-bar {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+@media (max-width: 600px) {
+  .low-bar {
+    padding: 10px;
+  }
+}
+.low-bar > div {
+  margin: 10px 0;
+}
+.low-bar button {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.low-bar button:hover {
+  background-color: #ffd700;
+}
+.low-bar .references {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.low-bar .references .references-element {
+  margin: 5px 10px;
+  cursor: pointer;
+}
+.low-bar .references .references-element:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=actor-profile.css.map */

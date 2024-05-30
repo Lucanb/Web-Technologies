@@ -1,7 +1,10 @@
-const {RouterController,Router} = require("../../../modules/controllers/routerController");
+const {RouterController,Router} = require("../app_modules/controllers/routerController");
 const fs = require("fs");
+const path = require('path')
+const dirPath = path.resolve(__dirname, '../Frontend');
 const routerController = new RouterController([    new Router("GET","/luca-app/front/index",async (req,res)=>{
-    fs.readFile("Frontend/views/index.html",(err, data)=>{
+    const filePath = path.join(dirPath, 'views/index.html');
+    fs.readFile(filePath,(err, data)=>{
         if(err){
             res.writeHead(404, {'Content-Type': 'text/html'});
             // console.log(err)

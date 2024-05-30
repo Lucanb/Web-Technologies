@@ -1,0 +1,237 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.tab {
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  justify-content: space-between;
+  height: 60px;
+  z-index: 10;
+}
+@media (max-width: 700px) {
+  .tab {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+  }
+}
+
+.tabs, .menu-toggle {
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.tabs:hover, .menu-toggle:hover {
+  background-color: #ffd700;
+}
+
+.search-bar {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  position: relative;
+}
+.search-bar input[type=text] {
+  border: 1px solid #ccc;
+  width: calc(100% - 20px);
+  padding: 10px 10px 10px 40px;
+}
+.search-bar input[type=text]:hover {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.sign-in {
+  background-color: #fff;
+  padding: 20px;
+  width: auto;
+  margin: 60px auto 0 auto;
+  box-sizing: border-box;
+  max-width: 400px;
+  flex: 1 0 auto;
+}
+@media (max-width: 700px) {
+  .sign-in {
+    margin-top: 300px;
+  }
+}
+@media (max-width: 600px) {
+  .sign-in {
+    width: 90%;
+    padding: 10px;
+  }
+}
+.sign-in h2 {
+  text-align: center;
+}
+.sign-in form {
+  display: flex;
+  flex-direction: column;
+}
+.sign-in form input[type=text], .sign-in form input[type=password] {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+.sign-in form input[type=text]:focus, .sign-in form input[type=password]:focus {
+  outline: none;
+  border-color: #b3b3b3;
+}
+.sign-in form button[type=submit] {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.sign-in form button[type=submit]:hover {
+  background-color: #ffd700;
+}
+
+.forget {
+  padding: 20px;
+  background-color: #fff;
+  margin-top: 80px;
+  width: 90%;
+  max-width: 500px;
+  box-sizing: border-box;
+  align-self: center;
+}
+@media (max-width: 700px) {
+  .forget {
+    margin-top: 250px;
+  }
+}
+.forget h2 {
+  color: #000;
+  text-align: center;
+}
+.forget form {
+  display: flex;
+  flex-direction: column;
+}
+.forget form input[type=text], .forget form input[type=password] {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #000;
+}
+.forget form button[type=submit] {
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.forget form button[type=submit]:hover {
+  background-color: #ccac00;
+}
+
+.register {
+  padding: 20px;
+  background-color: #fff;
+  margin-top: 80px;
+  width: 90%;
+  max-width: 500px;
+  box-sizing: border-box;
+  align-self: center;
+}
+@media (max-width: 700px) {
+  .register {
+    margin-top: 250px;
+  }
+}
+.register h2 {
+  text-align: center;
+}
+.register form {
+  display: flex;
+  flex-direction: column;
+}
+.register form label {
+  margin-bottom: 10px;
+}
+.register form input[type=text], .register form input[type=password] {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #000;
+}
+.register form input[type=text]:focus, .register form input[type=password]:focus {
+  outline: none;
+  border-color: black;
+}
+.register form button[type=submit] {
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.register form button[type=submit]:hover {
+  background-color: #ccac00;
+}
+
+.low-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: auto;
+}
+@media (max-width: 600px) {
+  .low-bar {
+    padding: 10px;
+  }
+}
+.low-bar > div {
+  margin: 10px 0;
+}
+.low-bar button {
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.low-bar button:hover {
+  background-color: #ffd700;
+}
+
+.references {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.references-element {
+  margin: 5px 10px;
+  cursor: pointer;
+}
+.references-element:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=authentification.css.map */
