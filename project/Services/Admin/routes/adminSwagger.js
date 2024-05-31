@@ -8,13 +8,11 @@ const generateSwaggerDoc = (routerController, outputPath) => {
         let path = route.path;
         const method = route.method.toLowerCase();
 
-        // Ensure route.config is initialized
         route.config = route.config || {};
 
-        // Check if the path ends with /: and add a generic path parameter
         if (path.endsWith('/:')) {
-            const paramName = "param"; // Placeholder name for the path variable
-            path = path.replace(/\/:$/, `/{${paramName}}`); // Replace /: with /{param} for Swagger
+            const paramName = "param";
+            path = path.replace(/\/:$/, `/{${paramName}}`);
             route.config.parameters = route.config.parameters || [];
             route.config.parameters.push({
                 name: paramName,
@@ -26,11 +24,11 @@ const generateSwaggerDoc = (routerController, outputPath) => {
         }
 
         if (!paths[path]) {
-            paths[path] = {}; // Initialize the path object
+            paths[path] = {};
         }
 
         if (!paths[path][method]) {
-            paths[path][method] = {}; // Initialize the method object
+            paths[path][method] = {};
         }
 
         const routeConfig = {
@@ -43,8 +41,8 @@ const generateSwaggerDoc = (routerController, outputPath) => {
                 404: { description: "Not Found" },
                 500: { description: "Internal Server Error" }
             },
-            parameters: route.config.parameters || [],  // Initialize parameters array with existing ones
-            requestBody: route.config.requestBody || {}  // Initialize requestBody object with existing one
+            parameters: route.config.parameters || [],
+            requestBody: route.config.requestBody || {}
         };
 
         // Path parameters extraction
@@ -52,7 +50,6 @@ const generateSwaggerDoc = (routerController, outputPath) => {
         if (pathParams) {
             pathParams.forEach(param => {
                 const paramName = param.replace(/[{}]/g, '');
-                // Check if the parameter is already added
                 if (!routeConfig.parameters.some(p => p.name === paramName)) {
                     routeConfig.parameters.push({
                         name: paramName,
@@ -65,7 +62,6 @@ const generateSwaggerDoc = (routerController, outputPath) => {
             });
         }
 
-        // General handling for methods that might have bodies
         if (['post', 'put', 'patch'].includes(method)) {
             routeConfig.requestBody = {
                 required: true,
@@ -74,7 +70,7 @@ const generateSwaggerDoc = (routerController, outputPath) => {
                         schema: {
                             type: 'object',
                             properties: {
-                                // Define JSON schema properties here
+
                             }
                         }
                     },
@@ -82,7 +78,7 @@ const generateSwaggerDoc = (routerController, outputPath) => {
                         schema: {
                             type: 'object',
                             properties: {
-                                // Define Form-URL Encoded schema properties here
+
                             }
                         }
                     }
@@ -90,7 +86,6 @@ const generateSwaggerDoc = (routerController, outputPath) => {
             };
         }
 
-        // Assign the configured routeConfig to the method
         paths[path][method] = routeConfig;
     });
 
@@ -104,7 +99,6 @@ const generateSwaggerDoc = (routerController, outputPath) => {
         paths: paths
     };
 
-    // Writing Swagger documentation to the specified output path with error handling
     try {
         fs.writeFileSync(outputPath, JSON.stringify(swaggerDoc, null, 2));
         console.log("Swagger documentation generated successfully!");
