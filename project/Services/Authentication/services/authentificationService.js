@@ -201,7 +201,7 @@ class UserService {
                 }
             });
 
-            const resetLink = `http://luca-app:5000/luca-app/front/update-password/${emailToken}`;
+            const resetLink = `http://localhost:5000/luca-app/front/update-password/${emailToken}`;
             const mailOptions = {
                 from:  config.EMAIL,
                 to: emailAddress,
