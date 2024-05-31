@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const generateSwaggerDoc = (routerController, outputPath) => {
     const paths = {};
@@ -50,13 +51,17 @@ const generateSwaggerDoc = (routerController, outputPath) => {
         const pathParams = path.match(/\{([^}]+)\}/g);
         if (pathParams) {
             pathParams.forEach(param => {
-                routeConfig.parameters.push({
-                    name: param.replace(/[{}]/g, ''),
-                    in: 'path',
-                    required: true,
-                    schema: { type: 'string' },
-                    description: `Parameter ${param.replace(/[{}]/g, '')}`
-                });
+                const paramName = param.replace(/[{}]/g, '');
+                // Check if the parameter is already added
+                if (!routeConfig.parameters.some(p => p.name === paramName)) {
+                    routeConfig.parameters.push({
+                        name: paramName,
+                        in: 'path',
+                        required: true,
+                        schema: { type: 'string' },
+                        description: `Parameter ${paramName}`
+                    });
+                }
             });
         }
 
@@ -99,7 +104,13 @@ const generateSwaggerDoc = (routerController, outputPath) => {
         paths: paths
     };
 
-    fs.writeFileSync(outputPath, JSON.stringify(swaggerDoc, null, 2));
+    // Writing Swagger documentation to the specified output path with error handling
+    try {
+        fs.writeFileSync(outputPath, JSON.stringify(swaggerDoc, null, 2));
+        console.log("Swagger documentation generated successfully!");
+    } catch (error) {
+        console.error("Failed to write Swagger documentation:", error);
+    }
 };
 
 module.exports = { generateSwaggerDoc };

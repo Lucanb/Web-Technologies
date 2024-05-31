@@ -225,15 +225,6 @@
               "type": "string"
             },
             "description": "Dynamic parameter, replace 'param' with the actual parameter name"
-          },
-          {
-            "name": "param",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Parameter param"
           }
         ],
         "requestBody": {

@@ -151,12 +151,6 @@ paths:
           schema:
             type: string
           description: Dynamic parameter, replace 'param' with the actual parameter name
-        - name: param
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Parameter param
       requestBody:
         required: true
         content:
@@ -697,19 +691,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Parameter param
-        - name: param
-          in: path
-          required: true
-          schema:
-            type: string
           description: Dynamic parameter, replace 'param' with the actual parameter name
-        - name: param
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Parameter param
       requestBody:
         required: true
         content:
@@ -765,19 +747,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Parameter param
-        - name: param
-          in: path
-          required: true
-          schema:
-            type: string
           description: Dynamic parameter, replace 'param' with the actual parameter name
-        - name: param
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Parameter param
       requestBody:
         required: true
         content:
@@ -1385,12 +1355,6 @@ paths:
           schema:
             type: string
           description: Dynamic parameter, replace 'param' with the actual parameter name
-        - name: param
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Parameter param
       requestBody: {}
   /luca-app/front/actvis:
     get:
@@ -1465,12 +1429,6 @@ paths:
           schema:
             type: string
           description: Dynamic parameter, replace 'param' with the actual parameter name
-        - name: param
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Parameter param
       requestBody: {}
   /luca-app/front/news:
     get:
@@ -1579,12 +1537,6 @@ paths:
           schema:
             type: string
           description: Dynamic parameter, replace 'param' with the actual parameter name
-        - name: param
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Parameter param
       requestBody: {}
   /luca-app/front/admin:
     get:
@@ -1676,10 +1628,4 @@ paths:
           schema:
             type: string
           description: Dynamic parameter, replace 'param' with the actual parameter name
-        - name: param
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Parameter param
       requestBody: {}
