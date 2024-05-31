@@ -26,7 +26,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/admin/addAnnounce": {
@@ -48,6 +50,24 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
           }
         }
       }
@@ -72,7 +92,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/admin/announces": {
@@ -95,7 +117,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       },
       "put": {
         "tags": [
@@ -115,6 +139,24 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
           }
         }
       },
@@ -137,7 +179,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/admin/get-news/:actor": {
@@ -160,7 +204,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/admin/RSS/:actor": {
@@ -183,7 +229,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/admin/logout": {
@@ -205,6 +253,24 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
           }
         }
       }
@@ -229,7 +295,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/admin/user": {
@@ -252,7 +320,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       },
       "put": {
         "tags": [
@@ -272,6 +342,24 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
           }
         }
       },
@@ -293,6 +381,24 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
           }
         }
       }
@@ -317,6 +423,24 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
         }
       }
     },
@@ -340,7 +464,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     }
   }

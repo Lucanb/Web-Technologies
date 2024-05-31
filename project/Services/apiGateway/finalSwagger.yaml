@@ -19,6 +19,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/auth/login:
     post:
       tags:
@@ -34,6 +36,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/auth/register:
     post:
       tags:
@@ -49,6 +63,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/auth/register_userCredentialsExists:
     post:
       tags:
@@ -64,6 +90,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/auth/forgot:
     post:
       tags:
@@ -79,11 +117,23 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
-  '/luca-app/auth/update-password/:':
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/auth/update-password/{param}:
     post:
       tags:
         - API
-      summary: 'POST /luca-app/auth/update-password/:'
+      summary: POST /luca-app/auth/update-password/{param}
       description: ''
       responses:
         '200':
@@ -94,6 +144,30 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Parameter param
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/main/altaRuta:
     get:
       tags:
@@ -109,6 +183,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/getnotifications:
     get:
       tags:
@@ -124,6 +200,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/announces:
     get:
       tags:
@@ -139,6 +217,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/send-actor-id:
     post:
       tags:
@@ -154,6 +234,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/main/actor-profile-info:
     post:
       tags:
@@ -169,6 +261,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/main/toppicks:
     get:
       tags:
@@ -184,6 +288,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/todayActors:
     get:
       tags:
@@ -199,6 +305,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/commingSoon:
     get:
       tags:
@@ -214,6 +322,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/news:
     get:
       tags:
@@ -229,6 +339,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/help:
     post:
       tags:
@@ -244,6 +356,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/main/styles/home.css:
     get:
       tags:
@@ -259,6 +383,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/styles/favourites.css:
     get:
       tags:
@@ -274,6 +400,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/styles/about.css:
     get:
       tags:
@@ -289,6 +417,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/styles/help.css:
     get:
       tags:
@@ -304,6 +434,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/styles/index.css:
     get:
       tags:
@@ -319,6 +451,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/styles/news.css:
     get:
       tags:
@@ -334,6 +468,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/styles/actor-profile.css:
     get:
       tags:
@@ -349,6 +485,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/styles/admin.css:
     get:
       tags:
@@ -364,6 +502,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/add-favorites:
     post:
       tags:
@@ -379,6 +519,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/main/all-favorites:
     get:
       tags:
@@ -394,6 +546,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/topPicksWeek:
     get:
       tags:
@@ -409,6 +563,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/topFavorites:
     get:
       tags:
@@ -424,6 +580,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/exploreActors:
     get:
       tags:
@@ -439,6 +597,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/delete-actor:
     delete:
       tags:
@@ -454,6 +614,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/logout:
     post:
       tags:
@@ -469,6 +631,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/main/search:
     post:
       tags:
@@ -484,11 +658,23 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
-  '/luca-app/main/statisticAwards/:':
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/statisticAwards/{param}:
     post:
       tags:
         - API
-      summary: 'POST /luca-app/main/statisticAwards/:'
+      summary: POST /luca-app/main/statisticAwards/{param}
       description: ''
       responses:
         '200':
@@ -499,6 +685,42 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Parameter param
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Parameter param
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/main/nominatedActors:
     get:
       tags:
@@ -514,11 +736,13 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
-  '/luca-app/main/statisticGenre/:':
+      parameters: []
+      requestBody: {}
+  /luca-app/main/statisticGenre/{param}:
     post:
       tags:
         - API
-      summary: 'POST /luca-app/main/statisticGenre/:'
+      summary: POST /luca-app/main/statisticGenre/{param}
       description: ''
       responses:
         '200':
@@ -529,6 +753,42 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Parameter param
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Parameter param
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /index:
     get:
       tags:
@@ -544,12 +804,16 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/announces_unauthenticated:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/announces_unauthenticated
-      description: ''
+      summary: Fetch Public Announcements
+      description: >-
+        Retrieves the latest public announcements without requiring user
+        authentication.
       responses:
         '200':
           description: Successful response
@@ -559,12 +823,16 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/toppicks_unauthenticated:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/toppicks_unauthenticated
-      description: ''
+      summary: Fetch Top Picks
+      description: >-
+        Provides a feed of the top picks content accessible without user
+        authentication.
       responses:
         '200':
           description: Successful response
@@ -574,12 +842,16 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/todayActors_unauthenticated:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/todayActors_unauthenticated
-      description: ''
+      summary: Fetch Today's Actors
+      description: >-
+        Retrieves a feed of today featured actors without needing
+        authentication.
       responses:
         '200':
           description: Successful response
@@ -589,12 +861,16 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/main/commingSoon_unauthenticated:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/commingSoon_unauthenticated
-      description: ''
+      summary: Fetch Coming Soon Content
+      description: >-
+        Retrieves information about upcoming features or content accessible
+        without user authentication.
       responses:
         '200':
           description: Successful response
@@ -604,6 +880,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/admin/altaRuta:
     get:
       tags:
@@ -619,6 +897,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/admin/addAnnounce:
     post:
       tags:
@@ -634,6 +914,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/admin/users:
     get:
       tags:
@@ -649,6 +941,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/admin/announces:
     get:
       tags:
@@ -664,6 +958,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
     put:
       tags:
         - API
@@ -678,6 +974,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
     delete:
       tags:
         - API
@@ -692,6 +1000,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/admin/get-news/:actor:
     get:
       tags:
@@ -707,6 +1017,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/admin/RSS/:actor:
     get:
       tags:
@@ -722,6 +1034,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/admin/logout:
     post:
       tags:
@@ -737,6 +1051,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/admin/nominatedActors:
     get:
       tags:
@@ -752,6 +1078,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/admin/user:
     delete:
       tags:
@@ -767,6 +1095,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
     put:
       tags:
         - API
@@ -781,6 +1111,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
     post:
       tags:
         - API
@@ -795,6 +1137,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/admin/import-csv:
     post:
       tags:
@@ -810,6 +1164,18 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/front/index:
     get:
       tags:
@@ -825,6 +1191,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/altaRuta:
     get:
       tags:
@@ -840,6 +1208,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/styles/home.css:
     get:
       tags:
@@ -855,6 +1225,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/styles/favourites.css:
     get:
       tags:
@@ -870,6 +1242,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/styles/about.css:
     get:
       tags:
@@ -885,6 +1259,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/styles/help.css:
     get:
       tags:
@@ -900,6 +1276,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/styles/index.css:
     get:
       tags:
@@ -915,6 +1293,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/styles/news.css:
     get:
       tags:
@@ -930,6 +1310,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/styles/actor-profile.css:
     get:
       tags:
@@ -945,6 +1327,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/styles/admin.css:
     get:
       tags:
@@ -960,6 +1344,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/home:
     get:
       tags:
@@ -975,11 +1361,13 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
-  '/luca-app/front/diagrams/:':
+      parameters: []
+      requestBody: {}
+  /luca-app/front/diagrams/{param}:
     get:
       tags:
         - API
-      summary: 'GET /luca-app/front/diagrams/:'
+      summary: GET /luca-app/front/diagrams/{param}
       description: ''
       responses:
         '200':
@@ -990,6 +1378,20 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Parameter param
+      requestBody: {}
   /luca-app/front/actvis:
     get:
       tags:
@@ -1005,6 +1407,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/notifications:
     get:
       tags:
@@ -1020,6 +1424,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/favorites:
     get:
       tags:
@@ -1035,11 +1441,13 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
-  '/luca-app/front/actor-profile/:':
+      parameters: []
+      requestBody: {}
+  /luca-app/front/actor-profile/{param}:
     get:
       tags:
         - API
-      summary: 'GET /luca-app/front/actor-profile/:'
+      summary: GET /luca-app/front/actor-profile/{param}
       description: ''
       responses:
         '200':
@@ -1050,6 +1458,20 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Parameter param
+      requestBody: {}
   /luca-app/front/news:
     get:
       tags:
@@ -1065,6 +1487,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/about:
     get:
       tags:
@@ -1080,6 +1504,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/help:
     get:
       tags:
@@ -1095,6 +1521,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/styles/authentification.css:
     get:
       tags:
@@ -1110,6 +1538,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/news/RSS:
     get:
       tags:
@@ -1125,11 +1555,13 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
-  '/luca-app/front/news/:':
+      parameters: []
+      requestBody: {}
+  /luca-app/front/news/{param}:
     get:
       tags:
         - API
-      summary: 'GET /luca-app/front/news/:'
+      summary: GET /luca-app/front/news/{param}
       description: ''
       responses:
         '200':
@@ -1140,6 +1572,20 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Parameter param
+      requestBody: {}
   /luca-app/front/admin:
     get:
       tags:
@@ -1155,6 +1601,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/login:
     get:
       tags:
@@ -1170,6 +1618,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/register:
     get:
       tags:
@@ -1185,6 +1635,8 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters: []
+      requestBody: {}
   /luca-app/front/forgot:
     get:
       tags:
@@ -1200,11 +1652,13 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
-  '/luca-app/front/update-password/:':
+      parameters: []
+      requestBody: {}
+  /luca-app/front/update-password/{param}:
     get:
       tags:
         - API
-      summary: 'GET /luca-app/front/update-password/:'
+      summary: GET /luca-app/front/update-password/{param}
       description: ''
       responses:
         '200':
@@ -1215,3 +1669,17 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Parameter param
+      requestBody: {}

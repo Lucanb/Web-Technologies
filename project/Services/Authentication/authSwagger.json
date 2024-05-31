@@ -26,7 +26,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/auth/login": {
@@ -48,6 +50,24 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
           }
         }
       }
@@ -72,6 +92,24 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
         }
       }
     },
@@ -94,6 +132,24 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
           }
         }
       }
@@ -118,15 +174,33 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
         }
       }
     },
-    "/luca-app/auth/update-password/:": {
+    "/luca-app/auth/update-password/{param}": {
       "post": {
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/auth/update-password/:",
+        "summary": "POST /luca-app/auth/update-password/{param}",
         "description": "",
         "responses": {
           "200": {
@@ -140,6 +214,43 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Dynamic parameter, replace 'param' with the actual parameter name"
+          },
+          {
+            "name": "param",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Parameter param"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
           }
         }
       }

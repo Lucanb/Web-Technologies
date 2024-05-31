@@ -26,7 +26,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/altaRuta": {
@@ -49,7 +51,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/styles/home.css": {
@@ -72,7 +76,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/styles/favourites.css": {
@@ -95,7 +101,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/styles/about.css": {
@@ -118,7 +126,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/styles/help.css": {
@@ -141,7 +151,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/styles/index.css": {
@@ -164,7 +176,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/styles/news.css": {
@@ -187,7 +201,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/styles/actor-profile.css": {
@@ -210,7 +226,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/styles/admin.css": {
@@ -233,7 +251,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/home": {
@@ -256,15 +276,17 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
-    "/luca-app/front/diagrams/:": {
+    "/luca-app/front/diagrams/{param}": {
       "get": {
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/diagrams/:",
+        "summary": "GET /luca-app/front/diagrams/{param}",
         "description": "",
         "responses": {
           "200": {
@@ -279,7 +301,28 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Dynamic parameter, replace 'param' with the actual parameter name"
+          },
+          {
+            "name": "param",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Parameter param"
+          }
+        ],
+        "requestBody": {}
       }
     },
     "/luca-app/front/actvis": {
@@ -302,7 +345,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/notifications": {
@@ -325,7 +370,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/favorites": {
@@ -348,15 +395,17 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
-    "/luca-app/front/actor-profile/:": {
+    "/luca-app/front/actor-profile/{param}": {
       "get": {
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/actor-profile/:",
+        "summary": "GET /luca-app/front/actor-profile/{param}",
         "description": "",
         "responses": {
           "200": {
@@ -371,7 +420,28 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Dynamic parameter, replace 'param' with the actual parameter name"
+          },
+          {
+            "name": "param",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Parameter param"
+          }
+        ],
+        "requestBody": {}
       }
     },
     "/luca-app/front/news": {
@@ -394,7 +464,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/about": {
@@ -417,7 +489,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/help": {
@@ -440,7 +514,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/styles/authentification.css": {
@@ -463,7 +539,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/news/RSS": {
@@ -486,15 +564,17 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
-    "/luca-app/front/news/:": {
+    "/luca-app/front/news/{param}": {
       "get": {
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/news/:",
+        "summary": "GET /luca-app/front/news/{param}",
         "description": "",
         "responses": {
           "200": {
@@ -509,7 +589,28 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Dynamic parameter, replace 'param' with the actual parameter name"
+          },
+          {
+            "name": "param",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Parameter param"
+          }
+        ],
+        "requestBody": {}
       }
     },
     "/luca-app/front/admin": {
@@ -532,7 +633,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/login": {
@@ -555,7 +658,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/register": {
@@ -578,7 +683,9 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
     "/luca-app/front/forgot": {
@@ -601,15 +708,17 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [],
+        "requestBody": {}
       }
     },
-    "/luca-app/front/update-password/:": {
+    "/luca-app/front/update-password/{param}": {
       "get": {
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/update-password/:",
+        "summary": "GET /luca-app/front/update-password/{param}",
         "description": "",
         "responses": {
           "200": {
@@ -624,7 +733,28 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Dynamic parameter, replace 'param' with the actual parameter name"
+          },
+          {
+            "name": "param",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Parameter param"
+          }
+        ],
+        "requestBody": {}
       }
     }
   }
