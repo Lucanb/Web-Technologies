@@ -44,7 +44,7 @@
         checkFormData.append(field, value);
 
         try {
-            const checkResponse = await fetch('http://luca-app:5000/luca-app/auth/register_userCredentialsExists', {
+            const checkResponse = await fetch('/luca-app/auth/register_userCredentialsExists', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -92,7 +92,7 @@
         formData.append('password', password);
         formData.append('passwordCheck', password2);
 
-        fetch('http://luca-app:5000/luca-app/auth/register', {
+        fetch('/luca-app/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

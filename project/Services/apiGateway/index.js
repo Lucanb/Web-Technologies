@@ -133,5 +133,5 @@ const server = http.createServer((req, res) => {
 const port = 5000;
 server.listen(port, async () => {
     await fetchSwaggerDocs();
-    console.log(`API Gateway is running on http://luca-app:${port}`);
+    console.log(`API Gateway is running on http://localhost:${port}`);
 });

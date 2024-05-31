@@ -44,7 +44,7 @@
     formData.append('username', username);
     formData.append('password', password);
 
-    fetch('http://luca-app:5000/luca-app/auth/login', {
+    fetch('/luca-app/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

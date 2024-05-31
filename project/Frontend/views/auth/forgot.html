@@ -13,7 +13,7 @@
 </div>
 <div class="forget">
     <h2>Forget password</h2>
-    <form id="forgetForm" method="post" action="http://luca-app:5000/luca-app/auth/forgot">
+    <form id="forgetForm" method="post" action="/luca-app/auth/forgot">
         <input type="text" id="email" name="email" placeholder="Email" required>
         <button type="submit">Submit</button>
     </form>
@@ -34,7 +34,7 @@
         let formData = new URLSearchParams();
         formData.append('email', email);
 
-        fetch('http://luca-app:5000/luca-app/auth/forgot', {
+        fetch('/luca-app/auth/forgot', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
