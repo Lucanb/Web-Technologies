@@ -544,6 +544,66 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+  /luca-app/main/announces_unauthenticated:
+    get:
+      tags:
+        - API
+      summary: GET /luca-app/main/announces_unauthenticated
+      description: ''
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /luca-app/main/toppicks_unauthenticated:
+    get:
+      tags:
+        - API
+      summary: GET /luca-app/main/toppicks_unauthenticated
+      description: ''
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /luca-app/main/todayActors_unauthenticated:
+    get:
+      tags:
+        - API
+      summary: GET /luca-app/main/todayActors_unauthenticated
+      description: ''
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /luca-app/main/commingSoon_unauthenticated:
+    get:
+      tags:
+        - API
+      summary: GET /luca-app/main/commingSoon_unauthenticated
+      description: ''
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
   /luca-app/admin/altaRuta:
     get:
       tags:

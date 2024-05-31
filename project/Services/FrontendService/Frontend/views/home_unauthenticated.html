@@ -64,44 +64,7 @@
 </div>
 <div class="result"></div>
 <script>
-    function redirectToActor(event){
-        event.preventDefault();
-        const id = event.target.id;
-        let formData = new URLSearchParams();
-        formData.append('id', id);
-        console.log(formData)
-
-        fetch('/luca-app/main/send-actor-id', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: formData
-        })
-            .then(response => {
-                // console.log('Raw Response:', response);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                window.location.href = `/luca-app/main/actor-profile/${id}`
-                console.log('Raw Response:', response);
-                return response;
-            })
-            /*.then(data => {
-                if (data.success) {
-
-                } else {
-                    console.log('DATA : ',data)
-                    alert('Id not sent. Check if id exists ');
-                }
-            })*/
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred: ' + error.message);
-            });
-    }
-
-    fetch('/luca-app/main/announces', {
+    fetch('/luca-app/main/announces_unauthenticated', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -133,7 +96,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('/luca-app/main/toppicks', {
+    fetch('/luca-app/main/toppicks_unauthenticated', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -155,7 +118,6 @@
                         imgElement.src = item.posterUrl;
                         imgElement.id = item.id;
                         imgElement.alt = item.full_name;
-                        imgElement.addEventListener('click', redirectToActor);
                         actorElement.appendChild(imgElement);
                     }
                 });
@@ -165,7 +127,7 @@
             console.error('Error:', error);
             alert('Error: ' + error.message);
         });
-    fetch('/luca-app/main/todayActors', {
+    fetch('/luca-app/main/todayActors_unauthenticated', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -187,7 +149,6 @@
                         imgElement.src = item.posterUrl;
                         imgElement.id = item.id;
                         imgElement.alt = item.full_name;
-                        imgElement.addEventListener('click',redirectToActor);
                         actorElement.appendChild(imgElement);
                     }
                 });
@@ -198,7 +159,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('/luca-app/main/commingSoon', {
+    fetch('/luca-app/main/commingSoon_unauthenticated', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -229,64 +190,6 @@
             console.error('Error:', error);
             alert('Error: ' + error.message);
         });
-    const searchBar = document.querySelector('.search-bar input');
-
-    searchBar.addEventListener('input', async () => {
-        const searchText = searchBar.value.trim();
-        if (searchText.length === 0) {
-            return;
-        }
-
-        try {
-            let formData = new URLSearchParams();
-            formData.append('full_name', searchText);
-            const response = await fetch(`/luca-app/main/search`,{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: formData
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch search results');
-            }
-            const data = await response.json();
-            if (data && Array.isArray(data)) {
-                clearAutocompleteOptions();
-                data.forEach(item => {
-                    addAutocompleteOption(item.full_name);
-                    console.log(item.full_name);
-                });
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error: ' + error.message);
-        }
-    });
-
-    function clearAutocompleteOptions() {
-        var result = document.querySelector('.result');
-        if (result) {
-            result.innerHTML = '';
-        }
-    }
-
-    function addAutocompleteOption(optionText) {
-        const autocompleteContainer = document.querySelector('.result');
-        if (autocompleteContainer) {
-            const optionElement = document.createElement('div');
-            optionElement.textContent = optionText;
-            optionElement.classList.add('autocomplete-option');
-            autocompleteContainer.appendChild(optionElement);
-
-            optionElement.addEventListener('click', () => {
-                searchBar.value = optionText;
-                clearAutocompleteOptions();
-            });
-        } else {
-            console.error('Elementul cu clasa ".result" nu a fost găsit.');
-        }
-    }
 </script>
 </body>
 </html>
