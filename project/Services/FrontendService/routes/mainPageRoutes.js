@@ -136,7 +136,7 @@ routerController.addRoute(
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
+                    res.writeHead(302, {'Location': 'http://localhost:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else{
@@ -235,7 +235,7 @@ routerController.addRoute(
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
+                    res.writeHead(302, {'Location': 'http://localhost:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else{
@@ -327,7 +327,7 @@ routerController.addRoute(
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
+                    res.writeHead(302, {'Location': 'http://localhost:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else{
@@ -367,7 +367,7 @@ routerController.addRoute(
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
+                    res.writeHead(302, {'Location': 'http://localhost:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else{
@@ -468,7 +468,7 @@ routerController.addRoute(
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
+                    res.writeHead(302, {'Location': 'http://localhost:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else{
@@ -559,7 +559,7 @@ routerController.addRoute(
                     res.writeHead(500, {'Content-Type': 'text/html'});
                     res.end(tokenStatus.message)
                 }else{
-                    res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/front/login'});
+                    res.writeHead(302, {'Location': 'http://localhost:5000/luca-app/front/login'});
                     res.end(tokenStatus.message);
                 }
             }else{

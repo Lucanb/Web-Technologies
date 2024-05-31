@@ -140,7 +140,7 @@
     });
 
     function handleLogout() {
-        fetch('http://luca-app:5000/luca-app/main/logout', {
+        fetch('/luca-app/main/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -175,7 +175,7 @@
         let formData = new URLSearchParams();
         formData.append('id', id);
 
-        fetch('http://luca-app:5000/luca-app/main/send-actor-id', {
+        fetch('/luca-app/main/send-actor-id', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -195,7 +195,7 @@
             });
     }
 
-    fetch('http://luca-app:5000/luca-app/main/announces', {
+    fetch('/luca-app/main/announces', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -226,7 +226,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('http://luca-app:5000/luca-app/main/exploreActors', {
+    fetch('/luca-app/main/exploreActors', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -260,7 +260,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('http://luca-app:5000/luca-app/main/toppicks', {
+    fetch('/luca-app/main/toppicks', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -292,7 +292,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('http://luca-app:5000/luca-app/main/todayActors', {
+    fetch('/luca-app/main/todayActors', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -324,7 +324,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('http://luca-app:5000/luca-app/main/topPicksWeek', {
+    fetch('/luca-app/main/topPicksWeek', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -361,7 +361,7 @@
             alert('An error occurred: ' + error.message);
         });
 
-    fetch('http://luca-app:5000/luca-app/main/topFavorites', {
+    fetch('/luca-app/main/topFavorites', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -398,7 +398,7 @@
             alert('An error occurred: ' + error.message);
         });
 
-    fetch('http://luca-app:5000/luca-app/main/commingSoon', {
+    fetch('/luca-app/main/commingSoon', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -440,7 +440,7 @@
         try {
             let formData = new URLSearchParams();
             formData.append('full_name', searchText);
-            const response = await fetch(`http://luca-app:5000/luca-app/main/search`,{
+            const response = await fetch(`/luca-app/main/search`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

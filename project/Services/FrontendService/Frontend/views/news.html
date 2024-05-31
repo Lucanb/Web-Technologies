@@ -40,7 +40,7 @@
 <script>
     async function fetchActors() {
         try {
-            const response = await fetch('http://luca-app:5000/luca-app/main/nominatedActors');
+            const response = await fetch('/luca-app/main/nominatedActors');
             const data = await response.json();
             const table = document.getElementById('actorTable');
             data.forEach(actor => {

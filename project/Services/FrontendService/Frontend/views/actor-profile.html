@@ -146,13 +146,13 @@
                 reject("Actor name is missing!");
                 return;
             }
-            window.location.href = `http://luca-app:5000/luca-app/front/news/:${name}`;
+            window.location.href = `/luca-app/front/news/:${name}`;
             resolve();
         });
     }
 
     function handleLogout() {
-        fetch('http://luca-app:5000/luca-app/main/logout', {
+        fetch('/luca-app/main/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -163,7 +163,7 @@
                 if (!response.ok) {
                     throw new Error('Failed to log out');
                 }
-                window.location.href = 'http://luca-app:5000/luca-app/front/login';
+                window.location.href = '/luca-app/front/login';
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -182,7 +182,7 @@
     const addToFavoritesBtn = document.getElementById('add');
     addToFavoritesBtn.addEventListener('click', async () => {
         try {
-            const response = await fetch('http://luca-app:5000/luca-app/main/add-favorites', {
+            const response = await fetch('/luca-app/main/add-favorites', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -198,7 +198,7 @@
         }
     });
 
-    fetch('http://luca-app:5000/luca-app/main/actor-profile-info', {
+    fetch('/luca-app/main/actor-profile-info', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

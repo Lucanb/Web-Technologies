@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="tab">
-    <button onclick="location.href='http://luca-app:5000/luca-app/front/home';" class="tabs">Home</button>
+    <button onclick="location.href='/luca-app/front/home';" class="tabs">Home</button>
     <div class="search-bar">
         <input type="text" placeholder="Search">
     </div>
@@ -118,7 +118,7 @@
 
     function fetchAnnouncements() {
         const limit = 5;
-        fetch(`http://luca-app:5000/luca-app/admin/announces?page=${currentPage2}&limit=${limit}`)
+        fetch(`/luca-app/admin/announces?page=${currentPage2}&limit=${limit}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch announcements');
@@ -194,7 +194,7 @@
     function fetchUsers() {
         const limit = 5;
 
-        fetch(`http://luca-app:5000/luca-app/admin/users?page=${currentPage}&limit=${limit}`)
+        fetch(`/luca-app/admin/users?page=${currentPage}&limit=${limit}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch users');
@@ -265,7 +265,7 @@
     }
 
     function handleLogout() {
-        fetch('http://luca-app:5000/luca-app/admin/logout', {
+        fetch('/luca-app/admin/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -291,7 +291,7 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        const url = `http://luca-app:5000/luca-app/admin/user?username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+        const url = `http://localhost:5000/luca-app/admin/user?username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
 
         fetch(url, {
             method: 'POST',
@@ -313,7 +313,7 @@
     }
 
     function deleteUser(username) {
-        const url = `http://luca-app:5000/luca-app/admin/user?username=${encodeURIComponent(username)}`;
+        const url = `http://localhost:5000/luca-app/admin/user?username=${encodeURIComponent(username)}`;
 
         fetch(url, {
             method: 'DELETE',
@@ -339,7 +339,7 @@
         const email = prompt('Enter new email:');
         const password = prompt('Enter new password:');
 
-        const url = `http://luca-app:5000/luca-app/admin/user?lastusername=${encodeURIComponent(lastusername)}&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+        const url = `/luca-app/admin/user?lastusername=${encodeURIComponent(lastusername)}&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
 
         fetch(url, {
             method: 'PUT',
@@ -371,7 +371,7 @@
         const picture = document.getElementById('picture').value;
         const content = document.getElementById('content').value;
 
-        const url = `http://luca-app:5000/luca-app/admin/addAnnounce`;
+        const url = `/luca-app/admin/addAnnounce`;
 
         const data = {
             start_date,
@@ -407,7 +407,7 @@
     }
 
     function deleteAnnouncement(announcementtitle) {
-        const url = `http://luca-app:5000/luca-app/admin/announces?title=${encodeURIComponent(announcementtitle)}`;
+        const url = `/luca-app/admin/announces?title=${encodeURIComponent(announcementtitle)}`;
 
         fetch(url, {
             method: 'DELETE',
@@ -438,7 +438,7 @@
         const content = prompt('Enter new content:');
         const lasttitle = announcementtitle
 
-        const url = `http://luca-app:5000/luca-app/admin/announces?lasttitle=${encodeURIComponent(lasttitle)}&start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}&topic=${encodeURIComponent(topic)}&title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}&picture=${encodeURIComponent(picture)}&content=${encodeURIComponent(content)}`;
+        const url = `/luca-app/admin/announces?lasttitle=${encodeURIComponent(lasttitle)}&start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}&topic=${encodeURIComponent(topic)}&title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}&picture=${encodeURIComponent(picture)}&content=${encodeURIComponent(content)}`;
 
         fetch(url, {
             method: 'PUT',
@@ -474,7 +474,7 @@
         const formData = new FormData();
         formData.append('csvFile', file);
 
-        fetch('http://luca-app:5000/luca-app/admin/import-csv', {
+        fetch('/luca-app/admin/import-csv', {
             method: 'POST',
             body: formData,
         })

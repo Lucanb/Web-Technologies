@@ -13,7 +13,7 @@
         <input type="text" placeholder="Search">
         <div class="autocomplete-options-container result"></div>
     </div>
-    <button class="tabs" onclick="location.href='http://luca-app:5000/luca-app/front/login';">Log In</button>
+    <button class="tabs" onclick="location.href='/luca-app/front/login';">Log In</button>
 </div>
 <div class="main-content">
     <div class="intro">
@@ -71,7 +71,7 @@
         formData.append('id', id);
         console.log(formData)
 
-        fetch('http://luca-app:5000/luca-app/main/send-actor-id', {
+        fetch('/luca-app/main/send-actor-id', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -101,7 +101,7 @@
             });
     }
 
-    fetch('http://luca-app:5000/luca-app/main/announces', {
+    fetch('/luca-app/main/announces', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -133,7 +133,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('http://luca-app:5000/luca-app/main/toppicks', {
+    fetch('/luca-app/main/toppicks', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -165,7 +165,7 @@
             console.error('Error:', error);
             alert('Error: ' + error.message);
         });
-    fetch('http://luca-app:5000/luca-app/main/todayActors', {
+    fetch('/luca-app/main/todayActors', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -198,7 +198,7 @@
             alert('Error: ' + error.message);
         });
 
-    fetch('http://luca-app:5000/luca-app/main/commingSoon', {
+    fetch('/luca-app/main/commingSoon', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -240,7 +240,7 @@
         try {
             let formData = new URLSearchParams();
             formData.append('full_name', searchText);
-            const response = await fetch(`http://luca-app:5000/luca-app/main/search`,{
+            const response = await fetch(`/luca-app/main/search`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
