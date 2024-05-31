@@ -1,8 +1,5 @@
 const { Router } = require("../app_modules/controllers/routerController");
-const fs = require("fs");
 const {feedController} = require("../controllers/feedController");
-const {favoritesController} = require("../controllers/favoritesController");
-const getTokenStatus = require("../modules/protected");
 
 const internalRoutes_unautheticated = [
     new Router("GET", '/luca-app/main/announces_unauthenticated', async (req, res) => {
