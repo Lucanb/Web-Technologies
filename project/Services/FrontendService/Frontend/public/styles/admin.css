@@ -219,10 +219,6 @@ button:hover {
   color: #fff;
   text-decoration: none;
 }
-.references-element:hover {
-  text-decoration: underline;
-  background-color: #ffd700;
-}
 
 .user-list {
   display: flex;
