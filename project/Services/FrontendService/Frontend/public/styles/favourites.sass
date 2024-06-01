@@ -345,3 +345,26 @@ body
     &:hover
       background-color: $button-bg-hover
       color: $primary-color
+
+.autocomplete-options-container
+  position: absolute
+  width: calc(100%)
+  max-height: 200px
+  overflow-y: auto
+  background-color: $secondary-color
+  border: 0px solid $input-border
+  border-radius: 5px
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
+  z-index: 1000
+  margin-top: 37px
+
+.autocomplete-option
+  padding: 10px
+  cursor: pointer
+
+.autocomplete-option:hover
+  background-color: $button-bg-hover
+
+.main-content
+  padding-bottom: 60px
+
