@@ -7,64 +7,13 @@
     <link rel="stylesheet" href="/luca-app/front/public/styles/actor-profile.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/3.0.7/umd.min.js"></script>
-    <style>
-        canvas {
-            max-width: 100%;
-            max-height: 400px;
-            width: 100%;
-            height: auto;
-            margin-top: 30%;
-        }
-
-        .chart-container {
-            width: 33.33%;
-            float: left;
-            margin-top: 20px;
-            box-sizing: border-box;
-            padding: 10px;
-        }
-
-        .awards-table-container {
-            margin-top: 20px;
-        }
-
-        .awards-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 18px;
-            text-align: left;
-        }
-
-        .awards-table th, .awards-table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-        }
-
-        .awards-table th {
-            background-color: #000000;
-            color: white;
-            text-align: center;
-        }
-
-        .awards-table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .awards-table tr:hover {
-            background-color: #ddd;
-        }
-
-        .awards-table td {
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
 <div class="tab">
     <button onclick="location.href='/luca-app/front/home';" class="tabs">Home</button>
     <div class="search-bar">
         <input type="text" placeholder="Search">
+        <div class="autocomplete-options-container result"></div>
     </div>
     <button onclick="location.href='/luca-app/front/favorites';" class="tabs">Favorites</button>
     <button class="tabs" id="add" >Add to Favourites</button>
@@ -112,20 +61,24 @@
             <button onclick="redirectToSource('https://www.nytimes.com')">The New York Times</button>
         </div>
     </div>
-    <div class="chart-container">
-        <canvas id="genreChart"></canvas>
-        <button onclick="exportChartToWebP('genreChart')">Export to WebP</button>
-    </div>
 
-    <div class="chart-container" style="margin-top: 10%;">
-        <canvas id="awardChart"></canvas>
-        <button onclick="exportChartToSVG('awardChart')">Export to SVG</button>
+    <div class ="statistics">
+        <h1>Statistics</h1>
     </div>
+        <div class="chart-container">
+            <canvas id="genreChart"></canvas>
+            <button onclick="exportChartToWebP('genreChart')">Export to WebP</button>
+        </div>
 
-    <div class="chart-container" style="margin-top: 10%;">
-        <canvas id="popularityYearChart"></canvas>
-        <button onclick="exportChartToCSV('popularityYearChart')">Export to CSV</button>
-    </div>
+        <div class="chart-container" style="margin-top: 10%;">
+            <canvas id="awardChart"></canvas>
+            <button onclick="exportChartToSVG('awardChart')">Export to SVG</button>
+        </div>
+
+        <div class="chart-container" style="margin-top: 10%;">
+            <canvas id="popularityYearChart"></canvas>
+            <button onclick="exportChartToCSV('popularityYearChart')">Export to CSV</button>
+        </div>
 </div>
 <div class="low-bar">
     <div class="references">
@@ -139,8 +92,6 @@
 <script src="/luca-app/front/public/js/favorite.js"></script>
 <script src="/luca-app/front/public/js/auth.js"></script>
 <script src="/luca-app/front/public/js/utils.js"></script>
-<script>
-
-</script>
+<script src="/luca-app/front/public/js/search.js"></script>
 </body>
 </html>

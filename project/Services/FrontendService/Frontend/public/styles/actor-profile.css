@@ -26,20 +26,6 @@ body {
   }
 }
 
-.tabs, .menu-toggle {
-  background-color: transparent;
-  color: #fff;
-  padding: 10px 15px;
-  margin: 0 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-.tabs:hover, .menu-toggle:hover {
-  background-color: #ffd700;
-}
-
 .search-bar {
   display: flex;
   flex-grow: 1;
@@ -61,7 +47,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: calc(60px + 20px);
+  margin-top: 80px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -83,51 +69,39 @@ body {
   background-color: #ffd700;
   border-radius: 10px;
 }
-.form-container form button[type=submit] {
-  background-color: #000;
-  color: #fff;
-  padding: 10px 15px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
-}
-.form-container form button[type=submit]:hover {
-  background-color: #ffd700;
-}
 .form-container:hover {
   background-color: #ffd700;
 }
-
 @media (max-width: 700px) {
   .form-container {
-    margin-top: calc(2 * 60px + 250px);
+    margin-top: 370px;
   }
 }
+
 .intro-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: calc(60px + 10px);
+  margin-top: 70px;
   z-index: 15;
 }
 .intro-container .actress-name {
   margin-top: 30px;
+  text-align: center;
 }
-
 @media (max-width: 700px) {
-  .intro-container {
-    margin-top: calc(2 * 60px + 250px);
+  .intro-container .actress-name {
+    margin-top: 10px;
   }
 }
+
 .intro-pictures {
   display: flex;
   flex-wrap: wrap;
   margin-top: 70px;
   padding: 20px;
   box-sizing: border-box;
-  justify-content: space-between;
+  justify-content: center;
 }
 @media (max-width: 600px) {
   .intro-pictures {
@@ -146,27 +120,35 @@ body {
   justify-content: center;
   align-items: center;
 }
-
 .actor-picture img, .intro-video img {
   max-height: 300px;
   width: auto;
   object-fit: cover;
 }
-@media (max-width: 800px) {
+@media (max-width: 1024px) {
   .actor-picture img, .intro-video img {
     max-width: 100%;
   }
 }
 
+.movie-awards, .all-movies, .related-news, .statistics {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.movie-awards h1, .all-movies h1, .related-news h1, .statistics h1 {
+  text-align: center;
+  margin-top: 5%;
+}
+
 .movie-awards .movie-container, .upcoming-movies .movie-container, .all-movies .movie-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 20px;
 }
 @media (max-width: 600px) {
   .movie-awards .movie-container, .upcoming-movies .movie-container, .all-movies .movie-container {
-    justify-content: center;
     flex-direction: column;
     align-items: center;
   }
@@ -190,65 +172,164 @@ body {
 .movie-details h2, .movie-details h3 {
   margin: 10px 0;
 }
-
-.see-movies {
-  display: block;
-  width: fit-content;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.see-movies:hover {
-  background-color: #ffd700;
+.movie-details .score {
+  font-size: 16px;
+  color: #555;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
 }
 
-.low-bar {
-  position: relative;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #fff;
-  box-sizing: border-box;
-  z-index: 1000;
-}
-@media (max-width: 600px) {
-  .low-bar {
-    padding: 10px;
-  }
-}
-.low-bar > div {
-  margin: 10px 0;
-}
-.low-bar button {
-  padding: 10px 20px;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.low-bar button:hover {
-  background-color: #ffd700;
-}
-.low-bar .references {
+.references {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  height: 50px;
 }
-.low-bar .references .references-element {
+
+.references-element {
   margin: 5px 10px;
   cursor: pointer;
+  color: #fff;
+  text-decoration: none;
 }
-.low-bar .references .references-element:hover {
-  text-decoration: underline;
+
+canvas {
+  max-width: 100%;
+  max-height: 400px;
+  width: 100%;
+  height: auto;
+  margin-top: 5%;
+}
+@media (max-width: 600px) {
+  canvas {
+    margin-top: 20px;
+    max-height: 300px;
+  }
+}
+
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33.33%;
+  float: left;
+  margin-top: 20px;
+  box-sizing: border-box;
+  padding: 10px;
+  height: auto;
+}
+@media (max-width: 600px) {
+  .chart-container {
+    width: 100%;
+    padding: 0;
+    margin-top: 10px;
+  }
+}
+
+.chart-container canvas {
+  margin-bottom: 10px;
+}
+
+.chart-container button {
+  margin-top: 10px;
+  margin-bottom: 20%;
+}
+
+.awards-table-container {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+.awards-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+.awards-table th, .awards-table td {
+  border: 1px solid #ddd;
+  padding: 15px;
+}
+.awards-table th {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+}
+.awards-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.awards-table tr:hover {
+  background-color: #ddd;
+}
+.awards-table td {
+  text-align: center;
+}
+
+.button, .related-news button, button, .tabs, .menu-toggle, .form-container form button[type=submit], .see-movies, .chart-container button {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.button:hover, button:hover, .tabs:hover, .menu-toggle:hover, .form-container form button[type=submit]:hover, .see-movies:hover {
+  background-color: #ffd700;
+}
+
+.chart-container button {
+  margin-top: 10px;
+}
+
+h1 {
+  margin: 20px 0;
+}
+@media (max-width: 700px) {
+  h1 {
+    margin: 10px 0;
+  }
+}
+
+.autocomplete-options-container {
+  position: absolute;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 0px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin-top: 37px;
+}
+
+.autocomplete-option {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.autocomplete-option:hover {
+  background-color: #ffd700;
+}
+
+.main-content {
+  padding-bottom: 60px;
 }
 
 /*# sourceMappingURL=actor-profile.css.map */

@@ -176,45 +176,195 @@ body {
   margin: 10px 0;
 }
 
-.low-bar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #fff;
-  box-sizing: border-box;
-  width: 100%;
-}
-@media (max-width: 600px) {
-  .low-bar {
-    padding: 10px;
-  }
-}
-.low-bar > div {
-  margin: 10px 0;
-}
-.low-bar button {
-  padding: 10px 20px;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.low-bar button:hover {
-  background-color: #ffd700;
-}
-.low-bar .references {
+.references {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  height: 50px;
 }
-.low-bar .references .references-element {
+
+.references-element {
   margin: 5px 10px;
   cursor: pointer;
+  color: #fff;
+  text-decoration: none;
 }
-.low-bar .references .references-element:hover {
-  text-decoration: underline;
+
+.autocomplete-options-container {
+  position: absolute;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border: 0px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin-top: 37px;
+}
+
+.autocomplete-option {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.autocomplete-option:hover {
+  background-color: #ffd700;
+}
+
+.intro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+  z-index: 15;
+}
+.intro-container .actress-name {
+  margin-top: 30px;
+  text-align: center;
+}
+@media (max-width: 700px) {
+  .intro-container .actress-name {
+    margin-top: 10px;
+  }
+}
+
+.intro-pictures {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 70px;
+  padding: 20px;
+  box-sizing: border-box;
+  justify-content: center;
+}
+@media (max-width: 600px) {
+  .intro-pictures {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media (max-width: 700px) {
+  .intro-pictures {
+    margin-top: 20px;
+  }
+}
+
+.actor-picture, .intro-video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.actor-picture img, .intro-video img {
+  max-height: 300px;
+  width: auto;
+  object-fit: cover;
+}
+@media (max-width: 1024px) {
+  .actor-picture img, .intro-video img {
+    max-width: 100%;
+  }
+}
+
+.movie-awards, .all-movies, .related-news, .statistics {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.movie-awards h1, .all-movies h1, .related-news h1, .statistics h1 {
+  text-align: center;
+  margin-top: 5%;
+}
+
+.movie-awards .movie-container, .upcoming-movies .movie-container, .all-movies .movie-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+@media (max-width: 600px) {
+  .movie-awards .movie-container, .upcoming-movies .movie-container, .all-movies .movie-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.movie-details {
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 200px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.movie-details .movie-picture img {
+  width: 100%;
+  display: block;
+}
+.movie-details h2, .movie-details h3 {
+  margin: 10px 0;
+}
+.movie-details .score {
+  font-size: 16px;
+  color: #555;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px 0;
+}
+
+.actor-details {
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 200px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.actor-details .actor-picture img {
+  width: 100%;
+  display: block;
+}
+.actor-details h2, .actor-details h3 {
+  margin: 10px 0;
+}
+.actor-details .score {
+  font-size: 16px;
+  color: #555;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px 0;
+}
+.actor-details button {
+  padding: 8px 16px;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.actor-details button:hover {
+  background-color: #ffd700;
+  color: #000;
 }
 
 /*# sourceMappingURL=favourites.css.map */

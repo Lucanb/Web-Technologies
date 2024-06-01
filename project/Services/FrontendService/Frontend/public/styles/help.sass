@@ -106,29 +106,28 @@ body
       &:hover
         background-color: $highlight-color
 
-.low-bar
-  display: flex
-  flex-direction: column
-  align-items: center
-  padding: 20px
-  background-color: $secondary-color
-  color: $primary-color
-  width: 100%
-  margin-top: 20px
-  z-index: 1
-
 .references
   display: flex
   justify-content: center
   flex-wrap: wrap
-  .references-element
-    margin: 5px 10px
-    cursor: pointer
-    &:hover
-      text-decoration: underline
+  align-items: center
+  background-color: $primary-color
+  color: $secondary-color
+  text-align: center
+  padding: 10px
+  width: 100%
+  position: fixed
+  bottom: 0
+  left: 0
+  z-index: 100
+  height: 50px
+
 
 .references-element
   margin: 5px 10px
   cursor: pointer
+  color: $secondary-color
+  text-decoration: none
   &:hover
     text-decoration: underline
+    background-color: $button-bg-hover

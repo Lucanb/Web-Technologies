@@ -27,6 +27,7 @@ body
   justify-content: space-between
   height: $bar-height
   z-index: 10
+
   @media (max-width: $vertical-bar-breakpoint)
     flex-direction: column
     height: auto
@@ -41,6 +42,7 @@ body
   cursor: pointer
   font-size: 16px
   transition: background-color 0.3s ease
+
   &:hover
     background-color: $button-bg-hover
 
@@ -49,6 +51,7 @@ body
   flex-grow: 1
   justify-content: space-between
   position: relative
+
   input[type="text"]
     border: 1px solid $input-border
     width: calc(100% - 20px)
@@ -96,10 +99,12 @@ body
   flex-wrap: wrap
   justify-content: center
   gap: 10px
+
   img
     margin: 5px
     width: 100%
     max-width: 200px
+
   @media (max-width: $breakpoint-md)
     flex-direction: column
     align-items: center
@@ -110,12 +115,14 @@ body
 
 .your-favourites-actors
   margin: 20px 0
+
   h2
     margin-bottom: 20px
     text-align: center
 
 .your-favourites-movies
   margin: 20px 0
+
   h2
     margin-bottom: 20px
     text-align: center
@@ -130,6 +137,7 @@ body
     margin-bottom: 20px
     cursor: pointer
     transition: background-color 0.3s ease, color 0.3s ease
+
     &:hover
       background-color: $button-bg-hover
       color: $primary_color
@@ -168,33 +176,172 @@ body
   h2, h3
     margin: 10px 0
 
-.low-bar
+.references
+  display: flex
+  justify-content: center
+  flex-wrap: wrap
+  align-items: center
+  background-color: $primary-color
+  color: $secondary-color
+  text-align: center
+  padding: 10px
+  width: 100%
+  position: fixed
+  bottom: 0
+  left: 0
+  z-index: 100
+  height: 50px
+
+
+.references-element
+  margin: 5px 10px
+  cursor: pointer
+  color: $secondary-color
+  text-decoration: none
+
+.autocomplete-options-container
+  position: absolute
+  width: calc(100%)
+  max-height: 200px
+  overflow-y: auto
+  background-color: #ffffff
+  border: 0px solid #ccc
+  border-radius: 5px
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
+  z-index: 1000
+  margin-top: 37px
+
+.autocomplete-option
+  padding: 10px
+  cursor: pointer
+
+.autocomplete-option:hover
+  background-color: #ffd700
+
+.intro-container
   display: flex
   flex-direction: column
   align-items: center
+  margin-top: calc($bar-height + 10px)
+  z-index: 15
+
+  .actress-name
+    margin-top: 30px
+    text-align: center
+
+    @media (max-width: $vertical-bar-breakpoint)
+      margin-top: 10px
+
+.intro-pictures
+  display: flex
+  flex-wrap: wrap
+  margin-top: 70px
   padding: 20px
-  background-color: $secondary_color
   box-sizing: border-box
-  width: 100%
+  justify-content: center
+
   @media (max-width: $breakpoint-md)
-    padding: 10px
-  > div
+    flex-direction: column
+    align-items: center
+
+  @media (max-width: $vertical-bar-breakpoint)
+    margin-top: 20px
+
+.actor-picture, .intro-video
+  display: flex
+  justify-content: center
+  align-items: center
+
+  img
+    max-height: 300px
+    width: auto
+    object-fit: cover
+
+    @media (max-width: $breakpoint-lg)
+      max-width: 100%
+
+.movie-awards, .all-movies, .related-news, .statistics
+  display: flex
+  flex-direction: column
+  align-items: center
+
+  h1
+    text-align: center
+    margin-top: 5%
+
+.movie-awards .movie-container, .upcoming-movies .movie-container, .all-movies .movie-container
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  gap: 20px
+
+  @media (max-width: $breakpoint-md)
+    flex-direction: column
+    align-items: center
+
+.movie-details
+  background-color: $secondary_color
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2)
+  border-radius: 10px
+  overflow: hidden
+  max-width: 200px
+  margin: 10px
+  display: flex
+  flex-direction: column
+  align-items: center
+
+  .movie-picture img
+    width: 100%
+    display: block
+
+  h2, h3
     margin: 10px 0
+
+  .score
+    font-size: 16px
+    color: #555
+    background-color: $background-color
+    border-radius: 5px
+    padding: 5px 10px
+    margin: 10px 0
+
+.actor-details
+  background-color: $secondary_color
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2)
+  border-radius: 10px
+  overflow: hidden
+  max-width: 200px
+  margin: 10px
+  display: flex
+  flex-direction: column
+  align-items: center
+
+  .actor-picture img
+    width: 100%
+    display: block
+
+  h2, h3
+    margin: 10px 0
+
+  .score
+    font-size: 16px
+    color: #555
+    background-color: $background-color
+    border-radius: 5px
+    padding: 5px 10px
+    margin: 10px 0
+
   button
-    padding: 10px 20px
-    background-color: $primary_color
+    padding: 8px 16px
+    background-color: $primary-color
     color: $secondary_color
-    border: none
+    border: 1px solid darken($primary-color, 10%)
+    border-radius: 5px
+    font-weight: bold
     cursor: pointer
-    transition: background-color 0.3s ease
+    margin-top: 10px
+    transition: background-color 0.3s ease, color 0.3s ease
+
     &:hover
       background-color: $button-bg-hover
-  .references
-    display: flex
-    justify-content: center
-    flex-wrap: wrap
-    .references-element
-      margin: 5px 10px
-      cursor: pointer
-      &:hover
-        text-decoration: underline
+      color: $primary-color
