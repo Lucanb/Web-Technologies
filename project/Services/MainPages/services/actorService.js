@@ -260,6 +260,57 @@ class actorService {
         }
     }
 
+
+    async statisticPopularity(req, res) {
+        try {
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+
+            const data = await new Promise((resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            });
+
+            const id = data.id;
+            const decoded = await JWToken.validate(id);
+            const actor_id = decoded[0].movieID;
+            const apiKey = config.api_key;
+
+            const response = await fetch(`https://api.themoviedb.org/3/person/${actor_id}/movie_credits?api_key=${apiKey}`);
+            const tmdbData = await response.json();
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch data from TMDB');
+            }
+
+            const popularityByYear = {};
+            tmdbData.cast.forEach(movie => {
+                const year = new Date(movie.release_date).getFullYear();
+                if (!popularityByYear[year]) {
+                    popularityByYear[year] = 0;
+                }
+                popularityByYear[year] += movie.popularity;
+            });
+
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.write(JSON.stringify(popularityByYear));
+            res.end();
+
+        } catch (error) {
+            console.error('Eroare interna la obținerea informațiilor despre actor:', error);
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.write('Eroare interna la obținerea informațiilor despre actor');
+            res.end();
+        }
+    }
+
     async statisticAwards(req,res){
         try {
             let body= '';

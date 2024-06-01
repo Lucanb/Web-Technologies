@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACVIS</title>
     <link rel="stylesheet" href="/luca-app/front/public/styles/actor-profile.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+            max-width: 100%;
+            max-height: 400px; /* Setează o înălțime maximă pentru canvas */
+            width: 100%; /* Face canvas-ul să se extindă pe întreaga lățime disponibilă */
+            height: auto; /* Face canvas-ul să-și ajusteze înălțimea în mod proporțional */
+            margin-top: 30%;
+        }
+
+        .chart-container {
+            width: 33.33%; /* Setează lățimea la 33.33% pentru a afișa fiecare diagramă pe o treime din lățimea ecranului */
+            float: left; /* Face ca fiecare container de grafic să se alinieze la stânga și să urmeze unul după altul */
+            margin-top: 20px; /* Adaugă un spațiu de 20px între fiecare diagramă */
+            box-sizing: border-box; /* Asigură că lățimea și marginile sunt incluse în lățimea totală */
+            padding: 10px; /* Adaugă puțin spațiu intern între container și grafic */
+        }
+    </style>
 </head>
 <body>
 <div class="tab">
@@ -25,10 +43,10 @@
         <h1></h1>
     </div>
     <div class="intro-pictures">
-    <div class="actor-picture">
-    </div>
-    <div class="intro-video">
-    </div>
+        <div class="actor-picture">
+        </div>
+        <div class="intro-video">
+        </div>
     </div>
 </div>
 <div class="Actor-Awards">
@@ -83,15 +101,27 @@
             </div>
             <div class="movie-picture">
             </div>
+        </div>
     </div>
-</div>
-<div class="low-bar">
-    <div class="references">
-        <label onclick="location.href='/luca-app/front/about';" class="references-element">About</label>
-        <label onclick="location.href='/luca-app/front/help';" class="references-element">Help</label>
-        <label onclick="location.href='/luca-app/front/index';" class="references-element">Site Index</label>
+    <div class="chart-container">
+        <canvas id="genreChart"></canvas>
     </div>
-</div>
+
+    <div class="chart-container" style="margin-top: 10%;">
+        <canvas id="awardChart"></canvas>
+    </div>
+
+    <div class="chart-container" style="margin-top: 10%;">
+        <canvas id="popularityYearChart"></canvas>
+    </div>
+
+    <div class="low-bar">
+        <div class="references">
+            <label onclick="location.href='/luca-app/front/about';" class="references-element">About</label>
+            <label onclick="location.href='/luca-app/front/help';" class="references-element">Help</label>
+            <label onclick="location.href='/luca-app/front/index';" class="references-element">Site Index</label>
+        </div>
+    </div>
 </div>
 <script>
     function openForm() {
@@ -252,6 +282,201 @@
             console.error('Error:', error);
             alert('Error: ' + error.message);
         });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/luca-app/main/statisticGenre/:', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const canvasId = `genreChart`;
+                const ctx = document.getElementById(canvasId).getContext('2d');
+                const labels = [];
+                const values = [];
+                const backgroundColors = [];
+
+                function generateRandomColor() {
+                    const r = Math.floor(Math.random() * 256);
+                    const g = Math.floor(Math.random() * 256);
+                    const b = Math.floor(Math.random() * 256);
+                    return `rgba(${r}, ${g}, ${b}, 0.2)`;
+                }
+
+                for (const genre in data) {
+                    if (data.hasOwnProperty(genre)) {
+                        const genreName = genre.split(':')[0];
+                        labels.push(genreName);
+                        values.push(data[genre].length);
+                        backgroundColors.push(generateRandomColor());
+                    }
+                }
+
+                const config = {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Genre Distribution',
+                            data: values,
+                            backgroundColor: backgroundColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Genre Distribution Chart'
+                            }
+                        },
+                    },
+                };
+
+                new Chart(ctx, config);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+
+        fetch('/luca-app/main/statisticAwards/:', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const years = Object.keys(data);
+                const wonData = [];
+                const showsData = [];
+
+                years.forEach(year => {
+                    wonData.push(data[year].won);
+                    showsData.push(data[year].shows.length);
+                });
+
+                const ctx = document.getElementById('awardChart').getContext('2d');
+
+                const config = {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: 'Awards Won',
+                            data: wonData,
+                            borderColor: 'blue',
+                            backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                            fill: true,
+                            tension: 0.4
+                        }, {
+                            label: 'Number of Shows',
+                            data: showsData,
+                            borderColor: 'green',
+                            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Awards and Shows Over the Years'
+                            }
+                        }
+                    }
+                };
+
+                new Chart(ctx, config);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+
+        fetch('/luca-app/main/statisticPopularity/:', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the JSON data. Status: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const ctx = document.getElementById('popularityYearChart').getContext('2d');
+
+                const labels = Object.keys(data).sort(); // Anii, ordonați crescător
+                const values = labels.map(year => data[year]); // Valorile de popularitate pentru fiecare an
+
+                const config = {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Actor Popularity by Year',
+                            data: values,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Actor Popularity by Year'
+                            }
+                        }
+                    }
+                };
+
+                new Chart(ctx, config);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+    });
 
 </script>
 </body>

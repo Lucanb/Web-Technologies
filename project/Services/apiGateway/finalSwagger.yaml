@@ -550,6 +550,45 @@ paths:
             schema:
               type: object
               properties: {}
+  /luca-app/main/statisticPopularity/{param}:
+    post:
+      tags:
+        - API
+      summary: Get Award Statistics
+      description: Retrieves statistics on awards for a specific actor.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/main/nominatedActors:
     get:
       tags:

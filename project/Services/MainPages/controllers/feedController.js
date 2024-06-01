@@ -270,6 +270,24 @@ class feedController {
             res.end(JSON.stringify({success: false, message: 'Internal error'}));
         }
     }
+
+    async statisticPopularity(req, res){
+        try {
+            const service = new actorService();
+            const getService = await service.statisticPopularity(req, res);
+            if (getService) {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.write(JSON.stringify(getService))
+                res.end()
+            } else {
+                console.log('fara succes')
+            }
+        } catch (error) {
+            console.log(error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({success: false, message: 'Internal error'}));
+        }
+    }
 }
 
 module.exports = {feedController}
