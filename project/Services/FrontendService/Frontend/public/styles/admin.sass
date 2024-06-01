@@ -106,6 +106,75 @@ body
     &:hover
       background-color: $button-bg-hover
 
+.form-addUser, .form-addAnnounce
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  padding: 20px
+  box-sizing: border-box
+  width: 100%
+  margin-top: 10px
+  z-index: 5
+
+#userForm, #announceForm
+  display: none
+  flex-direction: column
+  width: 90%
+  max-width: 500px
+  background-color: $secondary-color
+  padding: 20px
+  border-radius: 10px
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2)
+  input, textarea
+    margin: 10px 0
+    padding: 8px
+    border: 1px solid $input-border
+    border-radius: 5px
+  button[type="submit"]
+    padding: 10px 20px
+    background-color: $primary-color
+    color: $secondary-color
+    border: none
+    border-radius: 5px
+    cursor: pointer
+    transition: background-color 0.3s ease
+    &:hover
+      background-color: $button-bg-hover
+
+.paginationUsers, .paginationAnnounces
+  display: flex
+  justify-content: center
+  align-items: center
+  padding: 20px
+  position: relative
+  width: 100%
+  margin-top: 20px
+  margin-bottom: 60px
+  background-color: $secondary-color
+  border-top: 1px solid $input-border
+  border-bottom: 1px solid $input-border
+
+button
+  padding: 10px 15px
+  margin: 0 10px
+  background-color: $primary-color
+  color: $secondary-color
+  font-size: 16px
+  border: none
+  border-radius: 5px
+  cursor: pointer
+  transition: background-color 0.3s ease, transform 0.3s ease
+  &:hover
+    background-color: $button-bg-hover
+    transform: scale(1.05)
+
+@media (max-width: $breakpoint-sm)
+  .paginationUsers, .paginationAnnounces
+    flex-direction: column
+    padding: 10px
+    gap: 10px
+
 .references
   display: flex
   justify-content: center
@@ -116,11 +185,12 @@ body
   text-align: center
   padding: 10px
   width: 100%
-  position: relative
+  position: fixed
   bottom: 0
   left: 0
-  @media (max-width: $vertical-bar-breakpoint)
-    position: fixed
+  z-index: 100
+  height: 50px
+
 
 .references-element
   margin: 5px 10px
@@ -145,21 +215,50 @@ body
 .user-list
   display: flex
   flex-wrap: wrap
+  justify-content: center
+  padding: 20px
   gap: 20px
 
 .user-item
+  background-color: $secondary-color
+  color: $primary-color
   width: calc(50% - 20px)
   padding: 20px
-  border: 1px solid #ccc
-  border-radius: 5px
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+  margin: 10px
+  border: 1px solid $input-border
+  border-radius: 10px
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+  transition: transform 0.3s ease, box-shadow 0.3s ease
+  &:hover
+    transform: translateY(-5px)
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15)
+
+@media (max-width: $breakpoint-md)
+  .user-item
+    width: 100%
 
 .user-info
-  p
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  h3, p
     margin: 5px 0
 
 .actions
-  @include action-buttons
+  display: flex
+  justify-content: space-between
+  button
+    padding: 8px 16px
+    font-size: 14px
+    background-color: $primary-color
+    color: $secondary-color
+    border: none
+    border-radius: 5px
+    cursor: pointer
+    transition: background-color 0.3s ease
+    &:hover
+      background-color: $button-bg-hover
+
 
 .csv-import-section
   display: flex
@@ -169,7 +268,38 @@ body
   padding: 20px
   background-color: $secondary-color
   width: 100%
-  margin-top: $bar-height // Așează secțiunea chiar sub bara de tab-uri
+  margin-top: $bar-height + 20px
+  @media (max-width: $vertical-bar-breakpoint)
+    margin-top: 3 * $bar-height + 250px
+
+.file-button
+  display: inline-block
+  padding: 10px 20px
+  margin-top: 10px
+  background-color: $primary-color
+  color: $secondary-color
+  text-align: center
+  font-size: 16px
+  border: 1px solid $highlight-color
+  border-radius: 5px
+  cursor: pointer
+  transition: background-color 0.3s ease, border-color 0.3s ease
+  &:hover
+    background-color: $button-bg-hover
+    border-color: darken($highlight-color, 10%)
+
+#csvImportForm button
+  margin-top: 10px
+  padding: 10px 20px
+  background-color: $primary-color
+  color: $secondary-color
+  border: 1px solid $highlight-color
+  border-radius: 5px
+  cursor: pointer
+  transition: background-color 0.3s ease, border-color 0.3s ease
+  &:hover
+    background-color: $button-bg-hover
+    border-color: darken($highlight-color, 10%)
 
   button
     padding: 10px 20px
@@ -180,3 +310,4 @@ body
     transition: background-color 0.3s ease
     &:hover
       background-color: $button-bg-hover
+
