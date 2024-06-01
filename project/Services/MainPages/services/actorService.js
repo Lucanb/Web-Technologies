@@ -57,6 +57,7 @@ class actorService {
                 });
             })
             const id = data.id;
+            const actor = new actorModel();
             const decoded = await JWToken.validate(id);
             const actor_id = decoded[0].movieID;
             const apiKey = config.api_key;
@@ -88,26 +89,56 @@ class actorService {
                     allResults = [...allResults, ...nextPageResponseJSON.results];
                 }
 
-                const formattedResponse = {
-                    success: true,
-                    data: allResults.map(result => ({
-                        id: result.id,
-                        known_for_department: result.known_for_department,
-                        name: result.name,
-                        original_name: result.original_name,
-                        profile_path: `https://image.tmdb.org/t/p/w500${result.profile_path}`,
-                        known_for: result.known_for.map(knownForItem => ({
-                            id: knownForItem.id,
-                            overview: knownForItem.overview,
-                            poster_path: `https://image.tmdb.org/t/p/w500${knownForItem.poster_path}`,
-                            title: knownForItem.title ? knownForItem.title : knownForItem.name,
-                            vote_average: knownForItem.vote_average
+                const rows = await actor.searchAwardsByName(allResults[0].original_name);
+                if(rows && rows.length > 0) {
+                    const formattedResponse = {
+                        award: true,
+                        success: true,
+                        awards: rows,
+                        data: allResults.map(result => ({
+                            id: result.id,
+                            known_for_department: result.known_for_department,
+                            name: result.name,
+                            original_name: result.original_name,
+                            profile_path: `https://image.tmdb.org/t/p/w500${result.profile_path}`,
+                            known_for: result.known_for.map(knownForItem => ({
+                                id: knownForItem.id,
+                                overview: knownForItem.overview,
+                                poster_path: `https://image.tmdb.org/t/p/w500${knownForItem.poster_path}`,
+                                title: knownForItem.title ? knownForItem.title : knownForItem.name,
+                                vote_average: knownForItem.vote_average
+                            }))
                         }))
-                    }))
-                };
-                res.writeHead(200, {'Content-Type': 'application/json'});
-                res.write(JSON.stringify(formattedResponse));
-                res.end();
+                    };
+                    //console.log(formattedResponse);
+                    res.writeHead(200, {'Content-Type': 'application/json'});
+                    res.write(JSON.stringify(formattedResponse));
+                    res.end();
+                }
+                else{
+                    const formattedResponse = {
+                        award: false,
+                        success: true,
+                        data: allResults.map(result => ({
+                            id: result.id,
+                            known_for_department: result.known_for_department,
+                            name: result.name,
+                            original_name: result.original_name,
+                            profile_path: `https://image.tmdb.org/t/p/w500${result.profile_path}`,
+                            known_for: result.known_for.map(knownForItem => ({
+                                id: knownForItem.id,
+                                overview: knownForItem.overview,
+                                poster_path: `https://image.tmdb.org/t/p/w500${knownForItem.poster_path}`,
+                                title: knownForItem.title ? knownForItem.title : knownForItem.name,
+                                vote_average: knownForItem.vote_average
+                            }))
+                        }))
+                    };
+                    //console.log(formattedResponse);
+                    res.writeHead(200, {'Content-Type': 'application/json'});
+                    res.write(JSON.stringify(formattedResponse));
+                    res.end();
+                }
             }
             else {
                 console.error('Eroare interna la ruta - ales nasol');

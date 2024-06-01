@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACVIS</title>
     <link rel="stylesheet" href="/luca-app/front/styles/actor-profile.css">
+    <style>
+        .awards-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .awards-table th, .awards-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .awards-table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
 <div class="tab">
@@ -12,23 +29,18 @@
     <div class="search-bar">
         <input type="text" placeholder="Search">
     </div>
-    <button onclick="openForm()" class="tabs">News</button>
     <button onclick="location.href='/luca-app/front/favorites';" class="tabs">Favorites</button>
     <button class="tabs" id="add" >Add to Favourites</button>
     <button onclick="handleLogout()" class="tabs">Log Out</button>
 </div>
-<div class="form-container">
-
-</div>
+<div class="form-container"></div>
 <div class="intro-container">
     <div class="actress-name">
         <h1></h1>
     </div>
     <div class="intro-pictures">
-    <div class="actor-picture">
-    </div>
-    <div class="intro-video">
-    </div>
+        <div class="actor-picture"></div>
+        <div class="intro-video"></div>
     </div>
 </div>
 <div class="Actor-Awards">
@@ -36,17 +48,11 @@
     <div class="movie-awards">
         <div class="movie-container">
             <div class="movie-details">
-                <div class="year">
-                </div>
-                <div class="category">
-                </div>
-                <div class="movie-name">
-                </div>
-                <div class="Score">
-                </div>
-                <div class="movie-picture">
-
-                </div>
+                <div class="year"></div>
+                <div class="category"></div>
+                <div class="movie-name"></div>
+                <div class="Score"></div>
+                <div class="movie-picture"></div>
             </div>
         </div>
     </div>
@@ -54,10 +60,8 @@
         <h1>Upcoming Movies</h1>
         <div class="movie-container">
             <div class="movie-details">
-                <div class="movie-name">
-                </div>
-                <div class="movie-picture">
-                </div>
+                <div class="movie-name"></div>
+                <div class="movie-picture"></div>
                 <h3></h3>
             </div>
         </div>
@@ -70,8 +74,7 @@
                 <div class="movie-name">
                     <h1></h1>
                 </div>
-                <div class="movie-picture">
-                </div>
+                <div class="movie-picture"></div>
             </div>
         </div>
     </div>
@@ -81,8 +84,8 @@
             <div class="movie-name">
                 <h1></h1>
             </div>
-            <div class="movie-picture">
-            </div>
+            <div class="movie-picture"></div>
+        </div>
     </div>
 </div>
 <div class="low-bar">
@@ -91,7 +94,6 @@
         <label onclick="location.href='/luca-app/front/help';" class="references-element">Help</label>
         <label onclick="location.href='/luca-app/front/index';" class="references-element">Site Index</label>
     </div>
-</div>
 </div>
 <script>
     function openForm() {
@@ -167,10 +169,8 @@
     const path = window.location.pathname;
     var lastIndex = path.lastIndexOf("/");
     var id = path.substring(lastIndex + 1);
-    // console.log(id);
     let formData = new URLSearchParams();
     formData.append('id', id);
-    // console.log(formData)
 
     const addToFavoritesBtn = document.getElementById('add');
     addToFavoritesBtn.addEventListener('click', async () => {
@@ -187,7 +187,7 @@
                 throw new Error('Failed to add to favourites.');
             }
         }catch (error){
-
+            console.error('Error:', error);
         }
     });
 
@@ -205,7 +205,6 @@
             return response.json();
         })
         .then(data => {
-            // console.log('DATA : ', data);
             const movieContainer = document.querySelector('.all-movies .movie-container');
             const actorPicture = document.querySelector('.actor-picture');
             const actorName = document.querySelector('.actress-name h1');
@@ -240,12 +239,59 @@
                     movieContainer.appendChild(movieDetails);
                 });
             });
+            console.log(1);
+            if (data.award) {
+                createAwardsTable(data.awards);
+            }
         })
         .catch(error => {
             console.error('Error:', error);
             alert('Error: ' + error.message);
         });
 
+    function createAwardsTable(awards) {
+        if (data.award) {
+            createAwardsTable(data.awards);
+        }
+        const awardsTableDiv = document.createElement('div');
+        awardsTableDiv.classList.add('awards-table-container');
+
+        const awardsTable = document.createElement('table');
+        awardsTable.classList.add('awards-table');
+
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        const headers = ['Year', 'Won', 'Show'];
+        headers.forEach(header => {
+            const th = document.createElement('th');
+            th.textContent = header;
+            headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        awardsTable.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        awards.forEach(award => {
+            const row = document.createElement('tr');
+
+            const yearCell = document.createElement('td');
+            yearCell.textContent = award.year;
+            row.appendChild(yearCell);
+
+            const wonCell = document.createElement('td');
+            wonCell.textContent = award.won ? 'Yes' : 'No';
+            row.appendChild(wonCell);
+
+            const showCell = document.createElement('td');
+            showCell.textContent = award.show;
+            row.appendChild(showCell);
+
+            tbody.appendChild(row);
+        });
+        awardsTable.appendChild(tbody);
+        awardsTableDiv.appendChild(awardsTable);
+        actorAwardsDiv.appendChild(awardsTableDiv);
+    }
 </script>
 </body>
 </html>

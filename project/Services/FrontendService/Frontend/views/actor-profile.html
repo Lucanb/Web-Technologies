@@ -6,21 +6,73 @@
     <title>ACVIS</title>
     <link rel="stylesheet" href="/luca-app/front/public/styles/actor-profile.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/3.0.7/umd.min.js"></script>
     <style>
         canvas {
             max-width: 100%;
-            max-height: 400px; /* Setează o înălțime maximă pentru canvas */
-            width: 100%; /* Face canvas-ul să se extindă pe întreaga lățime disponibilă */
-            height: auto; /* Face canvas-ul să-și ajusteze înălțimea în mod proporțional */
+            max-height: 400px;
+            width: 100%;
+            height: auto;
             margin-top: 30%;
         }
 
         .chart-container {
-            width: 33.33%; /* Setează lățimea la 33.33% pentru a afișa fiecare diagramă pe o treime din lățimea ecranului */
-            float: left; /* Face ca fiecare container de grafic să se alinieze la stânga și să urmeze unul după altul */
-            margin-top: 20px; /* Adaugă un spațiu de 20px între fiecare diagramă */
-            box-sizing: border-box; /* Asigură că lățimea și marginile sunt incluse în lățimea totală */
-            padding: 10px; /* Adaugă puțin spațiu intern între container și grafic */
+            width: 33.33%;
+            float: left;
+            margin-top: 20px;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+         canvas {
+             max-width: 100%;
+             max-height: 400px;
+             width: 100%;
+             height: auto;
+             margin-top: 30%;
+         }
+
+        .chart-container {
+            width: 33.33%;
+            float: left;
+            margin-top: 20px;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .awards-table-container {
+            margin-top: 20px;
+        }
+
+        .awards-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        .awards-table th, .awards-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+
+        .awards-table th {
+            background-color: #000000;
+            color: white;
+            text-align: center;
+        }
+
+        .awards-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .awards-table tr:hover {
+            background-color: #ddd;
+        }
+
+        .awards-table td {
+            text-align: center;
         }
     </style>
 </head>
@@ -35,92 +87,68 @@
     <button class="tabs" id="add" >Add to Favourites</button>
     <button onclick="handleLogout()" class="tabs">Log Out</button>
 </div>
-<div class="form-container">
-
-</div>
+<div class="form-container"></div>
 <div class="intro-container">
     <div class="actress-name">
         <h1></h1>
     </div>
     <div class="intro-pictures">
-        <div class="actor-picture">
-        </div>
-        <div class="intro-video">
-        </div>
+        <div class="actor-picture"></div>
+        <div class="intro-video"></div>
     </div>
 </div>
 <div class="Actor-Awards">
-    <h1>Actor Awards :</h1>
     <div class="movie-awards">
         <div class="movie-container">
             <div class="movie-details">
-                <div class="year">
-                </div>
-                <div class="category">
-                </div>
-                <div class="movie-name">
-                </div>
-                <div class="Score">
-                </div>
-                <div class="movie-picture">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="upcoming-movies">
-        <h1>Upcoming Movies</h1>
-        <div class="movie-container">
-            <div class="movie-details">
-                <div class="movie-name">
-                </div>
-                <div class="movie-picture">
-                </div>
-                <h3></h3>
+                <div class="year"></div>
+                <div class="category"></div>
+                <div class="movie-name"></div>
+                <div class="Score"></div>
+                <div class="movie-picture"></div>
             </div>
         </div>
     </div>
     <div class="all-movies">
-        <button class="see-movies">See All Movies</button>
-        <h1>All Movies:</h1>
+        <h1>Movies</h1>
         <div class="movie-container">
             <div class="movie-details">
                 <div class="movie-name">
                     <h1></h1>
                 </div>
-                <div class="movie-picture">
-                </div>
+                <div class="movie-picture"></div>
             </div>
         </div>
     </div>
     <div class="related-news">
-        <h1>Some related News</h1>
-        <div class="movie-details">
-            <div class="movie-name">
-                <h1></h1>
-            </div>
-            <div class="movie-picture">
-            </div>
+        <div class="button-container">
+            <h1>News</h1>
+            <button onclick="redirectToSource('https://variety.com')">Variety</button>
+            <button onclick="redirectToSource('https://www.bbc.com/news')">BBC News</button>
+            <button onclick="redirectToSource('https://edition.cnn.com')">CNN</button>
+            <button onclick="redirectToSource('https://www.nytimes.com')">The New York Times</button>
         </div>
     </div>
     <div class="chart-container">
         <canvas id="genreChart"></canvas>
+        <button onclick="exportChartToWebP('genreChart')">Export to WebP</button>
     </div>
 
     <div class="chart-container" style="margin-top: 10%;">
         <canvas id="awardChart"></canvas>
+        <button onclick="exportChartToSVG('awardChart')">Export to SVG</button>
     </div>
 
     <div class="chart-container" style="margin-top: 10%;">
         <canvas id="popularityYearChart"></canvas>
+        <button onclick="exportChartToCSV('popularityYearChart')">Export to CSV</button>
     </div>
-
-    <div class="low-bar">
-        <div class="references">
-            <label onclick="location.href='/luca-app/front/about';" class="references-element">About</label>
-            <label onclick="location.href='/luca-app/front/help';" class="references-element">Help</label>
-            <label onclick="location.href='/luca-app/front/index';" class="references-element">Site Index</label>
-        </div>
+</div>
+<div class="low-bar">
+    <div class="references">
+        <label onclick="location.href='/luca-app/front/about';" class="references-element">About</label>
+        <label onclick="location.href='/luca-app/front/help';" class="references-element">Help</label>
+        <label onclick="location.href='/luca-app/front/index';" class="references-element">Site Index</label>
     </div>
 </div>
 <script>
@@ -150,7 +178,7 @@
 
     function createButton(text, source) {
         const button = document.createElement('button');
-        button.type = 'button';  // Previne submit-ul formularului
+        button.type = 'button';
         button.textContent = text;
         button.addEventListener('click', function(event) {
             event.preventDefault();
@@ -204,10 +232,8 @@
     const path = window.location.pathname;
     var lastIndex = path.lastIndexOf("/");
     var id = path.substring(lastIndex + 1);
-    // console.log(id);
     let formData = new URLSearchParams();
     formData.append('id', id);
-    // console.log(formData)
 
     const addToFavoritesBtn = document.getElementById('add');
     addToFavoritesBtn.addEventListener('click', async () => {
@@ -223,8 +249,8 @@
             if (!response.ok) {
                 throw new Error('Failed to add to favourites.');
             }
-        }catch (error){
-
+        } catch (error) {
+            console.error('Error:', error);
         }
     });
 
@@ -242,7 +268,6 @@
             return response.json();
         })
         .then(data => {
-            // console.log('DATA : ', data);
             const movieContainer = document.querySelector('.all-movies .movie-container');
             const actorPicture = document.querySelector('.actor-picture');
             const actorName = document.querySelector('.actress-name h1');
@@ -277,11 +302,59 @@
                     movieContainer.appendChild(movieDetails);
                 });
             });
+            if (data.award) {
+                createAwardsTable(data.awards);
+            }
         })
         .catch(error => {
             console.error('Error:', error);
             alert('Error: ' + error.message);
         });
+
+    function createAwardsTable(awards) {
+        const actorAwardsDiv = document.querySelector('.movie-awards');
+        const heading = document.createElement('h1');
+        heading.textContent = 'Actor Awards';
+        actorAwardsDiv.appendChild(heading);
+        const awardsTableDiv = document.createElement('div');
+        awardsTableDiv.classList.add('awards-table-container');
+
+        const awardsTable = document.createElement('table');
+        awardsTable.classList.add('awards-table');
+
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        const headers = ['Year', 'Won', 'Show'];
+        headers.forEach(header => {
+            const th = document.createElement('th');
+            th.textContent = header;
+            headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        awardsTable.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        awards.forEach(award => {
+            const row = document.createElement('tr');
+
+            const yearCell = document.createElement('td');
+            yearCell.textContent = award.year;
+            row.appendChild(yearCell);
+
+            const wonCell = document.createElement('td');
+            wonCell.textContent = award.won ? 'Yes' : 'No';
+            row.appendChild(wonCell);
+
+            const showCell = document.createElement('td');
+            showCell.textContent = award.show;
+            row.appendChild(showCell);
+
+            tbody.appendChild(row);
+        });
+        awardsTable.appendChild(tbody);
+        awardsTableDiv.appendChild(awardsTable);
+        actorAwardsDiv.appendChild(awardsTableDiv);
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         fetch('/luca-app/main/statisticGenre/:', {
@@ -434,8 +507,8 @@
             .then(data => {
                 const ctx = document.getElementById('popularityYearChart').getContext('2d');
 
-                const labels = Object.keys(data).sort(); // Anii, ordonați crescător
-                const values = labels.map(year => data[year]); // Valorile de popularitate pentru fiecare an
+                const labels = Object.keys(data).sort();
+                const values = labels.map(year => data[year]);
 
                 const config = {
                     type: 'line',
@@ -478,6 +551,48 @@
             });
     });
 
+    function exportChartToWebP(chartId) {
+        const canvas = document.getElementById(chartId);
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/webp');
+        link.download = `${chartId}.webp`;
+        link.click();
+    }
+
+    async function exportChartToSVG(chartId) {
+        const canvas = document.getElementById(chartId);
+        const ctx = canvas.getContext('2d');
+        const dataUrl = canvas.toDataURL('image/png');
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}">
+                        <foreignObject width="100%" height="100%">
+                            <img src="${dataUrl}" width="100%" height="100%"/>
+                        </foreignObject>
+                     </svg>`;
+        const svgBlob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+        const svgUrl = URL.createObjectURL(svgBlob);
+        const link = document.createElement('a');
+        link.href = svgUrl;
+        link.download = `${chartId}.svg`;
+        link.click();
+        URL.revokeObjectURL(svgUrl);
+    }
+
+    function exportChartToCSV(chartId) {
+        const chart = Chart.getChart(chartId);
+        const data = chart.data;
+        let csvContent = "data:text/csv;charset=utf-8,";
+        data.labels.forEach((label, index) => {
+            let row = `${label},${data.datasets[0].data[index]}`;
+            csvContent += row + "\r\n";
+        });
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `${chartId}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 </script>
 </body>
 </html>

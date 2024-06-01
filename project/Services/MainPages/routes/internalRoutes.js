@@ -6,6 +6,7 @@ const {favoritesController} = require("../controllers/favoritesController");
 const Token = require("../../Authentication/modules/token");
 const getTokenStatus = require("../modules/protected");
 const {adminController} = require("../../Admin/controllers/AdminController");
+const {statisticController} = require("../controllers/statisticController");
 
 const internalRoutes = [
     new Router("GET", "/luca-app/main/altaRuta", async (req, res) => {
@@ -548,7 +549,7 @@ const internalRoutes = [
                             `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
                         );
                     }
-                    const controller = new feedController();
+                    const controller = new statisticController();
                     return await controller.statisticAwards(req, res);
                 }
             } catch (error) {
@@ -578,7 +579,7 @@ const internalRoutes = [
                             `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
                         );
                     }
-                    const controller = new feedController();
+                    const controller = new statisticController();
                     return await controller.statisticPopularity(req, res);
                 }
             } catch (error) {
@@ -638,7 +639,7 @@ const internalRoutes = [
                             `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
                         );
                     }
-                    const controller = new feedController();
+                    const controller = new statisticController();
                     return await controller.statisticGenre(req, res);
                 }
             } catch (error) {
