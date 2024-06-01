@@ -19,10 +19,6 @@ const mimeTypes = {
 };
 
 const index = http.createServer((req, res) => {
-    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    // res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    // res.setHeader('Access-Control-Allow-Credentials', 'true');
     console.log(`Request for ${req.url} received.`);
 
     let filePath;
@@ -35,7 +31,6 @@ const index = http.createServer((req, res) => {
         console.log(`Serving static file: ${filePath}`);
 
         fs.readFile(filePath, (error, content) => {
-            // console.log(content)
             if (error) {
                 if (error.code === 'ENOENT') {
                     if (!res.headersSent) {
