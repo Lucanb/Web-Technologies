@@ -15,7 +15,9 @@ const routerController = new RouterController([
             res.write(data);
             res.end();
         })
-    })
+    },
+        "User Login Page",
+        "Serves the login HTML page for users.")
 ]);
 
 routerController.addRoute(new Router("GET","/luca-app/front/register",async (req,res)=>{
@@ -29,7 +31,10 @@ routerController.addRoute(new Router("GET","/luca-app/front/register",async (req
             res.write(data);
             res.end();
         })
-    })
+    },
+    "Forgot Password Page",
+    "Serves the forgot password HTML page for users to reset their passwords."
+    )
 )
 
 routerController.addRoute(new Router("GET","/luca-app/front/forgot",async (req,res)=>{
@@ -43,7 +48,9 @@ routerController.addRoute(new Router("GET","/luca-app/front/forgot",async (req,r
             res.write(data);
             res.end();
         })
-    })
+    },
+    "Forgot Password Page",
+    "Serves the forgot password HTML page for users to reset their passwords.")
 )
 
 routerController.addRoute(new Router("GET","/luca-app/front/update-password/:",async (req,res)=>{
@@ -57,6 +64,8 @@ routerController.addRoute(new Router("GET","/luca-app/front/update-password/:",a
             res.write(data);
             res.end();
         })
-    })
+    },
+    "Update Password Page",
+    "Serves the update password HTML page for users to update their password using a token.")
 )
 module.exports ={routerController}

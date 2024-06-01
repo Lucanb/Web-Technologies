@@ -36,8 +36,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/getnotifications",
-        "description": "",
+        "summary": "Get Notifications",
+        "description": "Retrieves the notifications for the user.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -61,8 +61,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/announces",
-        "description": "",
+        "summary": "Get Announces",
+        "description": "Retrieves the announcements for the user.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -86,8 +86,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/main/send-actor-id",
-        "description": "",
+        "summary": "Send Actor ID",
+        "description": "Sends the actor ID to the server.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -127,8 +127,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/main/actor-profile-info",
-        "description": "",
+        "summary": "Send Actor Profile Info",
+        "description": "Sends the actor profile information to the server.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -168,8 +168,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/toppicks",
-        "description": "",
+        "summary": "Get Top Picks",
+        "description": "Retrieves the top picks for the user.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -193,8 +193,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/todayActors",
-        "description": "",
+        "summary": "Get Today's Actors",
+        "description": "Retrieves the actors featured today.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -218,8 +218,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/commingSoon",
-        "description": "",
+        "summary": "Get Coming Soon",
+        "description": "Retrieves the list of actors coming soon.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -243,8 +243,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/news",
-        "description": "",
+        "summary": "Get News Page",
+        "description": "Serves the news HTML page for authenticated users.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -268,8 +268,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/main/help",
-        "description": "",
+        "summary": "Add Help Request",
+        "description": "Adds a help request to the system.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -309,8 +309,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/main/add-favorites",
-        "description": "",
+        "summary": "Add to Favorites",
+        "description": "Adds an actor to the user's favorites.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -350,8 +350,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/all-favorites",
-        "description": "",
+        "summary": "Get All Favorites",
+        "description": "Retrieves all favorite actors for the user.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -375,8 +375,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/topPicksWeek",
-        "description": "",
+        "summary": "Get Top Picks of the Week",
+        "description": "Retrieves the top picks of the week for the user.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -400,8 +400,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/topFavorites",
-        "description": "",
+        "summary": "Get Top Favorites",
+        "description": "Retrieves the top favorite actors for the user.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -425,8 +425,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/exploreActors",
-        "description": "",
+        "summary": "Explore Actors",
+        "description": "Allows the user to explore different types of actors.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -450,8 +450,8 @@
         "tags": [
           "API"
         ],
-        "summary": "DELETE /luca-app/main/delete-actor",
-        "description": "",
+        "summary": "Delete Actor",
+        "description": "Deletes an actor from the user's favorites.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -475,8 +475,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/main/logout",
-        "description": "",
+        "summary": "Logout",
+        "description": "Logs out the user and clears the session.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -516,8 +516,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/main/search",
-        "description": "",
+        "summary": "Search",
+        "description": "Performs a search based on user input.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -557,8 +557,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/main/statisticAwards/{param}",
-        "description": "",
+        "summary": "Get Award Statistics",
+        "description": "Retrieves statistics on awards for a specific actor.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -617,8 +617,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/main/nominatedActors",
-        "description": "",
+        "summary": "Get Nominated Actors",
+        "description": "Retrieves a list of actors who have been nominated for awards.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -642,8 +642,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/main/statisticGenre/{param}",
-        "description": "",
+        "summary": "Get Genre Statistics",
+        "description": "Retrieves statistics on genres for a specific actor.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -695,31 +695,6 @@
             }
           }
         }
-      }
-    },
-    "/index": {
-      "get": {
-        "tags": [
-          "API"
-        ],
-        "summary": "GET /index",
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "parameters": [],
-        "requestBody": {}
       }
     },
     "/luca-app/main/announces_unauthenticated": {

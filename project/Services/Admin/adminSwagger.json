@@ -36,8 +36,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/admin/addAnnounce",
-        "description": "",
+        "summary": "Add Announce",
+        "description": "Adds a new announcement to the system.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -77,8 +77,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/admin/users",
-        "description": "",
+        "summary": "Get Users",
+        "description": "Retrieves a list of all users.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -102,8 +102,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/admin/announces",
-        "description": "",
+        "summary": "Get Announces",
+        "description": "Retrieves all announcements.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -125,8 +125,8 @@
         "tags": [
           "API"
         ],
-        "summary": "PUT /luca-app/admin/announces",
-        "description": "",
+        "summary": "Update Announces",
+        "description": "Updates an existing announcement.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -164,8 +164,8 @@
         "tags": [
           "API"
         ],
-        "summary": "DELETE /luca-app/admin/announces",
-        "description": "",
+        "summary": "Delete Announces",
+        "description": "Deletes an announcement.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -189,8 +189,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/admin/get-news/:actor",
-        "description": "",
+        "summary": "Get News for Actor",
+        "description": "Fetches news related to a specific actor.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -214,8 +214,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/admin/RSS/:actor",
-        "description": "",
+        "summary": "Get RSS Feed for Actor",
+        "description": "Generates an RSS feed with news related to a specific actor.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -239,8 +239,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/admin/logout",
-        "description": "",
+        "summary": "Logout Admin",
+        "description": "Logs out an admin user and clears the session.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -280,8 +280,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/admin/nominatedActors",
-        "description": "",
+        "summary": "Get Nominated Actors",
+        "description": "Retrieves a list of actors who have been nominated for awards.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -305,8 +305,8 @@
         "tags": [
           "API"
         ],
-        "summary": "DELETE /luca-app/admin/user",
-        "description": "",
+        "summary": "Delete User",
+        "description": "Deletes a user from the system.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -328,8 +328,8 @@
         "tags": [
           "API"
         ],
-        "summary": "PUT /luca-app/admin/user",
-        "description": "",
+        "summary": "Update User",
+        "description": "Updates the details of an existing user.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -367,8 +367,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/admin/user",
-        "description": "",
+        "summary": "Add User",
+        "description": "Adds a new user to the system.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -408,8 +408,8 @@
         "tags": [
           "API"
         ],
-        "summary": "POST /luca-app/admin/import-csv",
-        "description": "",
+        "summary": "Import CSV",
+        "description": "Imports user data from a CSV file.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -442,31 +442,6 @@
             }
           }
         }
-      }
-    },
-    "/index": {
-      "get": {
-        "tags": [
-          "API"
-        ],
-        "summary": "GET /index",
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "parameters": [],
-        "requestBody": {}
       }
     }
   }

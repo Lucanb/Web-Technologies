@@ -17,7 +17,9 @@ new Router("GET", "/luca-app/front/news/RSS", async (req, res) => {
                 res.write(data);
                 res.end();
             });
-        })
+        },
+    "Get News RSS",
+    "Serves the news RSS HTML page.")
  ]);
 
 routerController.addRoute(new Router("GET", "/luca-app/front/news", async (req, res, next) => {
@@ -50,7 +52,10 @@ routerController.addRoute(new Router("GET", "/luca-app/front/news", async (req, 
                 res.end(html);
             }
         });
-    })
+    },
+        "Get News",
+        "Serves the news HTML page."
+    )
 )
 
 routerController.addRoute(new Router("GET", "/luca-app/front/news/:", async (req, res, next) => {
@@ -83,7 +88,9 @@ routerController.addRoute(new Router("GET", "/luca-app/front/news/:", async (req
                 res.end(html);
             }
         });
-    }),
+    },
+    "Get News for Actor",
+    "Serves the news HTML page for a specific actor.")
 )
 
 
@@ -117,7 +124,10 @@ routerController.addRoute(    new Router("GET", "/luca-app/front/admin", async (
                 res.end(html);
             }
         });
-    })
+    },
+        "Get Admin Page",
+        "Serves the admin HTML page."
+    )
 )
 
 

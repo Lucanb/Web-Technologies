@@ -26,9 +26,7 @@ const index = http.createServer((req, res) => {
     let contentType = mimeTypes[extname] || 'application/octet-stream';
 
     if (req.url.startsWith('/luca-app/front/public/')) {
-        console.log(publicDir)
         filePath = path.join(publicDir, req.url.replace('/luca-app/front/public/', ''));
-        console.log(`Serving static file: ${filePath}`);
 
         fs.readFile(filePath, (error, content) => {
             if (error) {

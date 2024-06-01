@@ -11,34 +11,6 @@ indexRouterController.routes.forEach(route => {
     routerController.addRoute(route);
 });
 
-// routerController.addRoute(
-//     new Router("GET", "/luca-app/auth/styles/authentification.css", async (req, res) => {
-//         fs.readFile("Frontend/styles/authentification.css", (err, data) => {
-//             if (err) {
-//                 res.writeHead(404, {'Content-Type': 'text/css'});
-//                 return res.end('404 Not Found');
-//             }
-//             res.writeHead(200, {'Content-Type': 'text/css'});
-//             res.write(data);
-//             res.end();
-//         });
-//     })
-// );
-
-// routerController.addRoute(new Router("GET","/luca-app/auth/login",async (req,res)=>{
-//     fs.readFile("Frontend/views/auth/login.html",(err, data)=>{
-//         if(err){
-//             res.writeHead(404, {'Content-Type': 'text/html'});
-//             // console.log(err)
-//             return res.end('404 Not Found');
-//         }
-//         res.writeHead(200, {'Content-Type' : 'text/html'});
-//         res.write(data);
-//         res.end();
-//     })
-// })
-// );
-
 routerController.addRoute(new Router("POST","/luca-app/auth/login",async (req,res,next)=>{
     try{
         const controller = new authController();
@@ -50,21 +22,8 @@ routerController.addRoute(new Router("POST","/luca-app/auth/login",async (req,re
         res.end("Internal Error");
     }
 
-}));
-
-
-// routerController.addRoute(new Router("GET","/luca-app/auth/register",async (req,res)=>{
-//         fs.readFile("Frontend/views/auth/register.html",(err, data)=>{
-//             if(err){
-//                 res.writeHead(404, {'Content-Type': 'text/html'});
-//                 return res.end('404 Not Found');
-//             }
-//             res.writeHead(200, {'Content-Type' : 'text/html'});
-//             res.write(data);
-//             res.end();
-//         })
-//     })
-// )
+},    "User Login",
+    "Authenticates a user and starts a new session."));
 
 routerController.addRoute(new Router("POST","/luca-app/auth/register",async (req,res,next)=>{
     try {
@@ -77,8 +36,9 @@ routerController.addRoute(new Router("POST","/luca-app/auth/register",async (req
         res.writeHead(500, {'Content-Type': 'text/plain'});
         res.end("Internal Error");
     }
-    })
-)
+    },
+    "User Registration",
+    "Registers a new user in the system."))
 
 routerController.addRoute(new Router("POST","/luca-app/auth/register_userCredentialsExists",async (req,res,next)=>{
         try {
@@ -91,21 +51,9 @@ routerController.addRoute(new Router("POST","/luca-app/auth/register_userCredent
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    })
-)
-
-// routerController.addRoute(new Router("GET","/luca-app/auth/forgot",async (req,res)=>{
-//         fs.readFile("Frontend/views/auth/forgot.html",(err, data)=>{
-//             if(err){
-//                 res.writeHead(404, {'Content-Type': 'text/html'});
-//                 return res.end('404 Not Found');
-//             }
-//             res.writeHead(200, {'Content-Type' : 'text/html'});
-//             res.write(data);
-//             res.end();
-//         })
-//     })
-// )
+    },
+    "Check User Credentials",
+    "Checks if a username or email already exists in the system."))
 
 routerController.addRoute(new Router("POST","/luca-app/auth/forgot",async (req,res)=>{
         try {
@@ -118,21 +66,9 @@ routerController.addRoute(new Router("POST","/luca-app/auth/forgot",async (req,r
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    })
-)
-
-// routerController.addRoute(new Router("GET","/luca-app/auth/update-password/:",async (req,res)=>{
-//         fs.readFile("Frontend/views/auth/update-password.html",(err, data)=>{
-//             if(err){
-//                 res.writeHead(404, {'Content-Type': 'text/html'});
-//                 return res.end('404 Not Found');
-//             }
-//             res.writeHead(200, {'Content-Type' : 'text/html'});
-//             res.write(data);
-//             res.end();
-//         })
-//     })
-// )
+    },
+    "Forgot Password",
+    "Sends an email to reset the user's password."))
 
 routerController.addRoute(new Router("POST","/luca-app/auth/update-password/:",async (req, res)=>{
         try {
@@ -145,8 +81,9 @@ routerController.addRoute(new Router("POST","/luca-app/auth/update-password/:",a
             // res.writeHead(500, {'Content-Type': 'text/plain'});
             // res.end("Internal Error");
         }
-    })
-)
+    },
+    "Update Password",
+    "Updates the user's password using a token."))
 generateSwaggerDoc(routerController, 'Services/Authentication/authSwagger.json');
 
 module.exports = { routerController };

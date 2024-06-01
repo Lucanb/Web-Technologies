@@ -27,11 +27,6 @@ routerController.addRoute(
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-            //     res.writeHead(401, {'Content-Type': 'text/html'});
-            //     return res.end('Authorization header missing or invalid');
-            // }
-
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
             if (!tokenStatus.valid){
@@ -52,70 +47,10 @@ routerController.addRoute(
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             }
-            // let accessToken = null;
-            // let refreshToken = null;
-            // if (cookies) {
-            //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-            //         const parts = cookie.split('=');
-            //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-            //         return acc;
-            //     }, {});
-            //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-            //     refreshToken = cookieObj['refreshToken'];
-            // }
-            // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-            // try {
-            //     const decoded = await JWToken.validate(token);
-            //     if (!decoded) {
-            //         res.writeHead(401, {'Content-Type': 'text/html'});
-            //         return res.end('Invalid token');
-            //     }
-            // if (!accessToken || !refreshToken) {
-            //     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //     return res.end();
-            // }
-            //
-            // try {
-            //     const decoded = await JWToken.validate(accessToken);
-            //     if (!decoded) {
-            //         res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //         return res.end();
-            //     }
-            //     res.writeHead(200, {'Content-Type': 'text/html'});
-            //     res.end(html);
-            // } catch (error) {
-            //     try {
-            //         const decoded = await JWToken.validate(refreshToken);
-            //         console.log(decoded)
-            //         if (!decoded) {
-            //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //             return res.end();
-            //         } else {
-            //             const accessToken = await Token.generateKey({
-            //                 userId: decoded[0].userId,
-            //                 role: decoded[0].role,
-            //                 username: decoded[0].username,
-            //                 fresh: true,
-            //                 type: 'access'
-            //             }, {
-            //                 expiresIn: '1h'
-            //             })
-            //             console.log( accessToken)
-            //             res.setHeader('Set-Cookie',
-            //                 `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-            //             );
-            //             res.writeHead(200, {'Content-Type': 'text/html'});
-            //             res.end(html);
-            //         }
-            //     }catch (error)
-            //     {
-            //         console.error('Error validating token:', error);
-            //         res.writeHead(500, {'Content-Type': 'text/html'});
-            //         res.end('Internal server error');
-            //     }
-            // }
         });
-    })
+    },
+        "Get Home Page",
+        "Serves the home HTML page for authenticated users.")
 )
 
 routerController.addRoute(
@@ -151,49 +86,10 @@ routerController.addRoute(
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             }
-            // const cookies = req.headers.cookie;
-            // let accessToken = null;
-            // let refreshToken = null;
-            // if (cookies) {
-            //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-            //         const parts = cookie.split('=');
-            //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-            //         return acc;
-            //     }, {});
-            //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-            //     refreshToken = cookieObj['refreshToken'];
-            // }
-
-            // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-            // try {
-            //     const decoded = await JWToken.validate(token);
-            //     if (!decoded) {
-            //         res.writeHead(401, {'Content-Type': 'text/html'});
-            //         return res.end('Invalid token');
-            //     }
-
-            /*
-            if (!accessToken) {
-                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                return res.end('Authorization cookie missing or invalid');
-            }
-
-            try {
-                const decoded = await JWToken.validate(accessToken);
-                if (!decoded) {
-                    res.writeHead(401, {'Content-Type': 'text/html'});
-                    return res.end('Invalid token');
-                } ///aici o sa fac si cu refresh
-            */
-            // res.writeHead(200, {'Content-Type': 'text/html'});
-            // res.end(html);
-            // } catch (error) {
-            //     console.error('Error validating token:', error);
-            //     res.writeHead(500, {'Content-Type': 'text/html'});
-            //     res.end('Internal server error');
-            // }
         });
-    })
+    },
+        "Get Diagrams Page",
+        "Serves the diagrams HTML page.")
 );
 
 routerController.addRoute(
@@ -210,7 +106,9 @@ routerController.addRoute(
             res.end(html);
 
         });
-    })
+    },
+        "Get Unauthenticated Home Page",
+        "Serves the home HTML page for unauthenticated users.")
 );
 
 routerController.addRoute(
@@ -243,11 +141,10 @@ routerController.addRoute(
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             }
-            // res.writeHead(200, {'Content-Type': 'text/html'});
-            // res.end(html);
-
         });
-    })
+    },
+        "Get Notifications Page",
+        "Serves the notifications HTML page for authenticated users.")
 );
 
 routerController.addRoute(
@@ -283,72 +180,10 @@ routerController.addRoute(
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             }
-            // const cookies = req.headers.cookie;
-            // let accessToken = null;
-            // let refreshToken = null;
-            // if (cookies) {
-            //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-            //         const parts = cookie.split('=');
-            //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-            //         return acc;
-            //     }, {});
-            //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-            //     refreshToken = cookieObj['refreshToken'];
-            // }
-
-            // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-            // try {
-            //     const decoded = await JWToken.validate(token);
-            //     if (!decoded) {
-            //         res.writeHead(401, {'Content-Type': 'text/html'});
-            //         return res.end('Invalid token');
-            //     }
-            // if (!accessToken) {
-            //     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //     return res.end('Authorization cookie missing or invalid');
-            // }
-            //
-            // try {
-            //     const decoded = await JWToken.validate(accessToken);
-            //     if (!decoded) {
-            //         res.writeHead(401, {'Content-Type': 'text/html'});
-            //         return res.end('Invalid token');
-            //     } ///aici o sa fac si cu refresh
-            //     res.writeHead(200, {'Content-Type': 'text/html'});
-            //     res.end(html);
-            // } catch (error) {
-            //     try {
-            //         const decoded = await JWToken.validate(refreshToken);
-            //         console.log(decoded)
-            //         if (!decoded) {
-            //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //             return res.end();
-            //         } else {
-            //             const accessToken = await Token.generateKey({
-            //                 userId: decoded[0].userId,
-            //                 role: decoded[0].role,
-            //                 username: decoded[0].username,
-            //                 fresh: true,
-            //                 type: 'access'
-            //             }, {
-            //                 expiresIn: '1h'
-            //             })
-            //             console.log( accessToken)
-            //             res.setHeader('Set-Cookie',
-            //                 `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-            //             );
-            //             res.writeHead(200, {'Content-Type': 'text/html'});
-            //             res.end(html);
-            //         }
-            //     }catch (error)
-            //     {
-            //         console.error('Error validating token:', error);
-            //         res.writeHead(500, {'Content-Type': 'text/html'});
-            //         res.end('Internal server error');
-            //     }
-            // }
         });
-    })
+    },
+        "Get Favorites Page",
+        "Serves the favorites HTML page for authenticated users.")
 );
 
 routerController.addRoute(
@@ -384,49 +219,11 @@ routerController.addRoute(
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             }
-            // const cookies = req.headers.cookie;
-            // let accessToken = null;
-            // let refreshToken = null;
-            // if (cookies) {
-            //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-            //         const parts = cookie.split('=');
-            //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-            //         return acc;
-            //     }, {});
-            //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-            //     refreshToken = cookieObj['refreshToken'];
-            // }
-
-            // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-            // try {
-            //     const decoded = await JWToken.validate(token);
-            //     if (!decoded) {
-            //         res.writeHead(401, {'Content-Type': 'text/html'});
-            //         return res.end('Invalid token');
-            //     }
-
-            /*
-            if (!accessToken) {
-                res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-                return res.end('Authorization cookie missing or invalid');
-            }
-
-            try {
-                const decoded = await JWToken.validate(accessToken);
-                if (!decoded) {
-                    res.writeHead(401, {'Content-Type': 'text/html'});
-                    return res.end('Invalid token');
-                } ///aici o sa fac si cu refresh
-            */
-            // res.writeHead(200, {'Content-Type': 'text/html'});
-            // res.end(html);
-            // } catch (error) {
-            //     console.error('Error validating token:', error);
-            //     res.writeHead(500, {'Content-Type': 'text/html'});
-            //     res.end('Internal server error');
-            // }
         });
-    })
+    },
+        "Get Actor Profile Page",
+        "Serves the actor profile HTML page for authenticated users."
+    )
 )
 
 routerController.addRoute(
@@ -438,23 +235,6 @@ routerController.addRoute(
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-            //     res.writeHead(401, {'Content-Type': 'text/html'});
-            //     return res.end('Authorization header missing or invalid');
-            // }
-
-            // const cookies = req.headers.cookie;
-            // let accessToken = null;
-            // let refreshToken = null;
-            // if (cookies) {
-            //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-            //         const parts = cookie.split('=');
-            //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-            //         return acc;
-            //     }, {});
-            //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-            //     refreshToken = cookieObj['refreshToken'];
-            // }
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
             if (!tokenStatus.valid){
@@ -475,60 +255,10 @@ routerController.addRoute(
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             }
-            // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-            // try {
-            //     const decoded = await JWToken.validate(token);
-            //     if (!decoded) {
-            //         res.writeHead(401, {'Content-Type': 'text/html'});
-            //         return res.end('Invalid token');
-            //     }
-            // if (!accessToken) {
-            //     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //     return res.end('Authorization cookie missing or invalid');
-            // }
-            //
-            // try {
-            //     const decoded = await JWToken.validate(accessToken);
-            //     if (!decoded) {
-            //         res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //         return res.end('Invalid token');
-            //     } ///aici o sa fac si cu refresh
-            //
-            //     res.writeHead(200, {'Content-Type': 'text/html'});
-            //     res.end(html);
-            // } catch (error) {
-            //     try {
-            //         const decoded = await JWToken.validate(refreshToken);
-            //         console.log(decoded)
-            //         if (!decoded) {
-            //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //             return res.end();
-            //         } else {
-            //             const accessToken = await Token.generateKey({
-            //                 userId: decoded[0].userId,
-            //                 role: decoded[0].role,
-            //                 username: decoded[0].username,
-            //                 fresh: true,
-            //                 type: 'access'
-            //             }, {
-            //                 expiresIn: '1h'
-            //             })
-            //             console.log( accessToken)
-            //             res.setHeader('Set-Cookie',
-            //                 `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-            //             );
-            //             res.writeHead(200, {'Content-Type': 'text/html'});
-            //             res.end(html);
-            //         }
-            //     }catch (error)
-            //     {
-            //         console.error('Error validating token:', error);
-            //         res.writeHead(500, {'Content-Type': 'text/html'});
-            //         res.end('Internal server error');
-            //     }
-            // }
         });
-    })
+    },
+        "Get News Page",
+        "Serves the news HTML page for authenticated users.")
 )
 
 routerController.addRoute(
@@ -543,7 +273,10 @@ routerController.addRoute(
             res.write(data);
             res.end();
         })
-    })
+    },
+        "Get About Page",
+        "Serves the about HTML page."
+    )
 )
 
 routerController.addRoute(
@@ -558,7 +291,10 @@ routerController.addRoute(
             res.write(data);
             res.end();
         })
-    })
+    },
+        "Get Help Page",
+        "Serves the help HTML page."
+    )
 )
 
 module.exports ={routerController}

@@ -4,29 +4,12 @@ info:
   version: 1.0.0
   description: This is the consolidated API documentation for all services.
 paths:
-  /luca-app/auth/index:
-    get:
-      tags:
-        - API
-      summary: GET /luca-app/auth/index
-      description: ''
-      responses:
-        '200':
-          description: Successful response
-        '400':
-          description: Bad Request
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-      parameters: []
-      requestBody: {}
   /luca-app/auth/login:
     post:
       tags:
         - API
-      summary: POST /luca-app/auth/login
-      description: ''
+      summary: User Login
+      description: Authenticates a user and starts a new session.
       responses:
         '200':
           description: Successful response
@@ -52,8 +35,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/auth/register
-      description: ''
+      summary: User Registration
+      description: Registers a new user in the system.
       responses:
         '200':
           description: Successful response
@@ -79,8 +62,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/auth/register_userCredentialsExists
-      description: ''
+      summary: Check User Credentials
+      description: Checks if a username or email already exists in the system.
       responses:
         '200':
           description: Successful response
@@ -106,8 +89,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/auth/forgot
-      description: ''
+      summary: Forgot Password
+      description: Sends an email to reset the user's password.
       responses:
         '200':
           description: Successful response
@@ -133,8 +116,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/auth/update-password/{param}
-      description: ''
+      summary: Update Password
+      description: Updates the user's password using a token.
       responses:
         '200':
           description: Successful response
@@ -183,8 +166,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/getnotifications
-      description: ''
+      summary: Get Notifications
+      description: Retrieves the notifications for the user.
       responses:
         '200':
           description: Successful response
@@ -200,8 +183,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/announces
-      description: ''
+      summary: Get Announces
+      description: Retrieves the announcements for the user.
       responses:
         '200':
           description: Successful response
@@ -217,8 +200,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/main/send-actor-id
-      description: ''
+      summary: Send Actor ID
+      description: Sends the actor ID to the server.
       responses:
         '200':
           description: Successful response
@@ -244,8 +227,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/main/actor-profile-info
-      description: ''
+      summary: Send Actor Profile Info
+      description: Sends the actor profile information to the server.
       responses:
         '200':
           description: Successful response
@@ -271,8 +254,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/toppicks
-      description: ''
+      summary: Get Top Picks
+      description: Retrieves the top picks for the user.
       responses:
         '200':
           description: Successful response
@@ -288,8 +271,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/todayActors
-      description: ''
+      summary: Get Today's Actors
+      description: Retrieves the actors featured today.
       responses:
         '200':
           description: Successful response
@@ -305,8 +288,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/commingSoon
-      description: ''
+      summary: Get Coming Soon
+      description: Retrieves the list of actors coming soon.
       responses:
         '200':
           description: Successful response
@@ -322,8 +305,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/news
-      description: ''
+      summary: Get News Page
+      description: Serves the news HTML page for authenticated users.
       responses:
         '200':
           description: Successful response
@@ -339,8 +322,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/main/help
-      description: ''
+      summary: Add Help Request
+      description: Adds a help request to the system.
       responses:
         '200':
           description: Successful response
@@ -366,8 +349,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/main/add-favorites
-      description: ''
+      summary: Add to Favorites
+      description: Adds an actor to the user's favorites.
       responses:
         '200':
           description: Successful response
@@ -393,8 +376,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/all-favorites
-      description: ''
+      summary: Get All Favorites
+      description: Retrieves all favorite actors for the user.
       responses:
         '200':
           description: Successful response
@@ -410,8 +393,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/topPicksWeek
-      description: ''
+      summary: Get Top Picks of the Week
+      description: Retrieves the top picks of the week for the user.
       responses:
         '200':
           description: Successful response
@@ -427,8 +410,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/topFavorites
-      description: ''
+      summary: Get Top Favorites
+      description: Retrieves the top favorite actors for the user.
       responses:
         '200':
           description: Successful response
@@ -444,8 +427,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/exploreActors
-      description: ''
+      summary: Explore Actors
+      description: Allows the user to explore different types of actors.
       responses:
         '200':
           description: Successful response
@@ -461,8 +444,8 @@ paths:
     delete:
       tags:
         - API
-      summary: DELETE /luca-app/main/delete-actor
-      description: ''
+      summary: Delete Actor
+      description: Deletes an actor from the user's favorites.
       responses:
         '200':
           description: Successful response
@@ -478,8 +461,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/main/logout
-      description: ''
+      summary: Logout
+      description: Logs out the user and clears the session.
       responses:
         '200':
           description: Successful response
@@ -505,8 +488,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/main/search
-      description: ''
+      summary: Search
+      description: Performs a search based on user input.
       responses:
         '200':
           description: Successful response
@@ -532,8 +515,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/main/statisticAwards/{param}
-      description: ''
+      summary: Get Award Statistics
+      description: Retrieves statistics on awards for a specific actor.
       responses:
         '200':
           description: Successful response
@@ -571,8 +554,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/main/nominatedActors
-      description: ''
+      summary: Get Nominated Actors
+      description: Retrieves a list of actors who have been nominated for awards.
       responses:
         '200':
           description: Successful response
@@ -588,8 +571,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/main/statisticGenre/{param}
-      description: ''
+      summary: Get Genre Statistics
+      description: Retrieves statistics on genres for a specific actor.
       responses:
         '200':
           description: Successful response
@@ -623,23 +606,6 @@ paths:
             schema:
               type: object
               properties: {}
-  /index:
-    get:
-      tags:
-        - API
-      summary: GET /index
-      description: ''
-      responses:
-        '200':
-          description: Successful response
-        '400':
-          description: Bad Request
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-      parameters: []
-      requestBody: {}
   /luca-app/main/announces_unauthenticated:
     get:
       tags:
@@ -737,8 +703,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/admin/addAnnounce
-      description: ''
+      summary: Add Announce
+      description: Adds a new announcement to the system.
       responses:
         '200':
           description: Successful response
@@ -764,8 +730,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/admin/users
-      description: ''
+      summary: Get Users
+      description: Retrieves a list of all users.
       responses:
         '200':
           description: Successful response
@@ -781,8 +747,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/admin/announces
-      description: ''
+      summary: Get Announces
+      description: Retrieves all announcements.
       responses:
         '200':
           description: Successful response
@@ -797,8 +763,8 @@ paths:
     put:
       tags:
         - API
-      summary: PUT /luca-app/admin/announces
-      description: ''
+      summary: Update Announces
+      description: Updates an existing announcement.
       responses:
         '200':
           description: Successful response
@@ -823,8 +789,8 @@ paths:
     delete:
       tags:
         - API
-      summary: DELETE /luca-app/admin/announces
-      description: ''
+      summary: Delete Announces
+      description: Deletes an announcement.
       responses:
         '200':
           description: Successful response
@@ -840,8 +806,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/admin/get-news/:actor
-      description: ''
+      summary: Get News for Actor
+      description: Fetches news related to a specific actor.
       responses:
         '200':
           description: Successful response
@@ -857,8 +823,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/admin/RSS/:actor
-      description: ''
+      summary: Get RSS Feed for Actor
+      description: Generates an RSS feed with news related to a specific actor.
       responses:
         '200':
           description: Successful response
@@ -874,8 +840,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/admin/logout
-      description: ''
+      summary: Logout Admin
+      description: Logs out an admin user and clears the session.
       responses:
         '200':
           description: Successful response
@@ -901,8 +867,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/admin/nominatedActors
-      description: ''
+      summary: Get Nominated Actors
+      description: Retrieves a list of actors who have been nominated for awards.
       responses:
         '200':
           description: Successful response
@@ -918,8 +884,8 @@ paths:
     delete:
       tags:
         - API
-      summary: DELETE /luca-app/admin/user
-      description: ''
+      summary: Delete User
+      description: Deletes a user from the system.
       responses:
         '200':
           description: Successful response
@@ -934,8 +900,8 @@ paths:
     put:
       tags:
         - API
-      summary: PUT /luca-app/admin/user
-      description: ''
+      summary: Update User
+      description: Updates the details of an existing user.
       responses:
         '200':
           description: Successful response
@@ -960,8 +926,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/admin/user
-      description: ''
+      summary: Add User
+      description: Adds a new user to the system.
       responses:
         '200':
           description: Successful response
@@ -987,8 +953,8 @@ paths:
     post:
       tags:
         - API
-      summary: POST /luca-app/admin/import-csv
-      description: ''
+      summary: Import CSV
+      description: Imports user data from a CSV file.
       responses:
         '200':
           description: Successful response
@@ -1048,8 +1014,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/home
-      description: ''
+      summary: Get Home Page
+      description: Serves the home HTML page for authenticated users.
       responses:
         '200':
           description: Successful response
@@ -1065,8 +1031,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/diagrams/{param}
-      description: ''
+      summary: Get Diagrams Page
+      description: Serves the diagrams HTML page.
       responses:
         '200':
           description: Successful response
@@ -1088,8 +1054,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/actvis
-      description: ''
+      summary: Get Unauthenticated Home Page
+      description: Serves the home HTML page for unauthenticated users.
       responses:
         '200':
           description: Successful response
@@ -1105,8 +1071,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/notifications
-      description: ''
+      summary: Get Notifications Page
+      description: Serves the notifications HTML page for authenticated users.
       responses:
         '200':
           description: Successful response
@@ -1122,8 +1088,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/favorites
-      description: ''
+      summary: Get Favorites Page
+      description: Serves the favorites HTML page for authenticated users.
       responses:
         '200':
           description: Successful response
@@ -1139,8 +1105,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/actor-profile/{param}
-      description: ''
+      summary: Get Actor Profile Page
+      description: Serves the actor profile HTML page for authenticated users.
       responses:
         '200':
           description: Successful response
@@ -1162,8 +1128,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/news
-      description: ''
+      summary: Get News
+      description: Serves the news HTML page.
       responses:
         '200':
           description: Successful response
@@ -1179,8 +1145,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/about
-      description: ''
+      summary: Get About Page
+      description: Serves the about HTML page.
       responses:
         '200':
           description: Successful response
@@ -1196,8 +1162,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/help
-      description: ''
+      summary: Get Help Page
+      description: Serves the help HTML page.
       responses:
         '200':
           description: Successful response
@@ -1213,8 +1179,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/news/RSS
-      description: ''
+      summary: Get News RSS
+      description: Serves the news RSS HTML page.
       responses:
         '200':
           description: Successful response
@@ -1230,8 +1196,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/news/{param}
-      description: ''
+      summary: Get News for Actor
+      description: Serves the news HTML page for a specific actor.
       responses:
         '200':
           description: Successful response
@@ -1253,8 +1219,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/admin
-      description: ''
+      summary: Get Admin Page
+      description: Serves the admin HTML page.
       responses:
         '200':
           description: Successful response
@@ -1270,8 +1236,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/login
-      description: ''
+      summary: User Login Page
+      description: Serves the login HTML page for users.
       responses:
         '200':
           description: Successful response
@@ -1287,8 +1253,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/register
-      description: ''
+      summary: Forgot Password Page
+      description: Serves the forgot password HTML page for users to reset their passwords.
       responses:
         '200':
           description: Successful response
@@ -1304,8 +1270,8 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/forgot
-      description: ''
+      summary: Forgot Password Page
+      description: Serves the forgot password HTML page for users to reset their passwords.
       responses:
         '200':
           description: Successful response
@@ -1321,8 +1287,10 @@ paths:
     get:
       tags:
         - API
-      summary: GET /luca-app/front/update-password/{param}
-      description: ''
+      summary: Update Password Page
+      description: >-
+        Serves the update password HTML page for users to update their password
+        using a token.
       responses:
         '200':
           description: Successful response

@@ -19,224 +19,6 @@ const internalRoutes = [
             res.end();
         });
     }),
-    // new Router("GET", "/luca-app/main/home", async (req, res, next) => {
-    //
-    //     fs.readFile("Frontend/views/home.html", 'utf-8', async (err, html) => {
-    //         if (err) {
-    //             console.error('Error reading file:', err);
-    //             res.writeHead(404, {'Content-Type': 'text/html'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-    //         //     res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //     return res.end('Authorization header missing or invalid');
-    //         // }
-    //
-    //         const cookies = req.headers.cookie;
-    //         const tokenStatus = await getTokenStatus(cookies)
-    //         if (!tokenStatus.valid){
-    //             if(tokenStatus.message === 'Internal server error')
-    //             {
-    //                 res.writeHead(500, {'Content-Type': 'text/html'});
-    //                 res.end(tokenStatus.message)
-    //             }else{
-    //                 res.writeHead(302, {'Location': 'http://luca-app:5000/luca-app/auth/login'});
-    //                 res.end(tokenStatus.message);
-    //             }
-    //         }else{
-    //             if (tokenStatus.newAccessToken) {
-    //                 res.setHeader('Set-Cookie',
-    //                     `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`
-    //                 );
-    //             }
-    //             res.writeHead(200, {'Content-Type': 'text/html'});
-    //             res.end(html);
-    //         }
-    //         // let accessToken = null;
-    //         // let refreshToken = null;
-    //         // if (cookies) {
-    //         //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-    //         //         const parts = cookie.split('=');
-    //         //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-    //         //         return acc;
-    //         //     }, {});
-    //         //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-    //         //     refreshToken = cookieObj['refreshToken'];
-    //         // }
-    //         // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-    //         // try {
-    //         //     const decoded = await JWToken.validate(token);
-    //         //     if (!decoded) {
-    //         //         res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //         return res.end('Invalid token');
-    //         //     }
-    //         // if (!accessToken || !refreshToken) {
-    //         //     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //         //     return res.end();
-    //         // }
-    //         //
-    //         // try {
-    //         //     const decoded = await JWToken.validate(accessToken);
-    //         //     if (!decoded) {
-    //         //         res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //         //         return res.end();
-    //         //     }
-    //         //     res.writeHead(200, {'Content-Type': 'text/html'});
-    //         //     res.end(html);
-    //         // } catch (error) {
-    //         //     try {
-    //         //         const decoded = await JWToken.validate(refreshToken);
-    //         //         console.log(decoded)
-    //         //         if (!decoded) {
-    //         //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //         //             return res.end();
-    //         //         } else {
-    //         //             const accessToken = await Token.generateKey({
-    //         //                 userId: decoded[0].userId,
-    //         //                 role: decoded[0].role,
-    //         //                 username: decoded[0].username,
-    //         //                 fresh: true,
-    //         //                 type: 'access'
-    //         //             }, {
-    //         //                 expiresIn: '1h'
-    //         //             })
-    //         //             console.log( accessToken)
-    //         //             res.setHeader('Set-Cookie',
-    //         //                 `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-    //         //             );
-    //         //             res.writeHead(200, {'Content-Type': 'text/html'});
-    //         //             res.end(html);
-    //         //         }
-    //         //     }catch (error)
-    //         //     {
-    //         //         console.error('Error validating token:', error);
-    //         //         res.writeHead(500, {'Content-Type': 'text/html'});
-    //         //         res.end('Internal server error');
-    //         //     }
-    //         // }
-    //     });
-    // }),
-    // new Router("GET", "/luca-app/main/diagrams/:", async (req, res, next) => {
-    //
-    //     fs.readFile("Frontend/views/diagrams.html", 'utf-8', async (err, html) => {
-    //         if (err) {
-    //             console.error('Error reading file:', err);
-    //             res.writeHead(404, {'Content-Type': 'text/html'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-    //         //     res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //     return res.end('Authorization header missing or invalid');
-    //         // }
-    //         const cookies = req.headers.cookie;
-    //         const tokenStatus = await getTokenStatus(cookies)
-    //         if (!tokenStatus.valid){
-    //             if(tokenStatus.message === 'Internal server error')
-    //             {
-    //                 res.writeHead(500, {'Content-Type': 'text/html'});
-    //                 res.end(tokenStatus.message)
-    //             }else{
-    //                 res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //                 res.end(tokenStatus.message);
-    //             }
-    //         }else{
-    //             if (tokenStatus.newAccessToken) {
-    //                 res.setHeader('Set-Cookie',
-    //                     `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-    //                 );
-    //             }
-    //             res.writeHead(200, {'Content-Type': 'text/html'});
-    //             res.end(html);
-    //         }
-    //         // const cookies = req.headers.cookie;
-    //         // let accessToken = null;
-    //         // let refreshToken = null;
-    //         // if (cookies) {
-    //         //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-    //         //         const parts = cookie.split('=');
-    //         //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-    //         //         return acc;
-    //         //     }, {});
-    //         //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-    //         //     refreshToken = cookieObj['refreshToken'];
-    //         // }
-    //
-    //         // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-    //         // try {
-    //         //     const decoded = await JWToken.validate(token);
-    //         //     if (!decoded) {
-    //         //         res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //         return res.end('Invalid token');
-    //         //     }
-    //
-    //         /*
-    //         if (!accessToken) {
-    //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //             return res.end('Authorization cookie missing or invalid');
-    //         }
-    //
-    //         try {
-    //             const decoded = await JWToken.validate(accessToken);
-    //             if (!decoded) {
-    //                 res.writeHead(401, {'Content-Type': 'text/html'});
-    //                 return res.end('Invalid token');
-    //             } ///aici o sa fac si cu refresh
-    //         */
-    //         // res.writeHead(200, {'Content-Type': 'text/html'});
-    //         // res.end(html);
-    //         // } catch (error) {
-    //         //     console.error('Error validating token:', error);
-    //         //     res.writeHead(500, {'Content-Type': 'text/html'});
-    //         //     res.end('Internal server error');
-    //         // }
-    //     });
-    // }),
-    // new Router("GET", '/luca-app/main/actvis', async (req, res) => {
-    //     fs.readFile("Frontend/views/home_unauthenticated.html", 'utf-8', async (err, html) => {
-    //         if (err) {
-    //             console.error('Error reading file:', err);
-    //             res.writeHead(404, {'Content-Type': 'text/html'});
-    //             return res.end('404 Not Found');
-    //         }
-    //
-    //         res.writeHead(200, {'Content-Type': 'text/html'});
-    //         res.end(html);
-    //
-    //     });
-    // }),
-    // new Router("GET", '/luca-app/main/notifications', async (req, res) => {
-    //     fs.readFile("Frontend/views/announces.html", 'utf-8', async (err, html) => {
-    //         if (err) {
-    //             console.error('Error reading file:', err);
-    //             res.writeHead(404, {'Content-Type': 'text/html'});
-    //             return res.end('404 Not Found');
-    //         }
-    //
-    //         const cookies = req.headers.cookie;
-    //         const tokenStatus = await getTokenStatus(cookies)
-    //         if (!tokenStatus.valid){
-    //             if(tokenStatus.message === 'Internal server error')
-    //             {
-    //                 res.writeHead(500, {'Content-Type': 'text/html'});
-    //                 res.end(tokenStatus.message)
-    //             }else{
-    //                 res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //                 res.end(tokenStatus.message);
-    //             }
-    //         }else{
-    //             if (tokenStatus.newAccessToken) {
-    //                 res.setHeader('Set-Cookie',
-    //                     `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-    //                 );
-    //             }
-    //             res.writeHead(200, {'Content-Type': 'text/html'});
-    //             res.end(html);
-    //         }
-    //         // res.writeHead(200, {'Content-Type': 'text/html'});
-    //         // res.end(html);
-    //
-    //     });
-    // }),
     new Router("GET", '/luca-app/main/getnotifications', async (req, res) => {
         try {
             const cookies = req.headers.cookie;
@@ -259,20 +41,18 @@ const internalRoutes = [
                 const controller = new feedController();
                 const feedDone = await controller.getnotifications(req,res);
             }
-            // const controller = new feedController();
-            // const feedDone = await controller.getnotifications(req,res);
 
         } catch (error) {
             console.error("Error forgot password user", error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Get Notifications",
+        "Retrieves the notifications for the user."),
     new Router("GET", '/luca-app/main/announces', async (req, res) => {
         try {
 
-            // const controller = new feedController();
-            // const feedDone = await controller.feedAnnounces(req,res);
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
             if (!tokenStatus.valid){
@@ -299,7 +79,10 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Get Announces",
+        "Retrieves the announcements for the user."
+    ),
     new Router("POST","/luca-app/main/send-actor-id",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
@@ -323,22 +106,17 @@ const internalRoutes = [
                 const sendId = await controller.sendId(req,res);
                 return sendId;
             }
-            // const controller = new feedController();
-            // const sendId = await controller.sendId(req,res);
-            // return sendId;
-
         } catch (error) {
             console.error("Error forgot password user", error);
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Send Actor ID",
+        "Sends the actor ID to the server."),
 
     new Router("POST","/luca-app/main/actor-profile-info",async (req,res)=>{
         try {
-            // const controller = new feedController();
-            // const sendId = await controller.sendIdInformations(req,res);
-            // return sendId;
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
             if (!tokenStatus.valid){
@@ -365,12 +143,12 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Send Actor Profile Info",
+        "Sends the actor profile information to the server."),
 
     new Router("GET", '/luca-app/main/toppicks', async (req, res) => {
         try {
-            // const controller = new feedController();
-            // const feedDone = await controller.feedTopPicks(req,res);
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
             if (!tokenStatus.valid){
@@ -396,11 +174,11 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Get Top Picks",
+        "Retrieves the top picks for the user."),
     new Router("GET", '/luca-app/main/todayActors', async (req, res) => {
         try {
-            // const controller = new feedController();
-            // const feedDone = await controller.feedTodayActors(req,res);
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
             if (!tokenStatus.valid){
@@ -426,7 +204,10 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Get Today's Actors",
+        "Retrieves the actors featured today."
+    ),
     new Router("GET", '/luca-app/main/commingSoon', async (req, res) => {
         try {
             const cookies = req.headers.cookie;
@@ -454,180 +235,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
-    // new Router("GET", "/luca-app/main/favorites", async (req, res, next) => {
-    //
-    //     fs.readFile("Frontend/views/favorites.html", 'utf-8', async (err, html) => {
-    //         if (err) {
-    //             console.error('Error reading file:', err);
-    //             res.writeHead(404, {'Content-Type': 'text/html'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-    //         //     res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //     return res.end('Authorization header missing or invalid');
-    //         // }
-    //         const cookies = req.headers.cookie;
-    //         const tokenStatus = await getTokenStatus(cookies)
-    //         if (!tokenStatus.valid){
-    //             if(tokenStatus.message === 'Internal server error')
-    //             {
-    //                 res.writeHead(500, {'Content-Type': 'text/html'});
-    //                 res.end(tokenStatus.message)
-    //             }else{
-    //                 res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //                 res.end(tokenStatus.message);
-    //             }
-    //         }else{
-    //             if (tokenStatus.newAccessToken) {
-    //                 res.setHeader('Set-Cookie',
-    //                     `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-    //                 );
-    //             }
-    //             res.writeHead(200, {'Content-Type': 'text/html'});
-    //             res.end(html);
-    //         }
-    //         // const cookies = req.headers.cookie;
-    //         // let accessToken = null;
-    //         // let refreshToken = null;
-    //         // if (cookies) {
-    //         //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-    //         //         const parts = cookie.split('=');
-    //         //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-    //         //         return acc;
-    //         //     }, {});
-    //         //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-    //         //     refreshToken = cookieObj['refreshToken'];
-    //         // }
-    //
-    //         // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-    //         // try {
-    //         //     const decoded = await JWToken.validate(token);
-    //         //     if (!decoded) {
-    //         //         res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //         return res.end('Invalid token');
-    //         //     }
-    //         // if (!accessToken) {
-    //         //     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //         //     return res.end('Authorization cookie missing or invalid');
-    //         // }
-    //         //
-    //         // try {
-    //         //     const decoded = await JWToken.validate(accessToken);
-    //         //     if (!decoded) {
-    //         //         res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //         return res.end('Invalid token');
-    //         //     } ///aici o sa fac si cu refresh
-    //         //     res.writeHead(200, {'Content-Type': 'text/html'});
-    //         //     res.end(html);
-    //         // } catch (error) {
-    //         //     try {
-    //         //         const decoded = await JWToken.validate(refreshToken);
-    //         //         console.log(decoded)
-    //         //         if (!decoded) {
-    //         //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //         //             return res.end();
-    //         //         } else {
-    //         //             const accessToken = await Token.generateKey({
-    //         //                 userId: decoded[0].userId,
-    //         //                 role: decoded[0].role,
-    //         //                 username: decoded[0].username,
-    //         //                 fresh: true,
-    //         //                 type: 'access'
-    //         //             }, {
-    //         //                 expiresIn: '1h'
-    //         //             })
-    //         //             console.log( accessToken)
-    //         //             res.setHeader('Set-Cookie',
-    //         //                 `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-    //         //             );
-    //         //             res.writeHead(200, {'Content-Type': 'text/html'});
-    //         //             res.end(html);
-    //         //         }
-    //         //     }catch (error)
-    //         //     {
-    //         //         console.error('Error validating token:', error);
-    //         //         res.writeHead(500, {'Content-Type': 'text/html'});
-    //         //         res.end('Internal server error');
-    //         //     }
-    //         // }
-    //     });
-    // }),
-    // new Router("GET", "/luca-app/main/actor-profile/:", async (req, res, next) => {
-    //
-    //     fs.readFile("Frontend/views/actor-profile.html", 'utf-8', async (err, html) => {
-    //         if (err) {
-    //             console.error('Error reading file:', err);
-    //             res.writeHead(404, {'Content-Type': 'text/html'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-    //         //     res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //     return res.end('Authorization header missing or invalid');
-    //         // }
-    //         const cookies = req.headers.cookie;
-    //         const tokenStatus = await getTokenStatus(cookies)
-    //         if (!tokenStatus.valid){
-    //             if(tokenStatus.message === 'Internal server error')
-    //             {
-    //                 res.writeHead(500, {'Content-Type': 'text/html'});
-    //                 res.end(tokenStatus.message)
-    //             }else{
-    //                 res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //                 res.end(tokenStatus.message);
-    //             }
-    //         }else{
-    //             if (tokenStatus.newAccessToken) {
-    //                 res.setHeader('Set-Cookie',
-    //                     `accessToken=${tokenStatus.newAccessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-    //                 );
-    //             }
-    //             res.writeHead(200, {'Content-Type': 'text/html'});
-    //             res.end(html);
-    //         }
-    //         // const cookies = req.headers.cookie;
-    //         // let accessToken = null;
-    //         // let refreshToken = null;
-    //         // if (cookies) {
-    //         //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-    //         //         const parts = cookie.split('=');
-    //         //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-    //         //         return acc;
-    //         //     }, {});
-    //         //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-    //         //     refreshToken = cookieObj['refreshToken'];
-    //         // }
-    //
-    //         // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-    //         // try {
-    //         //     const decoded = await JWToken.validate(token);
-    //         //     if (!decoded) {
-    //         //         res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //         return res.end('Invalid token');
-    //         //     }
-    //
-    //         /*
-    //         if (!accessToken) {
-    //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //             return res.end('Authorization cookie missing or invalid');
-    //         }
-    //
-    //         try {
-    //             const decoded = await JWToken.validate(accessToken);
-    //             if (!decoded) {
-    //                 res.writeHead(401, {'Content-Type': 'text/html'});
-    //                 return res.end('Invalid token');
-    //             } ///aici o sa fac si cu refresh
-    //         */
-    //             // res.writeHead(200, {'Content-Type': 'text/html'});
-    //             // res.end(html);
-    //         // } catch (error) {
-    //         //     console.error('Error validating token:', error);
-    //         //     res.writeHead(500, {'Content-Type': 'text/html'});
-    //         //     res.end('Internal server error');
-    //         // }
-    //     });
-    // }),
+    },
+        "Get Coming Soon",
+        "Retrieves the list of actors coming soon."),
     new Router("GET", "/luca-app/main/news", async (req, res, next) => {
 
         fs.readFile("Frontend/views/news.html", 'utf-8', async (err, html) => {
@@ -636,23 +246,7 @@ const internalRoutes = [
                 res.writeHead(404, {'Content-Type': 'text/html'});
                 return res.end('404 Not Found');
             }
-            // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-            //     res.writeHead(401, {'Content-Type': 'text/html'});
-            //     return res.end('Authorization header missing or invalid');
-            // }
 
-            // const cookies = req.headers.cookie;
-            // let accessToken = null;
-            // let refreshToken = null;
-            // if (cookies) {
-            //     const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-            //         const parts = cookie.split('=');
-            //         acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-            //         return acc;
-            //     }, {});
-            //     accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-            //     refreshToken = cookieObj['refreshToken'];
-            // }
             const cookies = req.headers.cookie;
             const tokenStatus = await getTokenStatus(cookies)
             if (!tokenStatus.valid){
@@ -673,169 +267,10 @@ const internalRoutes = [
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             }
-            // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-            // try {
-            //     const decoded = await JWToken.validate(token);
-            //     if (!decoded) {
-            //         res.writeHead(401, {'Content-Type': 'text/html'});
-            //         return res.end('Invalid token');
-            //     }
-            // if (!accessToken) {
-            //     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //     return res.end('Authorization cookie missing or invalid');
-            // }
-            //
-            // try {
-            //     const decoded = await JWToken.validate(accessToken);
-            //     if (!decoded) {
-            //         res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //         return res.end('Invalid token');
-            //     } ///aici o sa fac si cu refresh
-            //
-            //     res.writeHead(200, {'Content-Type': 'text/html'});
-            //     res.end(html);
-            // } catch (error) {
-            //     try {
-            //         const decoded = await JWToken.validate(refreshToken);
-            //         console.log(decoded)
-            //         if (!decoded) {
-            //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-            //             return res.end();
-            //         } else {
-            //             const accessToken = await Token.generateKey({
-            //                 userId: decoded[0].userId,
-            //                 role: decoded[0].role,
-            //                 username: decoded[0].username,
-            //                 fresh: true,
-            //                 type: 'access'
-            //             }, {
-            //                 expiresIn: '1h'
-            //             })
-            //             console.log( accessToken)
-            //             res.setHeader('Set-Cookie',
-            //                 `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-            //             );
-            //             res.writeHead(200, {'Content-Type': 'text/html'});
-            //             res.end(html);
-            //         }
-            //     }catch (error)
-            //     {
-            //         console.error('Error validating token:', error);
-            //         res.writeHead(500, {'Content-Type': 'text/html'});
-            //         res.end('Internal server error');
-            //     }
-            // }
         });
-    })
-    // new Router("GET", "/admin", async (req, res, next) => {
-    //
-    //     fs.readFile("Frontend/views/admin.html", 'utf-8', async (err, html) => {
-    //         if (err) {
-    //             console.error('Error reading file:', err);
-    //             res.writeHead(404, {'Content-Type': 'text/html'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-    //         //     res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //     return res.end('Authorization header missing or invalid');
-    //         // }
-    //
-    //         const cookies = req.headers.cookie;
-    //         let accessToken = null;
-    //         let refreshToken = null;
-    //         if (cookies) {
-    //             const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-    //                 const parts = cookie.split('=');
-    //                 acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-    //                 return acc;
-    //             }, {});
-    //             accessToken = cookieObj['accessToken'];  // Assuming the token is stored under the key 'accessToken'
-    //             refreshToken = cookieObj['refreshToken'];
-    //         }
-    //
-    //         // const token = req.headers.authorization.split(' ')[1];  // Bearer <token>
-    //         // try {
-    //         //     const decoded = await JWToken.validate(token);
-    //         //     if (!decoded) {
-    //         //         res.writeHead(401, {'Content-Type': 'text/html'});
-    //         //         return res.end('Invalid token');
-    //         //     }
-    //         if (!accessToken) {
-    //             res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //             return res.end('Authorization cookie missing or invalid');
-    //         }
-    //
-    //         try {
-    //             const decoded = await JWToken.validate(accessToken);
-    //             if (!decoded) {
-    //                 res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //                 return res.end('Invalid token');
-    //             } ///aici o sa fac si cu refresh
-    //             if (!decoded[0].role)
-    //             {
-    //                 res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //                 return res.end('Invalid token');
-    //             }
-    //
-    //             res.writeHead(200, {'Content-Type': 'text/html'});
-    //             res.end(html);
-    //         } catch (error) {
-    //             try {
-    //                 const decoded = await JWToken.validate(refreshToken);
-    //                 console.log(decoded)
-    //                 if (!decoded) {
-    //                     res.writeHead(302, {'Location': 'http://localhost:3000/login'});
-    //                     return res.end();
-    //                 } else {
-    //                     const accessToken = await Token.generateKey({
-    //                         userId: decoded[0].userId,
-    //                         role: decoded[0].role,
-    //                         username: decoded[0].username,
-    //                         fresh: true,
-    //                         type: 'access'
-    //                     }, {
-    //                         expiresIn: '1h'
-    //                     })
-    //                     console.log( accessToken)
-    //                     res.setHeader('Set-Cookie',
-    //                         `accessToken=${accessToken}; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
-    //                     );
-    //                     res.writeHead(200, {'Content-Type': 'text/html'});
-    //                     res.end(html);
-    //                 }
-    //             }catch (error)
-    //             {
-    //                 console.error('Error validating token:', error);
-    //                 res.writeHead(500, {'Content-Type': 'text/html'});
-    //                 res.end('Internal server error');
-    //             }
-    //         }
-    //     });
-    // })
-    ,
-    // new Router("GET","/luca-app/main/about",async (req,res)=>{
-    //     fs.readFile("Frontend/views/about.html",(err, data)=>{
-    //         if(err){
-    //             res.writeHead(404, {'Content-Type': 'text/html'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type' : 'text/html'});
-    //         res.write(data);
-    //         res.end();
-    //     })
-    // }),
-
-    // new Router("GET","/luca-app/main/help",async (req,res)=>{
-    //     fs.readFile("Frontend/views/help.html",(err, data)=>{
-    //         if(err){
-    //             res.writeHead(404, {'Content-Type': 'text/html'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type' : 'text/html'});
-    //         res.write(data);
-    //         res.end();
-    //     })
-    // }),
+    },
+        "Get News Page",
+        "Serves the news HTML page for authenticated users."),
     new Router("POST","/luca-app/main/help",async (req,res)=>{
         try {
 
@@ -847,97 +282,9 @@ const internalRoutes = [
             res.end("Internal Error");
         }
 
-    }),
-    // , new Router("GET", "/luca-app/main/styles/home.css", async (req, res) => {
-    //     fs.readFile("Frontend/styles/home.css", (err, data) => {
-    //         if (err) {
-    //             res.writeHead(404, {'Content-Type': 'text/css'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type': 'text/css'});
-    //         res.write(data);
-    //         res.end();
-    //     });
-    // }),
-    // new Router("GET", "/luca-app/main/styles/favourites.css", async (req, res) => {
-    //     fs.readFile("Frontend/styles/favourites.css", (err, data) => {
-    //         if (err) {
-    //             res.writeHead(404, {'Content-Type': 'text/css'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type': 'text/css'});
-    //         res.write(data);
-    //         res.end();
-    //     });
-    // }),
-    // new Router("GET", "/luca-app/main/styles/about.css", async (req, res) => {
-    //     fs.readFile("Frontend/styles/about.css", (err, data) => {
-    //         if (err) {
-    //             res.writeHead(404, {'Content-Type': 'text/css'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type': 'text/css'});
-    //         res.write(data);
-    //         res.end();
-    //     });
-    // }),
-    // new Router("GET", "/luca-app/main/styles/help.css", async (req, res) => {
-    //     fs.readFile("Frontend/styles/help.css", (err, data) => {
-    //         if (err) {
-    //             res.writeHead(404, {'Content-Type': 'text/css'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type': 'text/css'});
-    //         res.write(data);
-    //         res.end();
-    //     });
-    // }),
-    // new Router("GET", "/luca-app/main/styles/index.css", async (req, res) => {
-    //     fs.readFile("Frontend/styles/index.css", (err, data) => {
-    //         if (err) {
-    //             res.writeHead(404, {'Content-Type': 'text/css'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type': 'text/css'});
-    //         res.write(data);
-    //         res.end();
-    //     });
-    // }),
-    // new Router("GET", "/luca-app/main/styles/news.css", async (req, res) => {
-    //     fs.readFile("Frontend/styles/news.css", (err, data) => {
-    //         if (err) {
-    //             res.writeHead(404, {'Content-Type': 'text/css'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type': 'text/css'});
-    //         res.write(data);
-    //         res.end();
-    //     });
-    // }),
-    // new Router("GET", "/luca-app/main/styles/actor-profile.css", async (req, res) => {
-    //     fs.readFile("Frontend/styles/actor-profile.css", (err, data) => {
-    //         if (err) {
-    //             res.writeHead(404, {'Content-Type': 'text/css'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type': 'text/css'});
-    //         res.write(data);
-    //         res.end();
-    //     });
-    // }),
-    // new Router("GET", "/luca-app/main/styles/admin.css", async (req, res) => {
-    //     fs.readFile("Frontend/styles/admin.css", (err, data) => {
-    //         if (err) {
-    //             res.writeHead(404, {'Content-Type': 'text/css'});
-    //             return res.end('404 Not Found');
-    //         }
-    //         res.writeHead(200, {'Content-Type': 'text/css'});
-    //         res.write(data);
-    //         res.end();
-    //     });
-    // }),
-
-
+    },
+        "Add Help Request",
+        "Adds a help request to the system."),
     new Router("POST","/luca-app/main/add-favorites",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
@@ -965,7 +312,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Add to Favorites",
+        "Adds an actor to the user's favorites."),
 
     new Router("GET","/luca-app/main/all-favorites",async (req,res)=>{
         try {
@@ -994,7 +343,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Get All Favorites",
+        "Retrieves all favorite actors for the user."),
 
     new Router("GET","/luca-app/main/topPicksWeek",async (req,res)=>{
         try {
@@ -1023,7 +374,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Get Top Picks of the Week",
+        "Retrieves the top picks of the week for the user."),
 
     new Router("GET","/luca-app/main/topFavorites",async (req,res)=>{
         try {
@@ -1052,7 +405,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Get Top Favorites",
+        "Retrieves the top favorite actors for the user."),
     new Router("GET","/luca-app/main/exploreActors",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
@@ -1080,7 +435,10 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Explore Actors",
+        "Allows the user to explore different types of actors."
+    ),
     new Router("DELETE","/luca-app/main/delete-actor",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
@@ -1108,7 +466,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Delete Actor",
+        "Deletes an actor from the user's favorites."),
     new Router("POST","/luca-app/main/logout",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
@@ -1136,7 +496,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Logout",
+        "Logs out the user and clears the session."),
     new Router("POST", "/luca-app/main/search", async(req,res) =>{
         try {
             const cookies = req.headers.cookie;
@@ -1164,7 +526,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Search",
+        "Performs a search based on user input."),
     new Router("POST","/luca-app/main/statisticAwards/:",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
@@ -1192,7 +556,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Get Award Statistics",
+        "Retrieves statistics on awards for a specific actor."),
     new Router("GET","/luca-app/main/nominatedActors",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
@@ -1220,7 +586,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    }),
+    },
+        "Get Nominated Actors",
+        "Retrieves a list of actors who have been nominated for awards."),
     new Router("POST","/luca-app/main/statisticGenre/:",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
@@ -1248,7 +616,9 @@ const internalRoutes = [
             res.writeHead(500, {'Content-Type': 'text/plain'});
             res.end("Internal Error");
         }
-    })
+    },
+        "Get Genre Statistics",
+        "Retrieves statistics on genres for a specific actor.")
 ];
 
 

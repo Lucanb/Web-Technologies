@@ -61,8 +61,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/home",
-        "description": "",
+        "summary": "Get Home Page",
+        "description": "Serves the home HTML page for authenticated users.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -86,8 +86,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/diagrams/{param}",
-        "description": "",
+        "summary": "Get Diagrams Page",
+        "description": "Serves the diagrams HTML page.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -121,8 +121,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/actvis",
-        "description": "",
+        "summary": "Get Unauthenticated Home Page",
+        "description": "Serves the home HTML page for unauthenticated users.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -146,8 +146,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/notifications",
-        "description": "",
+        "summary": "Get Notifications Page",
+        "description": "Serves the notifications HTML page for authenticated users.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -171,8 +171,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/favorites",
-        "description": "",
+        "summary": "Get Favorites Page",
+        "description": "Serves the favorites HTML page for authenticated users.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -196,8 +196,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/actor-profile/{param}",
-        "description": "",
+        "summary": "Get Actor Profile Page",
+        "description": "Serves the actor profile HTML page for authenticated users.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -231,8 +231,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/news",
-        "description": "",
+        "summary": "Get News",
+        "description": "Serves the news HTML page.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -256,8 +256,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/about",
-        "description": "",
+        "summary": "Get About Page",
+        "description": "Serves the about HTML page.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -281,8 +281,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/help",
-        "description": "",
+        "summary": "Get Help Page",
+        "description": "Serves the help HTML page.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -306,8 +306,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/news/RSS",
-        "description": "",
+        "summary": "Get News RSS",
+        "description": "Serves the news RSS HTML page.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -331,8 +331,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/news/{param}",
-        "description": "",
+        "summary": "Get News for Actor",
+        "description": "Serves the news HTML page for a specific actor.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -366,8 +366,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/admin",
-        "description": "",
+        "summary": "Get Admin Page",
+        "description": "Serves the admin HTML page.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -391,8 +391,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/login",
-        "description": "",
+        "summary": "User Login Page",
+        "description": "Serves the login HTML page for users.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -416,8 +416,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/register",
-        "description": "",
+        "summary": "Forgot Password Page",
+        "description": "Serves the forgot password HTML page for users to reset their passwords.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -441,8 +441,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/forgot",
-        "description": "",
+        "summary": "Forgot Password Page",
+        "description": "Serves the forgot password HTML page for users to reset their passwords.",
         "responses": {
           "200": {
             "description": "Successful response"
@@ -466,8 +466,8 @@
         "tags": [
           "API"
         ],
-        "summary": "GET /luca-app/front/update-password/{param}",
-        "description": "",
+        "summary": "Update Password Page",
+        "description": "Serves the update password HTML page for users to update their password using a token.",
         "responses": {
           "200": {
             "description": "Successful response"
