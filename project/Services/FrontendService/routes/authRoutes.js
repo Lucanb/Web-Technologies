@@ -2,21 +2,9 @@ const {RouterController,Router} = require("../app_modules/controllers/routerCont
 const fs = require("fs");
 const path = require('path')
 const dirPath = path.resolve(__dirname, '../Frontend');
-const routerController = new RouterController([new Router("GET", "/luca-app/front/styles/authentification.css", async (req, res) => {
-    const filePath = path.join(dirPath, 'styles/authentification.css');
-    fs.readFile("Frontend/styles/authentification.css", (err, data) => {
-        if (err) {
-            res.writeHead(404, {'Content-Type': 'text/css'});
-            return res.end('404 Not Found');
-        }
-        res.writeHead(200, {'Content-Type': 'text/css'});
-        res.write(data);
-        res.end();
-    });
-})]);
-
-routerController.addRoute(new Router("GET","/luca-app/front/login",async (req,res)=>{
-    const filePath = path.join(dirPath, 'views/auth/login.html');
+const routerController = new RouterController([
+    new Router("GET","/luca-app/front/login",async (req,res)=>{
+        const filePath = path.join(dirPath, 'views/auth/login.html');
         fs.readFile(filePath,(err, data)=>{
             if(err){
                 res.writeHead(404, {'Content-Type': 'text/html'});
@@ -28,7 +16,7 @@ routerController.addRoute(new Router("GET","/luca-app/front/login",async (req,re
             res.end();
         })
     })
-);
+]);
 
 routerController.addRoute(new Router("GET","/luca-app/front/register",async (req,res)=>{
     const filePath = path.join(dirPath, 'views/auth/register.html');

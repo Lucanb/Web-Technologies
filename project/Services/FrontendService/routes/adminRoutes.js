@@ -5,58 +5,20 @@ const path = require('path')
 const dirPath = path.resolve(__dirname, '../Frontend');
 
 const routerController = new RouterController([
-    new Router("GET", "/luca-app/front/styles/authentification.css", async (req, res) => {
-        const filePath = path.join(dirPath, 'styles/authentification.css');
-    fs.readFile(filePath, (err, data) => {
-        if (err) {
-            res.writeHead(404, {'Content-Type': 'text/css'});
-            return res.end('404 Not Found');
-        }
-        res.writeHead(200, {'Content-Type': 'text/css'});
-        res.write(data);
-        res.end();
-    });
-}),
-    new Router("GET", "/luca-app/front/styles/admin.css", async (req, res) => {
-        const filePath = path.join(dirPath, 'styles/admin.css');
-    fs.readFile(filePath, (err, data) => {
-        if (err) {
-            res.writeHead(404, {'Content-Type': 'text/css'});
-            return res.end('404 Not Found');
-        }
-        res.writeHead(200, {'Content-Type': 'text/css'});
-        res.write(data);
-        res.end();
-    });
-}),
-    new Router("GET", "/luca-app/front/styles/news.css", async (req, res) => {
-        const filePath = path.join(dirPath, 'styles/news.css');
-        fs.readFile(filePath, (err, data) => {
-            if (err) {
-                res.writeHead(404, {'Content-Type': 'text/css'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.write(data);
-            res.end();
-        });
-    })
-]);
-
-routerController.addRoute(new Router("GET", "/luca-app/front/news/RSS", async (req, res) => {
-    const filePath = path.join(dirPath, 'views/newsrss.html');
-        fs.readFile(filePath, (err, data) => {
-            if (err) {
-                console.log(err)
-                res.writeHead(404, {'Content-Type': 'text/html'});
-                return res.end('404 Not Found');
-            }
-            res.writeHead(200, {'Content-Type' : 'text/html'});
-            res.write(data);
-            res.end();
-        });
-    })
-);
+new Router("GET", "/luca-app/front/news/RSS", async (req, res) => {
+            const filePath = path.join(dirPath, 'views/newsrss.html');
+            fs.readFile(filePath, (err, data) => {
+                if (err) {
+                    console.log(err)
+                    res.writeHead(404, {'Content-Type': 'text/html'});
+                    return res.end('404 Not Found');
+                }
+                res.writeHead(200, {'Content-Type' : 'text/html'});
+                res.write(data);
+                res.end();
+            });
+        })
+ ]);
 
 routerController.addRoute(new Router("GET", "/luca-app/front/news", async (req, res, next) => {
     const filePath = path.join(dirPath, 'views/news.html');
