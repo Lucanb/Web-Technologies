@@ -31,11 +31,11 @@ class actorService {
                     }
                 });
             })
-               const id = data.id;
-                if(id != undefined) {
-                   return id;
-                }
-                else return null;
+            const id = data.id;
+            if(id != undefined) {
+                return id;
+            }
+            else return null;
         } catch (error) {
             console.error('Eroare interna la obținerea informațiilor despre actor:', error);
         }
@@ -64,9 +64,9 @@ class actorService {
             const response = await fetch(apiUrl);
             const responseJSON = await response.json()
 
-                if (response.status !== 200) {
-                    throw new Error('Nu am putut obține informațiile despre actor.');
-                }
+            if (response.status !== 200) {
+                throw new Error('Nu am putut obține informațiile despre actor.');
+            }
             if (responseJSON.name != null) {
                 const apiKey = config.api_key;
                 const apiUrl = `https://api.themoviedb.org/3/search/person?include_adult=false&language=en-US&page=1&query=${responseJSON.name}&api_key=${apiKey}`;
@@ -110,8 +110,8 @@ class actorService {
                 res.end();
             }
             else {
-                    console.error('Eroare interna la ruta - ales nasol');
-                }
+                console.error('Eroare interna la ruta - ales nasol');
+            }
         } catch (error) {
             console.error('Eroare interna la obținerea informațiilor despre actor:', error);
         }
@@ -119,14 +119,61 @@ class actorService {
 
     async getNotifications(req, res) {
         try {
-                const announceModel = new homeModel();
-                const rows = await announceModel.getAnnouncesNews()
-                res.writeHead(200, {'Content-Type': 'application/json'});
-                res.write(JSON.stringify(rows));
-                res.end();
+            const announceModel = new homeModel();
+            const rows = await announceModel.getAnnouncesNews()
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(JSON.stringify(rows));
+            res.end();
         } catch (error) {
             console.error('Eroare interna la obținerea informațiilor despre actor:', error);
             res.end(error)
+        }
+    }
+
+    async searchByName(req, res){
+        try {
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+
+            const data = await new Promise((resolve, reject) => {
+                req.on('end', () => {
+                    try {
+                        resolve(querystring.parse(body));
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            });
+
+            const full_name = data.full_name;
+            const response = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${config.api_key}&query=${full_name}`);
+            const tmdbData = await response.json();
+            const tmdbActor = tmdbData.results[0];
+            const movieToken = await Token.generateKey({
+                movieID: tmdbActor.id,
+                fresh: true,
+                type: 'access'
+            }, {
+                expiresIn: '1h'
+            })
+
+            const resultsWithTmdbId = {
+                full_name: full_name,
+                id: movieToken,
+            };
+
+            console.log(resultsWithTmdbId);
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(JSON.stringify(resultsWithTmdbId));
+            res.end();
+
+        } catch (error) {
+            console.error('Eroare interna la obținerea informațiilor despre actor:', error);
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.write(JSON.stringify({ error: error.message }));
+            res.end();
         }
     }
 

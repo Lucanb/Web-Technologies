@@ -606,6 +606,33 @@ paths:
             schema:
               type: object
               properties: {}
+  /luca-app/main/searchByName:
+    post:
+      tags:
+        - API
+      summary: Get token from full_name
+      description: Get an access token after an actor full name.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
   /luca-app/main/announces_unauthenticated:
     get:
       tags:

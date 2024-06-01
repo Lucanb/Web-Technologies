@@ -161,30 +161,56 @@
         return "";
     }
 
-    function redirectToActor(event){
-        event.preventDefault();
-        const id = event.target.id;
+    async function searchByName(optionText) {
+        let formData = new URLSearchParams();
+        formData.append('full_name', optionText);
+
+        try {
+            const response = await fetch('/luca-app/main/searchByName', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            return data.id;
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred: ' + error.message);
+            return null;
+        }
+    }
+
+    async function redirectToActor(id){
+        if (!id) return;
+
         let formData = new URLSearchParams();
         formData.append('id', id);
 
-        fetch('/luca-app/main/send-actor-id', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: formData
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                window.location.href = `/luca-app/front/actor-profile/${id}`
-                return response;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred: ' + error.message);
+        try {
+            const response = await fetch('/luca-app/main/send-actor-id', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData
             });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            window.location.href = `/luca-app/front/actor-profile/${id}`;
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred: ' + error.message);
+        }
     }
 
     fetch('/luca-app/main/announces', {
@@ -241,7 +267,7 @@
                         imgElement.src = item.profilePath;
                         imgElement.id = item.actorId;
                         imgElement.alt = item.actorName;
-                        imgElement.addEventListener('click', redirectToActor);
+                        imgElement.addEventListener('click', () => redirectToActor(item.actorId));
                         actorElement.appendChild(imgElement);
                     }
                 });
@@ -273,7 +299,7 @@
                         imgElement.src = item.posterUrl;
                         imgElement.id = item.id;
                         imgElement.alt = item.full_name;
-                        imgElement.addEventListener('click', redirectToActor);
+                        imgElement.addEventListener('click', () => redirectToActor(item.id));
                         actorElement.appendChild(imgElement);
                     }
                 });
@@ -305,7 +331,7 @@
                         imgElement.src = item.posterUrl;
                         imgElement.id = item.id;
                         imgElement.alt = item.full_name;
-                        imgElement.addEventListener('click',redirectToActor);
+                        imgElement.addEventListener('click', () => redirectToActor(item.id));
                         actorElement.appendChild(imgElement);
                     }
                 });
@@ -340,7 +366,7 @@
                             imgElement.src = item.posterUrl;
                             imgElement.id = item.id;
                             imgElement.alt = item.full_name;
-                            imgElement.addEventListener('click', redirectToActor);
+                            imgElement.addEventListener('click', () => redirectToActor(item.id));
                             actorElement.appendChild(imgElement);
                         }
                     });
@@ -377,7 +403,7 @@
                             imgElement.src = item.posterUrl;
                             imgElement.id = item.id;
                             imgElement.alt = item.full_name;
-                            imgElement.addEventListener('click', redirectToActor);
+                            imgElement.addEventListener('click', () => redirectToActor(item.id));
                             actorElement.appendChild(imgElement);
                         }
                     });
@@ -446,7 +472,7 @@
             if (data && Array.isArray(data)) {
                 clearAutocompleteOptions();
                 data.forEach(item => {
-                    addAutocompleteOption(item.full_name);
+                    addAutocompleteOption(item);
                     console.log(item.full_name);
                 });
             }
@@ -463,23 +489,28 @@
         }
     }
 
-    function addAutocompleteOption(optionText) {
+    async function addAutocompleteOption(option) {
         const autocompleteContainer = document.querySelector('.result');
         if (autocompleteContainer) {
             const optionElement = document.createElement('div');
-            optionElement.textContent = optionText;
+            optionElement.textContent = option.full_name;
             optionElement.classList.add('autocomplete-option');
             autocompleteContainer.appendChild(optionElement);
 
-            optionElement.addEventListener('click', () => {
-                searchBar.value = optionText;
+            optionElement.addEventListener('click', async () => {
+                searchBar.value = option.full_name;
                 clearAutocompleteOptions();
+                const id = await searchByName(option.full_name);
+                if (id) {
+                    redirectToActor(id);
+                } else {
+                    alert('Actor not found');
+                }
             });
         } else {
             console.error('Elementul cu clasa ".result" nu a fost găsit.');
         }
     }
-
 </script>
 </body>
 </html>
