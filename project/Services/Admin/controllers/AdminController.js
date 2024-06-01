@@ -15,8 +15,8 @@ class adminController {
             if(message === 'LogOut')
             {
                 res.setHeader('Set-Cookie', [
-                    `accessToken=; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`,
-                    `refreshToken=; HttpOnly; Path=/; SameSite=Strict; Domain=.luca-app`
+                    `accessToken=; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`,
+                    `refreshToken=; HttpOnly; Path=/; SameSite=Strict; Domain=localhost`
                 ]);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end()
