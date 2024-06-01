@@ -95,10 +95,12 @@ const internalRoutes = [
             }, {});
             source = cookieObj['source'];  // Assuming the token is stored under the key 'accessToken'
         }
+        console.log(source)
 
         const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
         const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
-        const actor = decodeURIComponent(pathSegments[2]);
+        const actor = decodeURIComponent(pathSegments[3].replace(/^:+/, ''));
+        console.log(actor)
 
         const url = `${source}/v/film/news/feed?query=${encodeURIComponent(actor)}`; // Hypothetical URL
         const parser = new Parser();
