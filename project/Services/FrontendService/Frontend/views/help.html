@@ -34,33 +34,6 @@
         <label onclick="location.href='/luca-app/front/index';" class="references-element">Site Index</label>
     </div>
 </div>
-<script>
-    document.getElementById('helpForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const formData = {
-            email: document.getElementById('email').value,
-            content: document.getElementById('content').value
-        };
-
-        fetch('/luca-app/main/help', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                alert('Cererea de ajutor a fost trimisă cu succes!');
-                document.getElementById('helpForm').reset();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('A apărut o eroare la trimiterea cererii de ajutor.');
-            });
-    });
-</script>
+<script src="/luca-app/front/public/js/helpForm.js"></script>
 </body>
 </html>
