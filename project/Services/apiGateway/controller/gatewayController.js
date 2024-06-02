@@ -1,7 +1,17 @@
 const { proxyRequest } = require('../service/gatewayService');
 
 const routeRequest = (req, res) => {
-    if (req.url.startsWith('/luca-app/auth/')) {
+    if (req.url === '/') {
+        res.writeHead(302, {
+            'Location': '/luca-app/front/actvis'
+        });
+        res.end();
+    } else if (req.url === '/luca-app') {
+        res.writeHead(302, {
+            'Location': '/luca-app/front/actvis'
+        });
+        res.end();
+    }else if (req.url.startsWith('/luca-app/auth/')) {
         proxyRequest(req, res, 'http://localhost:3000');
     } else if (req.url.startsWith('/luca-app/main/')) {
         proxyRequest(req, res, 'http://localhost:3001');
