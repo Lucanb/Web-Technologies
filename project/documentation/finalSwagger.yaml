@@ -1,0 +1,1376 @@
+openapi: 3.0.0
+info:
+  title: API Gateway Documentation
+  version: 1.0.0
+  description: This is the consolidated API documentation for all services.
+paths:
+  /luca-app/auth/login:
+    post:
+      tags:
+        - API
+      summary: User Login
+      description: Authenticates a user and starts a new session.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/auth/register:
+    post:
+      tags:
+        - API
+      summary: User Registration
+      description: Registers a new user in the system.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/auth/register_userCredentialsExists:
+    post:
+      tags:
+        - API
+      summary: Check User Credentials
+      description: Checks if a username or email already exists in the system.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/auth/forgot:
+    post:
+      tags:
+        - API
+      summary: Forgot Password
+      description: Sends an email to reset the user's password.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/auth/update-password/{param}:
+    post:
+      tags:
+        - API
+      summary: Update Password
+      description: Updates the user's password using a token.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/altaRuta:
+    get:
+      tags:
+        - API
+      summary: GET /luca-app/main/altaRuta
+      description: ''
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/getnotifications:
+    get:
+      tags:
+        - API
+      summary: Get Notifications
+      description: Retrieves the notifications for the user.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/announces:
+    get:
+      tags:
+        - API
+      summary: Get Announces
+      description: Retrieves the announcements for the user.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/send-actor-id:
+    post:
+      tags:
+        - API
+      summary: Send Actor ID
+      description: Sends the actor ID to the server.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/actor-profile-info:
+    post:
+      tags:
+        - API
+      summary: Send Actor Profile Info
+      description: Sends the actor profile information to the server.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/toppicks:
+    get:
+      tags:
+        - API
+      summary: Get Top Picks
+      description: Retrieves the top picks for the user.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/todayActors:
+    get:
+      tags:
+        - API
+      summary: Get Today's Actors
+      description: Retrieves the actors featured today.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/commingSoon:
+    get:
+      tags:
+        - API
+      summary: Get Coming Soon
+      description: Retrieves the list of actors coming soon.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/news:
+    get:
+      tags:
+        - API
+      summary: Get News Page
+      description: Serves the news HTML page for authenticated users.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/help:
+    post:
+      tags:
+        - API
+      summary: Add Help Request
+      description: Adds a help request to the system.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/add-favorites:
+    post:
+      tags:
+        - API
+      summary: Add to Favorites
+      description: Adds an actor to the user's favorites.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/all-favorites:
+    get:
+      tags:
+        - API
+      summary: Get All Favorites
+      description: Retrieves all favorite actors for the user.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/topPicksWeek:
+    get:
+      tags:
+        - API
+      summary: Get Top Picks of the Week
+      description: Retrieves the top picks of the week for the user.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/topFavorites:
+    get:
+      tags:
+        - API
+      summary: Get Top Favorites
+      description: Retrieves the top favorite actors for the user.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/exploreActors:
+    get:
+      tags:
+        - API
+      summary: Explore Actors
+      description: Allows the user to explore different types of actors.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/delete-actor:
+    delete:
+      tags:
+        - API
+      summary: Delete Actor
+      description: Deletes an actor from the user's favorites.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/logout:
+    post:
+      tags:
+        - API
+      summary: Logout
+      description: Logs out the user and clears the session.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/search:
+    post:
+      tags:
+        - API
+      summary: Search
+      description: Performs a search based on user input.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/statisticAwards/{param}:
+    post:
+      tags:
+        - API
+      summary: Get Award Statistics
+      description: Retrieves statistics on awards for a specific actor.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/statisticPopularity/{param}:
+    post:
+      tags:
+        - API
+      summary: Get Award Statistics
+      description: Retrieves statistics on awards for a specific actor.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/nominatedActors:
+    get:
+      tags:
+        - API
+      summary: Get Nominated Actors
+      description: Retrieves a list of actors who have been nominated for awards.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/statisticGenre/{param}:
+    post:
+      tags:
+        - API
+      summary: Get Genre Statistics
+      description: Retrieves statistics on genres for a specific actor.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/searchByName:
+    post:
+      tags:
+        - API
+      summary: Get token from full_name
+      description: Get an access token after an actor full name.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/main/announces_unauthenticated:
+    get:
+      tags:
+        - API
+      summary: Fetch Public Announcements
+      description: >-
+        Retrieves the latest public announcements without requiring user
+        authentication.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/toppicks_unauthenticated:
+    get:
+      tags:
+        - API
+      summary: Fetch Top Picks
+      description: >-
+        Provides a feed of the top picks content accessible without user
+        authentication.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/todayActors_unauthenticated:
+    get:
+      tags:
+        - API
+      summary: Fetch Today's Actors
+      description: >-
+        Retrieves a feed of today featured actors without needing
+        authentication.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/main/commingSoon_unauthenticated:
+    get:
+      tags:
+        - API
+      summary: Fetch Coming Soon Content
+      description: >-
+        Retrieves information about upcoming features or content accessible
+        without user authentication.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/admin/altaRuta:
+    get:
+      tags:
+        - API
+      summary: GET /luca-app/admin/altaRuta
+      description: ''
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/admin/addAnnounce:
+    post:
+      tags:
+        - API
+      summary: Add Announce
+      description: Adds a new announcement to the system.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/admin/users:
+    get:
+      tags:
+        - API
+      summary: Get Users
+      description: Retrieves a list of all users.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/admin/announces:
+    get:
+      tags:
+        - API
+      summary: Get Announces
+      description: Retrieves all announcements.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+    put:
+      tags:
+        - API
+      summary: Update Announces
+      description: Updates an existing announcement.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+    delete:
+      tags:
+        - API
+      summary: Delete Announces
+      description: Deletes an announcement.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/admin/get-news/:actor:
+    get:
+      tags:
+        - API
+      summary: Get News for Actor
+      description: Fetches news related to a specific actor.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/admin/RSS/:actor:
+    get:
+      tags:
+        - API
+      summary: Get RSS Feed for Actor
+      description: Generates an RSS feed with news related to a specific actor.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/admin/logout:
+    post:
+      tags:
+        - API
+      summary: Logout Admin
+      description: Logs out an admin user and clears the session.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/admin/nominatedActors:
+    get:
+      tags:
+        - API
+      summary: Get Nominated Actors
+      description: Retrieves a list of actors who have been nominated for awards.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/admin/user:
+    delete:
+      tags:
+        - API
+      summary: Delete User
+      description: Deletes a user from the system.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+    put:
+      tags:
+        - API
+      summary: Update User
+      description: Updates the details of an existing user.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+    post:
+      tags:
+        - API
+      summary: Add User
+      description: Adds a new user to the system.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/admin/import-csv:
+    post:
+      tags:
+        - API
+      summary: Import CSV
+      description: Imports user data from a CSV file.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+  /luca-app/front/index:
+    get:
+      tags:
+        - API
+      summary: GET /luca-app/front/index
+      description: ''
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/altaRuta:
+    get:
+      tags:
+        - API
+      summary: GET /luca-app/front/altaRuta
+      description: ''
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/home:
+    get:
+      tags:
+        - API
+      summary: Get Home Page
+      description: Serves the home HTML page for authenticated users.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/diagrams/{param}:
+    get:
+      tags:
+        - API
+      summary: Get Diagrams Page
+      description: Serves the diagrams HTML page.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+      requestBody: {}
+  /luca-app/front/actvis:
+    get:
+      tags:
+        - API
+      summary: Get Unauthenticated Home Page
+      description: Serves the home HTML page for unauthenticated users.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/notifications:
+    get:
+      tags:
+        - API
+      summary: Get Notifications Page
+      description: Serves the notifications HTML page for authenticated users.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/favorites:
+    get:
+      tags:
+        - API
+      summary: Get Favorites Page
+      description: Serves the favorites HTML page for authenticated users.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/actor-profile/{param}:
+    get:
+      tags:
+        - API
+      summary: Get Actor Profile Page
+      description: Serves the actor profile HTML page for authenticated users.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+      requestBody: {}
+  /luca-app/front/news:
+    get:
+      tags:
+        - API
+      summary: Get News
+      description: Serves the news HTML page.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/about:
+    get:
+      tags:
+        - API
+      summary: Get About Page
+      description: Serves the about HTML page.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/help:
+    get:
+      tags:
+        - API
+      summary: Get Help Page
+      description: Serves the help HTML page.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/news/RSS:
+    get:
+      tags:
+        - API
+      summary: Get News RSS
+      description: Serves the news RSS HTML page.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/news/{param}:
+    get:
+      tags:
+        - API
+      summary: Get News for Actor
+      description: Serves the news HTML page for a specific actor.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+      requestBody: {}
+  /luca-app/front/admin:
+    get:
+      tags:
+        - API
+      summary: Get Admin Page
+      description: Serves the admin HTML page.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/login:
+    get:
+      tags:
+        - API
+      summary: User Login Page
+      description: Serves the login HTML page for users.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/register:
+    get:
+      tags:
+        - API
+      summary: Forgot Password Page
+      description: Serves the forgot password HTML page for users to reset their passwords.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/forgot:
+    get:
+      tags:
+        - API
+      summary: Forgot Password Page
+      description: Serves the forgot password HTML page for users to reset their passwords.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters: []
+      requestBody: {}
+  /luca-app/front/update-password/{param}:
+    get:
+      tags:
+        - API
+      summary: Update Password Page
+      description: >-
+        Serves the update password HTML page for users to update their password
+        using a token.
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      parameters:
+        - name: param
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Dynamic parameter, replace 'param' with the actual parameter name
+      requestBody: {}
