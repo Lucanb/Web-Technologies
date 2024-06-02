@@ -1,0 +1,509 @@
+{
+	"info": {
+		"_postman_id": "83d1f646-70c0-4f6e-a797-2f93c5c8ca22",
+		"name": "Web",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27848296"
+	},
+	"item": [
+		{
+			"name": "login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    username: \"lucazewww\",\n    password: \"lucanb4321\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "home",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwLCJ1c2VybmFtZSI6Imx1Y2F6ZXd3dyIsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzEwMTkyNDM2LCJleHAiOjE3MTAxOTYwMzZ9.UfCy-tcwpCZwlcZnZw9SilqQYObKV0S_oEh8NmPsAQmAXnLFc8WFEp2kKfo1V3wH7wOvISQ-UT4dg8nqgsGE4YRed1XjRro6z1tb42vNG3yeEy68JLMB17KPlr6wDL-0jNZiM-Cvso2fhzy2W0v2IYwUpxmG3G1-rVUE3uPoE4d6zxUZGHXvVCyz2iyopvViO58iGvl9_ONdQq4LtvhaSarYPTm1i229Lh9wbQ9BYQcJPWbUA76OIB-cvUvFuAon-HNgSHL3tLiVf4Y-8gPX059Si15kK7l7x4zTOtXZusRuH-dS1lhq9zlOl24-1QYdPTgdZ_ryGkAQYteoJJXOOQZk2dDVtHU_pvAdSp0EoppD63aKuwb0K893OVg4Cf5eX-iam2M5CuhgpsnfSekRfJi5WAHeVGKtZyc8x54EkEUH4pF6AKR907jdBn-1jDqVzeg-l-TAkjmTtGga8S7kgMjuT2OYEsX8a0Slx1m1XSl3re6l1zwh799mf5DT_4vnU-o5ahKBbTvr11kceQiKvgRovQwb4My3axZvt9PiNXpyPR6nruiDZqVn3cRW0Yk-rgmok8pmMwBtHi6c38FDZzRUMNZKf1HE1UhSdqzx-RtSclM7y0rt1dHhVNxro5geIXpZ-6TiJuMfFg9ZVekslunOXdqm5aRLx_T18ovj1_U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwLCJ1c2VybmFtZSI6Imx1Y2F6ZXd3dyIsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzEwMTg3NDI0LCJleHAiOjE3MTAxOTEwMjR9.ie0uGPAs4aW0wqO7WfLcE58fWP87GM9J4hoZHzR2rXPVn3cQ_D4XRN5_cdx8fzRMbb1v4HL57XXH3Dn5_JAsmVQPKdVfUlyj4kZzlu_SDxE9UCQKHRTfEW2vFTDm9YxR8jsjQClHPXVVh5EA0G-DHAlIDaNB3y9guEfY-IbV4uxXE95DqMcfjOn8pr8g1_MAryAbFCf5KCwPPcvvNUd9kn0uMM_tVUYgz2kLDxEY3zCyvf4hyP2ZBWzo4YaMkIXTPGVOwtuaus1F_pzbxwkAf-vkZIQBV03BAfeFtUXkH-3m-DNWotkb3MPEBgI83DmGdkqAewUuv1vTQ-Ng1-A4kBHmAie0HMULV37uYOkP40HJ2Grmz22bGQPTixonzVo3uNP15dy-H8JJUWFR7BoG5jQM5jlZKyk2rjlIXwAMK0v4-121l4XxdhDZ06EDSNZDQZTVABaAxcZk2dT3_gciVHSY0sYmz5LEEI2KkkArKR8mS2S9UZN4sXWNHnzuy6iau2W1i06GCUh_ANLy7SVrNiYF6kqdXR2YRKyYVUMMSAWJdDQxtsJkHIFbbCEsCoaPl5NaLSZdpV07JGJwDPE1u6hGl7kXYUfJkF6K7oJPsMtD9TcKQZlIZzWhy12RysERCXgz_rHWJS0ok6I8VMFurpw6PG2qOeahetPPCLz_iYg",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwLCJ1c2VybmFtZSI6Imx1Y2F6ZXd3dyIsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzEwMjI4ODQ1LCJleHAiOjE3MTAyMzI0NDV9.WEZmj-mMAupwjmgAypJqmmpWUVhKakyFIWRHHqc3i6V2oG99u8J4UBhexwy3UNUnC5rWvPIAiPiKAlyVofM_BU_iFIfrjJ08SnLUXqfYWPId0GRAnCe_zqn4iQMUjiKIT7PoNuQ6nCskR9B2tH7IiGEOpXsBPmzUMYB23rkr_XJvoAtSt5GzysZ0J4dNOCn9EQkoB1hFaofJ6j561M7D5nA9gTjAXbVq6nJziSKIe2yEGC0jfbXroRH3LYBYAmgDKYsd8FijwQc8lunvzQvw8g4iqbBCR6R9DuUg1ngW_wsoINAkF3yyISm5FWHx5Yl4R9Fdmbd-ywMMPkDPPBpUlJgvK9ZRCbykr4WaJROhQgZSmkfFVRfcUfORuzWMxf-Fj93XKM-_LflMjn63ZKf4TMNMRfEf9dUSZtJb2YEtItR_RqT023LqcdcBP8jx3AaOtGvXNgsZ0R217jQTfseDN85iyssR0RI4MW67uIgSckk07WDLVC7I5BzK9DhgPKvhZyVphgB-kDsXS2NODcEMbJb8m1h9eck9iR3kHuKue3M6-jlWQmiwqG6UNPOE9no_wibypCamLx5na1OmYUcJ07Lzag7mjRI8_RUDlUL2AuCK_z-dpEZcHFSmWFKdSiTM8WRIu40T1Smx55Z6vDPKR92aKl8yJdzJkPfaOU9cgH8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "lucazewww",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "lucanb4321",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "lucaaa",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/register_userCredentialsExists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"register_userCredentialsExists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "lucanb4321",
+							"type": "text"
+						},
+						{
+							"key": "retype_password",
+							"value": "lucanb4321",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/update-password/:param",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"update-password",
+						":param"
+					],
+					"variable": [
+						{
+							"key": "param",
+							"value": "lucanastasa@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3002/announces",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"announces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/exploreActors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"exploreActors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3002/get-news/:actor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"get-news",
+						":actor"
+					],
+					"variable": [
+						{
+							"key": "actor",
+							"value": "JOAQUIN PHOENIX"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3002/news/getRSS",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"news",
+						"getRSS"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3002/nominatedActors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"nominatedActors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "startdate",
+							"value": "2024-05-01",
+							"type": "text"
+						},
+						{
+							"key": "enddate",
+							"value": "2024-05-15",
+							"type": "text"
+						},
+						{
+							"key": "topic",
+							"value": "Event",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Spring Community Gathering",
+							"type": "text"
+						},
+						{
+							"key": "author",
+							"value": "John Doe",
+							"type": "text"
+						},
+						{
+							"key": "picture",
+							"value": "image1.jpg",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "Join us for our annual community gathering with fun, food, and festivities.",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3002/addAnnounce",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"addAnnounce"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "content",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "lucanastasa@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3001/help",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"help"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3002/user?username=muie",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "muie"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3002/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3002/user?username=muie&email=12345&password=1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "muie"
+						},
+						{
+							"key": "email",
+							"value": "12345"
+						},
+						{
+							"key": "password",
+							"value": "1234"
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
