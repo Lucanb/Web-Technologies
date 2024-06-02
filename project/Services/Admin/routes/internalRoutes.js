@@ -110,17 +110,8 @@ const internalRoutes = [
                 case 'https://www.hollywoodreporter.com':
                     url = `https://www.hollywoodreporter.com/rss`;
                     break;
-                case 'https://deadline.com':
-                    url = `https://deadline.com/v/film/news/feed/`;
-                    break;
-                case 'https://ew.com':
-                    url = `https://ew.com/feed/`;
-                    break;
                 case 'https://screenrant.com':
                     url = `https://screenrant.com/feed/`;
-                    break;
-                case 'https://www.empireonline.com':
-                    url = `https://www.empireonline.com/rss`;
                     break;
                 default:
                     res.writeHead(400, {'Content-Type': 'text/html'});
@@ -151,58 +142,74 @@ const internalRoutes = [
         "Get News for Actor",
         "Fetches news related to a specific actor."),
     new Router("GET", "/luca-app/admin/RSS/:actor", async (req, res) => {
-        const cookies = req.headers.cookie;
-        let source = null;
-        if (cookies) {
-            const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-                const parts = cookie.split('=');
-                acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-                return acc;
-            }, {});
-            source = cookieObj['source'];  // Assuming the token is stored under the key 'accessToken'
-        }
-        const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
-        const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
-        const actor = decodeURIComponent(pathSegments[2]);
+            const cookies = req.headers.cookie;
+            let source = null;
+            if (cookies) {
+                const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+                    const parts = cookie.split('=');
+                    acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+                    return acc;
+                }, {});
+                source = cookieObj['source'];
+            }
 
-        const feed = new RSS({
-            title: 'Variety - Film News',
-            description: 'Latest updates on film news from Variety.',
-            feed_url: 'http://yourdomain.com/news/RSS',
-            site_url: source,
-            image_url: `${source}/wp-content/uploads/2018/06/variety-favicon.png`,
-            language: 'en',
-            pubDate: new Date().toUTCString(),
-            ttl: 60
-        });
+            const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+            const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
+            const actor = decodeURIComponent(pathSegments[2]);
 
-        try {
-            const url = `${source}/v/film/news/feed?query=${encodeURIComponent(actor)}`; // Hypothetical URL
-            const parser = new Parser();
-            const sourceFeed = await parser.parseURL(url);
+            let url;
+            switch (source) {
+                case 'https://variety.com':
+                    url = `${source}/v/film/news/feed?query=${encodeURIComponent(actor)}`;
+                    break;
+                case 'https://www.hollywoodreporter.com':
+                    url = `https://www.hollywoodreporter.com/rss`;
+                    break;
+                case 'https://screenrant.com':
+                    url = `https://screenrant.com/feed/`;
+                    break;
+                default:
+                    res.writeHead(400, {'Content-Type': 'text/plain'});
+                    res.end('Unknown news source');
+                    return;
+            }
 
-            sourceFeed.items.forEach(article => {
-                feed.item({
-                    title: article.title,
-                    description: article.contentSnippet || article.description,
-                    url: article.link,
-                    guid: article.guid || article.link,
-                    author: article.creator,
-                    date: article.pubDate,
-                    categories: article.categories,
-                    enclosure: article.enclosure ? {url: article.enclosure.url} : undefined,
-                });
+            const feed = new RSS({
+                title: 'Film News',
+                description: 'Latest updates on film news.',
+                feed_url: 'http://yourdomain.com/news/RSS',
+                site_url: source,
+                language: 'en',
+                pubDate: new Date().toUTCString(),
+                ttl: 60
             });
 
-            const xml = feed.xml({indent: true});
-            res.writeHead(200, {'Content-Type': 'application/rss+xml'});
-            res.write(xml);
-            res.end()
-        } catch (error) {
-            console.error('Error fetching or generating RSS feed:', error);
-            res.writeHead(500, {'Content-Type': 'text/plain'});
-            res.end('Internal server error');
-        }
+            try {
+                console.log(`Fetching URL: ${url}`);
+                const sourceFeed = await parser.parseURL(url);
+
+                sourceFeed.items.forEach(article => {
+                    feed.item({
+                        title: article.title,
+                        description: article.contentSnippet || article.description,
+                        url: article.link,
+                        guid: article.guid || article.link,
+                        author: article.creator,
+                        date: article.pubDate,
+                        categories: article.categories,
+                        enclosure: article.enclosure ? { url: article.enclosure.url } : undefined,
+                    });
+                });
+
+                const xml = feed.xml({ indent: true });
+                res.writeHead(200, { 'Content-Type': 'application/rss+xml' });
+                res.write(xml);
+                res.end();
+            } catch (error) {
+                console.error('Error fetching or generating RSS feed:', error);
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal server error');
+            }
     },"Get RSS Feed for Actor",
     "Generates an RSS feed with news related to a specific actor."),
     new Router("POST","/luca-app/admin/logout",async (req,res)=>{
