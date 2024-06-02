@@ -104,14 +104,11 @@ const internalRoutes = [
             let url;
 
             switch (source) {
-                case 'https://variety.com':
-                    url = `${source}/v/film/news/feed?query=${encodeURIComponent(actor)}`;
+                case 'https://news.google.com':
+                    url = `https://news.google.com/rss/search?q=${encodeURIComponent(actor)}`;
                     break;
-                case 'https://www.hollywoodreporter.com':
-                    url = `https://www.hollywoodreporter.com/rss`;
-                    break;
-                case 'https://screenrant.com':
-                    url = `https://screenrant.com/feed/`;
+                case 'https://www.bing.com/news':
+                    url = `https://www.bing.com/news/search?q=${encodeURIComponent(actor)}&format=rss`;
                     break;
                 default:
                     res.writeHead(400, {'Content-Type': 'text/html'});
@@ -138,9 +135,10 @@ const internalRoutes = [
                 res.writeHead(500, {'Content-Type': 'text/html'});
                 res.end('Internal server error');
             }
-    },
+        },
         "Get News for Actor",
         "Fetches news related to a specific actor."),
+
     new Router("GET", "/luca-app/admin/RSS/:actor", async (req, res) => {
             const cookies = req.headers.cookie;
             let source = null;
@@ -157,17 +155,13 @@ const internalRoutes = [
             const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
             const actor = decodeURIComponent(pathSegments[3].replace(/^:+/, ''));
 
-
             let url;
             switch (source) {
-                case 'https://variety.com':
-                    url = `${source}/v/film/news/feed?query=${encodeURIComponent(actor)}`;
+                case 'https://news.google.com':
+                    url = `https://news.google.com/rss/search?q=${encodeURIComponent(actor)}`;
                     break;
-                case 'https://www.hollywoodreporter.com':
-                    url = `https://www.hollywoodreporter.com/rss`;
-                    break;
-                case 'https://screenrant.com':
-                    url = `https://screenrant.com/feed/`;
+                case 'https://www.bing.com/news':
+                    url = `https://www.bing.com/news/search?q=${encodeURIComponent(actor)}&format=rss`;
                     break;
                 default:
                     res.writeHead(400, {'Content-Type': 'text/plain'});
@@ -214,8 +208,8 @@ const internalRoutes = [
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
                 res.end('Internal server error');
             }
-    },"Get RSS Feed for Actor",
-    "Generates an RSS feed with news related to a specific actor."),
+        },"Get RSS Feed for Actor",
+        "Generates an RSS feed with news related to a specific actor."),
     new Router("POST","/luca-app/admin/logout",async (req,res)=>{
         try {
             const cookies = req.headers.cookie;
