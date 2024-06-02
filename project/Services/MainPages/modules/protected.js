@@ -1,5 +1,4 @@
 const JWToken = require("../modules/token");
-const Token = require("../../MainPages/modules/token");
 async function getTokenStatus(cookies) {
     let accessToken = null;
     let refreshToken = null;
@@ -41,7 +40,7 @@ async function getTokenStatus(cookies) {
                 status.message = 'Invalid refresh token';
                 return status;
             } else {
-                const newAccessToken = await Token.generateKey({
+                const newAccessToken = await JWToken.generateKey({
                     userId: decoded[0].userId,
                     role: decoded[0].role,
                     username: decoded[0].username,

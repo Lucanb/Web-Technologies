@@ -1,6 +1,4 @@
-const homeFeedService = require('../services/homeFeedService')
 const actorService = require('../services/actorService')
-const adminService = require("../../Admin/services/adminService");
 
 class statisticController {
 

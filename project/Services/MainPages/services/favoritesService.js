@@ -1,7 +1,4 @@
 const querystring = require("querystring");
-const Password = require("../../Authentication/modules/password");
-const Token = require("../../Authentication/modules/token");
-const url = require("url");
 const favoritesModel = require('../model/favorites/favoritesModel')
 const config = require('../configuration/config.js')
 const JWToken = require("../modules/token");
@@ -100,7 +97,7 @@ class favoritesService{
                 const results = await model.getAllFavorites(id_user);
 
                 for (const element of results) {
-                    const actorId = await Token.generateKey({
+                    const actorId = await JWToken.generateKey({
                         movieID: element.id_actor,
                         fresh: true,
                         type: 'access'
@@ -155,7 +152,7 @@ class favoritesService{
                     const tmdbData = await tmdbResponse.json();
                     const profilePath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].profile_path : null;
                     const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
-                    const actorId = await Token.generateKey({
+                    const actorId = await JWToken.generateKey({
                         movieID: id,
                         fresh: true,
                         type: 'access'
@@ -216,7 +213,7 @@ class favoritesService{
                     const tmdbData = await tmdbResponse.json();
                     const profilePath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].profile_path : null;
                     const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
-                    const actorId = await Token.generateKey({
+                    const actorId = await JWToken.generateKey({
                         movieID: id,
                         fresh: true,
                         type: 'access'

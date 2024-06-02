@@ -1,5 +1,4 @@
 const { RouterController } = require("../app_modules/controllers/routerController");
-const { internalRoutes } = require('./mainPageRoutes');
 const routerController = new RouterController([]);
 const { routerController: adminRouterController  } = require('./adminRoutes');
 const {routerController: authRouterController } = require("./authRoutes")

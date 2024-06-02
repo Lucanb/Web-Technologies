@@ -1,8 +1,4 @@
-const querystring = require("querystring");
-const Password = require("../../Authentication/modules/password");
-const Token = require("../../Authentication/modules/token");
-const url = require("url");
-const axios = require("axios");
+const JWToken = require("../modules/token");
 const homeFeederModel = require('../model/home/homeFeederModel')
 const config = require('../configuration/config.js')
 
@@ -22,7 +18,7 @@ class homeService {
                 const tmdbData = await tmdbResponse.json();
                 const posterPath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].poster_path : null;
                 const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
-                const movieToken = await Token.generateKey({
+                const movieToken = await JWToken.generateKey({
                     movieID: id,
                     fresh: true,
                     type: 'access'
@@ -56,7 +52,7 @@ class homeService {
                 const tmdbData = await tmdbResponse.json();
                 const profilePath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].profile_path : null;
                 const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
-                const actorId = await Token.generateKey({
+                const actorId = await JWToken.generateKey({
                     movieID: id,
                     fresh: true,
                     type: 'access'
@@ -90,7 +86,7 @@ class homeService {
                 const tmdbData = await tmdbResponse.json();
                 const profilePath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].profile_path : null;
                 const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
-                const actorId = await Token.generateKey({
+                const actorId = await JWToken.generateKey({
                     movieID: id,
                     fresh: true,
                     type: 'access'
@@ -125,7 +121,7 @@ class homeService {
                 const tmdbData = await tmdbResponse.json();
                 const posterPath = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].poster_path : null;
                 const id = tmdbData.results && tmdbData.results.length > 0 ? tmdbData.results[0].id : null;
-                const movieToken = await Token.generateKey({
+                const movieToken = await JWToken.generateKey({
                     movieID: id,
                     fresh: true,
                     type: 'access'
@@ -266,7 +262,7 @@ class homeService {
                         const randomActor = cast[Math.floor(Math.random() * cast.length)];
                         if (!actorIds.has(randomActor.id) && actors.length < 7) {
                             if (randomActor.profile_path != null) {
-                                const movieToken = await Token.generateKey({
+                                const movieToken = await JWToken.generateKey({
                                     movieID: randomActor.id,
                                     fresh: true,
                                     type: 'access'

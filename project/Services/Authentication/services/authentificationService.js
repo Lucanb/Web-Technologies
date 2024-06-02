@@ -2,11 +2,9 @@ userModel = require('../model/authentificationModel')
 reqParser = require('../app_modules/middlewares/reqParser')
 const querystring = require('querystring');
 const Token = require('../modules/token');
-// const StatusCodeException = require('shared').exceptions.StatusCodeException;
 const Password = require('../modules/password');
 const nodemailer = require('nodemailer');
 const config = require('../configuration/config')
-const url = require('url');
 class UserService {
     constructor() {
     }

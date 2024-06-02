@@ -1,7 +1,5 @@
-// const favoritesService = require('../services/favoritesService');
 const adminService = require('../services/FrontService');
 const {parse} = require("url");
-const AdminModel = require("../model/adminModel");
 const formidable = require("formidable");
 
 class frontEndController {

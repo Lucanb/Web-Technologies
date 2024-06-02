@@ -1,7 +1,6 @@
 const {pool } = require("../../configuration/configApplication");
 const favoritesQuerries = require('./favoritesQuery')
 const {verifChar,verifCharMessage} = require('../../modules/verifChar')
-const {values} = require("pg/lib/native/query");
 class favoritesModel {
     constructor() {}
 

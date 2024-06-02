@@ -1,16 +1,8 @@
 const querystring = require("querystring");
-const Password = require("../../Authentication/modules/password");
-const Token = require("../../Authentication/modules/token");
-const url = require("url");
-const axios = require("axios");
 const config = require('../configuration/config.js')
-const {json} = require("../app_modules/middlewares/bodyParser");
 const homeModel = require("../model/home/homeFeederModel")
 const JWToken = require("../modules/token");
-const {rows} = require("pg/lib/defaults");
 const actorModel = require('../model/actor/actorModel')
-const {get} = require("http");
-const AdminModel = require("../../Admin/model/adminModel");
 
 class actorService {
     constructor() {
@@ -182,7 +174,7 @@ class actorService {
             const response = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${config.api_key}&query=${full_name}`);
             const tmdbData = await response.json();
             const tmdbActor = tmdbData.results[0];
-            const movieToken = await Token.generateKey({
+            const movieToken = await JWToken.generateKey({
                 movieID: tmdbActor.id,
                 fresh: true,
                 type: 'access'

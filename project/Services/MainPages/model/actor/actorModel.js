@@ -1,7 +1,6 @@
 const {pool } = require("../../configuration/configApplication");
 const actorQuerries = require('./actorQuery')
 const {verifChar,verifCharMessage} = require('../../modules/verifChar')
-const {values} = require("pg/lib/native/query");
 class actorModel {
     constructor() {}
 

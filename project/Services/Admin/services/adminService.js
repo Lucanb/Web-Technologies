@@ -1,9 +1,5 @@
-const Token = require("../../Authentication/modules/token");
-const config = require('../configuration/config.js')
 const AdminModel = require('../model/adminModel')
-const querystring = require("querystring");
 const Password = require('../modules/password');
-const formidable = require('formidable');
 const fs = require('fs')
 class adminService {
     constructor() {

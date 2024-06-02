@@ -1,5 +1,4 @@
 const JWToken = require("../modules/token");
-const Token = require("../../Authentication/modules/token");
 async function getTokenStatus(cookies) {
     let accessToken = null;
     let refreshToken = null;
