@@ -155,7 +155,8 @@ const internalRoutes = [
 
             const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
             const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
-            const actor = decodeURIComponent(pathSegments[2]);
+            const actor = decodeURIComponent(pathSegments[3].replace(/^:+/, ''));
+
 
             let url;
             switch (source) {
@@ -181,7 +182,8 @@ const internalRoutes = [
                 site_url: source,
                 language: 'en',
                 pubDate: new Date().toUTCString(),
-                ttl: 60
+                ttl: 60,
+                generator: 'RSS for Node'
             });
 
             try {
@@ -190,8 +192,8 @@ const internalRoutes = [
 
                 sourceFeed.items.forEach(article => {
                     feed.item({
-                        title: article.title,
-                        description: article.contentSnippet || article.description,
+                        title: `<![CDATA[${article.title}]]>`,
+                        description: `<![CDATA[${article.contentSnippet || article.description}]]>`,
                         url: article.link,
                         guid: article.guid || article.link,
                         author: article.creator,
@@ -202,8 +204,10 @@ const internalRoutes = [
                 });
 
                 const xml = feed.xml({ indent: true });
+                const rss = xml.replace(/^<\?xml.*\?>\s*/, '');
+
                 res.writeHead(200, { 'Content-Type': 'application/rss+xml' });
-                res.write(xml);
+                res.write(rss);
                 res.end();
             } catch (error) {
                 console.error('Error fetching or generating RSS feed:', error);
