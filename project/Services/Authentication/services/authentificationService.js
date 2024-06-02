@@ -1,5 +1,5 @@
 userModel = require('../model/authentificationModel')
-reqParser = require('../../../app_modules/middlewares/reqParser')
+reqParser = require('../app_modules/middlewares/reqParser')
 const querystring = require('querystring');
 const Token = require('../modules/token');
 // const StatusCodeException = require('shared').exceptions.StatusCodeException;

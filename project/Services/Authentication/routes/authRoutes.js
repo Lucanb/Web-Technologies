@@ -1,6 +1,6 @@
 const { RouterController } = require("../app_modules/controllers/routerController");
 const fs = require("fs");
-const { Router } = require("../../../app_modules/controllers/routerController");
+const { Router } = require("../app_modules/controllers/routerController");
 const { internalRoutes } = require('./internalRoutes');
 const routerController = new RouterController(internalRoutes);
 const { routerController: indexRouterController } = require('./index');
