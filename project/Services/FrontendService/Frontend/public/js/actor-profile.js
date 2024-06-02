@@ -108,6 +108,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+function redirectToSource(sourceUrl) {
+    document.cookie = "source=" + encodeURIComponent(sourceUrl) + "; path=/";
+    redirectActorPage()
+}
+
 function redirectActorPage() {
     return new Promise((resolve, reject) => {
         const actorName = document.querySelector('.actress-name h1');
