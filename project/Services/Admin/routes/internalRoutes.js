@@ -8,6 +8,7 @@ const { URL } = require('url');
 const formidable = require('formidable');
 const RSS = require('rss');
 const {getAdminTokenStatus,getTokenStatus} = require('../modules/protected')
+const parser = new Parser();
 
 const internalRoutes = [
     new Router("GET", "/luca-app/admin/altaRuta", async (req, res) => {
@@ -85,44 +86,67 @@ const internalRoutes = [
         "Delete Announces",
         "Deletes an announcement."),
     new Router("GET", "/luca-app/admin/get-news/:actor", async (req, res) => {
-        const cookies = req.headers.cookie;
-        let source = null;
-        if (cookies) {
-            const cookieObj = cookies.split(';').reduce((acc, cookie) => {
-                const parts = cookie.split('=');
-                acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
-                return acc;
-            }, {});
-            source = cookieObj['source'];  // Assuming the token is stored under the key 'accessToken'
-        }
-        console.log(source)
+            const cookies = req.headers.cookie;
+            let source = null;
+            if (cookies) {
+                const cookieObj = cookies.split(';').reduce((acc, cookie) => {
+                    const parts = cookie.split('=');
+                    acc[parts[0].trim()] = decodeURIComponent(parts[1].trim());
+                    return acc;
+                }, {});
+                source = cookieObj['source'];
+            }
 
-        const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
-        const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
-        const actor = decodeURIComponent(pathSegments[3].replace(/^:+/, ''));
-        console.log(actor)
+            const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+            const pathSegments = parsedUrl.pathname.split('/').filter(segment => segment);
+            const actor = decodeURIComponent(pathSegments[3].replace(/^:+/, ''));
 
-        const url = `${source}/v/film/news/feed?query=${encodeURIComponent(actor)}`; // Hypothetical URL
-        const parser = new Parser();
-        try {
-            const feed = await parser.parseURL(url);
-            const newsItems = feed.items.map(item => ({
-                title: item.title,
-                link: item.link,
-                contentSnippet: item.contentSnippet || '',
-                imageUrl: item.enclosure ? item.enclosure.url : '../img/default-image.jpg',
-                pubDate: item.pubDate || 'Date not available',
-                source: new URL(url).hostname,
-                category: item.categories ? item.categories.join(", ") : 'General'
-            }));
+            let url;
 
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.end(JSON.stringify(newsItems));
-        } catch (error) {
-            console.error('Error fetching news for actor:', actor, error);
-            res.writeHead(500, {'Content-Type': 'text/html'});
-            res.end('Internal server error');
-        }
+            switch (source) {
+                case 'https://variety.com':
+                    url = `${source}/v/film/news/feed?query=${encodeURIComponent(actor)}`;
+                    break;
+                case 'https://www.hollywoodreporter.com':
+                    url = `https://www.hollywoodreporter.com/rss`;
+                    break;
+                case 'https://deadline.com':
+                    url = `https://deadline.com/v/film/news/feed/`;
+                    break;
+                case 'https://ew.com':
+                    url = `https://ew.com/feed/`;
+                    break;
+                case 'https://screenrant.com':
+                    url = `https://screenrant.com/feed/`;
+                    break;
+                case 'https://www.empireonline.com':
+                    url = `https://www.empireonline.com/rss`;
+                    break;
+                default:
+                    res.writeHead(400, {'Content-Type': 'text/html'});
+                    res.end('Unknown news source');
+                    return;
+            }
+
+            try {
+                const feed = await parser.parseURL(url);
+                const newsItems = feed.items.map(item => ({
+                    title: item.title,
+                    link: item.link,
+                    contentSnippet: item.contentSnippet || '',
+                    imageUrl: item.enclosure ? item.enclosure.url : '../img/default-image.jpg',
+                    pubDate: item.pubDate || 'Date not available',
+                    source: new URL(url).hostname,
+                    category: item.categories ? item.categories.join(", ") : 'General'
+                }));
+
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify(newsItems));
+            } catch (error) {
+                console.error('Error fetching news for actor:', actor, error);
+                res.writeHead(500, {'Content-Type': 'text/html'});
+                res.end('Internal server error');
+            }
     },
         "Get News for Actor",
         "Fetches news related to a specific actor."),
