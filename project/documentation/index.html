@@ -42,18 +42,16 @@
             <ul>
                 <li><a href="#user-interface">3.1 Interfața utilizatorului </a>
                     <ul>
-                        <li><a href="#nav-bar">3.1.1 Bara de navigație </a></li>
                         <li><a href="#admin">3.1.1 Pagina de admin </a></li>
                         <li><a href="#login-page">3.1.2 Pagina de autentificare </a></li>
                         <li><a href="#signup-page">3.1.3 Pagina de înregistrare </a></li>
                         <li><a href="#forgot-page">3.1.4 Pagina de trimitere email pentru resetarea parolei</a></li>
                         <li><a href="#home-page">3.1.6 Pagina de acasă </a></li>
-                        <li><a href="#favorites">3.1.7 Pagina cu actori favoriti</a></li>
+                        <li><a href="#favorites">3.1.7 Pagina cu actori favoriți</a></li>
                         <li><a href="#actor-profile">3.1.8 Pagina cu profilul actorului</a></li>
-                        <li><a href="#news">3.1.9 Pagina de stiri</a></li>
+                        <li><a href="#news">3.1.9 Pagina de notificări</a></li>
                         <li><a href="#help">3.1.10 Pagina de ajutor </a></li>
                         <li><a href="#about">3.1.11 Pagina cu detalii despre noi</a></li>
-
                     </ul>
                 </li>
                 <li><a href="#hardware-interface">3.2 Interfața Hardware </a></li>
@@ -75,6 +73,20 @@
                         <li><a href="#logout-1">4.4.1 Descriere și generalități</a></li>
                         <li><a href="#logout-2">4.4.2 Actualizarea informațiilor</a></li>
                         <li><a href="#logout-3">4.4.3 Condiții de funcționare</a></li>
+                    </ul>
+                </li>
+                <li><a href="#admin-page">4.4 Secțiunea Admin</a>
+                    <ul>
+                        <li><a href="#admin-1">4.4.1 Descriere și generalități</a></li>
+                        <li><a href="#admin-2">4.4.2 Actualizarea informațiilor</a></li>
+                        <li><a href="#admin-3">4.4.3 Condiții de funcționare</a></li>
+                    </ul>
+                </li>
+                <li><a href="#alte">4.4 Secțiunea Funcționalități</a>
+                    <ul>
+                        <li><a href="#alte-1">4.4.1 Descriere și generalități</a></li>
+                        <li><a href="#alte-2">4.4.2 Actualizarea informațiilor</a></li>
+                        <li><a href="#alte-3">4.4.3 Condiții de funcționare</a></li>
                     </ul>
                 </li>
             </ul>
@@ -128,10 +140,10 @@
             <p>
 
                 Scopul acestui document Scholarly HTML este acela de a prezenta o descriere detaliată a proiectului AcVis (Actors Smart Visualiser),
-                aplicatia web realizata in cadrul materiei Tehnologii Web. Aplicatia ofera o vizualizare a diferitilor actori dupa criterii de preferinte personale
-                cat si a productiilor cinematografice realizate de acestia. Aplicatia dispune si de diferite functionalitati precum adaugarea de actori favoriti cat si
-                notificarea utilizatorului despre acestia. Aplicatia mai are la dispozitie cat si functionalitati complexe prezente in orice aplicatie web: sisteme
-                de autentificare, inregistrare cat si administrare a utilizatorului in cadrul aplicatiei.
+                aplicația web realizată în cadrul materiei Tehnologii Web. Aplicația oferă o vizualizare a diferiților actori după criterii de preferințe personale
+                cât și a producțiilor cinematografice realizate de aceștia. Aplicația dispune și de diferite funcționalități precum adăugarea de actori favoriți cât și
+                notificarea utilizatorului despre aceștia. Aplicația mai are la dispoziție cât și funcționalități complexe prezente în orice aplicație web: sisteme
+                de autentificare, înregistrare cât și administrare a utilizatorului în cadrul aplicației.
             </p>
         </section>
         <section id="conventions">
@@ -148,15 +160,15 @@
         <section id="audience">
             <h4>1.3 Publicul țintă</h4>
             <p>
-                Aplicatia este destinata tuturor fanilor de filme si seriale ce vor sa regaseasca informatii importante despre actorii lor preferati.
+                Aplicația este destinată tuturor fanilor de filme și seriale ce vor să regăsească informații importante despre actorii lor preferați.
             </p>
 
         </section>
         <section id="product-scope">
             <h4>1.4 Scopul Produsului</h4>
             <p>
-                Scopul produsului este cel de a face publicitate mai multor personalitati din domeniul cinematografiei
-                si a oferi recomandari cat mai apropiate pentru fiecare utilizator in parte.
+                Scopul produsului este cel de a face publicitate mai multor personalități din domeniul cinematografiei
+                și a oferi recomandări cât mai apropiate pentru fiecare utilizator în parte.
             </p>
         </section>
         <section id="references">
@@ -173,26 +185,28 @@
         <section id="product-perspective">
             <h4>2.1 Perspectiva produsului</h4>
             <p>AcVis (Actors Smart Visualiser) este o aplicație dezvoltată în cadrul cursului de Tehnologii Web, menită să
-                ofere recomandari pentru diverse tipuri de actori care joaca in diverse filme.
+                ofere recomandări pentru diverse tipuri de actori care joacă în diverse filme.
         </section>
         <section id="product-functions">
             <h4>2.2 Funcționalitățile produsului</h4>
-            Orice utilizator are acces la urmatoarele functionalitati:
+            Orice utilizator are acces la următoarele funcționalități:
             <ul>
                 <li>să se înregistreze pe site.</li>
                 <li>să se autentifice pe site.</li>
-                <li>să își reseteze parola in cazul in care a uitat-o.</li>
-                <li>să consulte pagină "Acasă" și noutățile disponibile</li>
-                <li>să acceseze pagina "Favorites" pentru a vedea lista sa cu actori favoriti</li>
+                <li>să își reseteze parola în cazul în care a uitat-o.</li>
+                <li>să consulte pagina "Acasă" și noutățile disponibile</li>
+                <li>să acceseze pagina "Favorites" pentru a vedea lista sa cu actori favoriți</li>
                 <li>să acceseze pagina "Actor Profile" pentru a vizualiza date despre cariera actorului</li>
                 <li>să acceseze pagina "About" pentru a accesa scurtă descriere a paginii web</li>
-                <li>să acceseze pagina "Help" pentru a beneficia de ajutor in cazul in care exista o problema legata de
-                    functionalitate sau referitor la ce face aplicatia</li>
-                <li>dacă este <b>autentificat</b>,poate să acceseze pagina "Actor Profile" și să vada despre actorul respectiv</li>
-                <li>dacă este <b>autentificat</b>,poate să acceseze pagina "Favorites" și să vada actorii sai favoriti</li>
-                <li>dacă este <b>autentificat</b>,poate să acceseze pagina "News" și să vada ultmele stiri</li>
-                <li>dacă este <b>autentificat</b>,poate să își acceseze profilul și sa verifice statisticile personale</li>
+                <li>să acceseze pagina "Help" pentru a beneficia de ajutor în cazul în care există o problemă legată de
+                    funcționalitate sau referitor la ce face aplicația</li>
+                <li>dacă este <b>autentificat</b>, poate să acceseze pagina "Actor Profile" și să vadă despre actorul respectiv (statistici, filme, premii cât și News)</li>
+                <li>dacă este <b>autentificat</b>, poate să acceseze pagina "Favorites" și să vadă actorii săi favoriți</li>
+                <li>dacă este <b>autentificat</b>, poate să acceseze pagina "Notifications" și să vadă ultimele notificări</li>
                 <li>dacă utilizatorul are rol de <b>admin</b>, acesta poate șterge utilizatori din baza de date</li>
+                <li>dacă utilizatorul are rol de <b>admin</b>, acesta poate adăuga utilizatori în baza de date</li>
+                <li>dacă utilizatorul are rol de <b>admin</b>, acesta poate adăuga și viziona notificări</li>
+                <li>dacă utilizatorul are rol de <b>admin</b>, acesta poate importa CSV</li>
             </ul>
         </section>
         <section id="users">
@@ -202,27 +216,27 @@
                 <li>utilizatorii autentificați pot fi:</li>
                 <li style="list-style: none">
                     <ul>
-                        <li>persoane care doresc pagini personalizate in care sa le vina recomandari specifice.</li>
+                        <li>persoane care doresc pagini personalizate în care să le vină recomandări specifice.</li>
 
                     </ul>
                 </li>
                 <li>
                     utilizatorii neautentificați pot fi:
                     <ul>
-                        <li>orice categorie de oameni care doresc să vada despre ce este vorba in aplicatie, deoarece au acces la o pagina generala nu una personalizata</li>
+                        <li>orice categorie de oameni care doresc să vadă despre ce este vorba în aplicație, deoarece au acces la o pagină generală nu una personalizată</li>
                     </ul>
                 </li>
             </ul>
             <h5>2.3.2 Caracteristici</h5>
             <ul>
-                <li>Utilizatorii care sunt <b> autentificați </b> pot accesa pagină de "login","Register", de "Home","Forgot","About","Help" dar
-                    si "Actor Profile","Favourites","News".
-                    Asadar acestia pot vedea o versiune a aplicatiei in care actorii sunt recomandati dupa preferinte personale dar si globale
-                    in care sunt disponibile filemele noi aparute in scop de publicitate dupa criteriile lor si pot vizualiza cele mai noi stiri.
+                <li>Utilizatorii care sunt <b> autentificați </b> pot accesa pagina de "login","Register", de "Home","Forgot","About","Help" dar
+                    și "Actor Profile","Favourites","Notifications".
+                    Așadar aceștia pot vedea o versiune a aplicației în care actorii sunt recomandați după preferințe personale dar și globale
+                    în care sunt disponibile filmele noi apărute în scop de publicitate după criteriile lor și pot vizualiza cele mai noi știri.
                 </li>
-                <li>Utilizatorii care nu sunt <b> autentificați </b> pot accesa pagină de "login","Register", de "Home","Forgot","About","Help"
-                    Asadar acestia pot vedea o versiune a aplicatiei in care actorii sunt recomandati dupa preferinte globale nu personale si
-                    in care sunt disponibile filemele noi apraute in scop de publicitate.
+                <li>Utilizatorii care nu sunt <b> autentificați </b> pot accesa pagina de "login","Register", de "Home","Forgot","About","Help"
+                    Așadar aceștia pot vedea o versiune a aplicației în care actorii sunt recomandați după preferințe globale nu personale și
+                    în care sunt disponibile filmele noi apărute în scop de publicitate.
                 </li>
             </ul>
 
@@ -251,26 +265,24 @@
             Mai jos, puteți vedea o prezentare generală a fiecărei pagini a aplicației și funcționalităților pe care le oferă:
             <ul>
 
-                <li id="nav-bar"><b>Bara de navigație</b></li>
-                <li style="list-style: none">
-                    <ul>
-                        <li>Aceasta reprezintă meniul de navigare către fiecare pagina a aplicației, prezent pe fiecare pagină totodată.</li>
-
-                        <li style="list-style: none" class="pictures"><img src="screenshots/navbar.JPG" alt="login" width=800
-                        ></li>
-                    </ul>
-                </li>
-
                 <li id="admin"><b>Pagina de admin</b></li>
                 <li style="list-style: none">
                     <ul>
-                        <li>In aceasta pagina, utilizatorul cu rol de admin poate sa administreze conturile la ceilalti utilizatori: poate sterge orice cont de utilizator.</li>
+                        <li>În această pagină, utilizatorul cu rol de admin poate să administreze conturile celorlalți utilizatori: poate șterge orice cont de utilizator cât și crea orice cont.</li>
 
-                        <li style="list-style: none" class="pictures"><img src="screenshots/admin.JPG" alt="login" width=800
+                        <li style="list-style: none" class="pictures"><img src="screenshot/admin2.PNG" alt="login" width=800
                         ></li>
                     </ul>
                 </li>
+                <li style="list-style: none">
+                    <ul>
+                        <li>Adminul poate să administreze și notificările importante din pagină (cele pe care le poate vedea orice utilizator <b>autentificat</b></li>
+                        <li>Acesta poate pune un anunț personalizat precum: termenul de expirare, poza de poster, titlul, conținutul cât și tagul actorului dorit</li>
 
+                        <li style="list-style: none" class="pictures"><img src="screenshot/admin3.PNG" alt="login" width=800
+                        ></li>
+                    </ul>
+                </li>
 
                 <li id="login-page"><b>Pagina de autentificare</b></li>
                 <li style="list-style: none">
@@ -283,7 +295,7 @@
                             înregistrare, ce se face prin apăsarea butonului <b>Register</b>. </li>
                         <li> În cazul în care utilizatorul și-a uitat parola, acesta poate să o reseteze selectând opțiunea de
                             <b>forgot password? </b> </li>
-                        <li style="list-style: none" class="pictures"><img src="screenshots/sign_in.JPG" alt="login" width=800 height="400">
+                        <li style="list-style: none" class="pictures"><img src="screenshot/login.png" alt="login" width=800 height="400">
                         </li>
                     </ul>
                 </li>
@@ -294,32 +306,47 @@
                         <li>Pagina oferă funcționalitatea de înregistrare a utilizatorilor, pentru a putea beneficia de toate
                             funcționalitățile AcVis.</li>
                         <li>Pentru a se înregistra, utilizatorul trebuie să completeze câmpurile <b>Email</b>, <b>Username</b>(acesta fiind unic),
-                            <b>Password</b>, <b>Current Passeord</b> .</li>
-                        <li>În cazul în care utilizatorul își amintește că are un cont existent, acesta poate apasă butonul
+                            <b>Password</b>, <b>Current Password</b> .</li>
+                        <li>În cazul în care utilizatorul își amintește că are un cont existent, acesta poate apăsa butonul
                             <b>log in</b> aflat în partea de jos a formularului.
                         </li>
 
-                        <li style="list-style: none" class="pictures"><img src="screenshots/register.JPG" alt="login" width=800 height="400">
+                        <li style="list-style: none" class="pictures"><img src="screenshot/register.png" alt="login" width=800 height="400">
 
                     </ul>
                 </li>
 
-                <li id="forgot-page"><b>Pagina de de resetare a parolei prin mail</b></li>
+                <li id="forgot-page"><b>Pagina de resetare a parolei prin email</b></li>
                 <li style="list-style: none">
                     <ul>
                         <li> Pagina are rolul de a trimite un email către utilizator, care îl va redirecționa spre o pagină nouă, unde care
-                            își va introduce nouă parolă. La apăsarea butonului de <b>Sumbit</b>, utilizatorul va fi redirecționat
-                            către pagină de autentificare, acesta primind un mail. </li>
+                            își va introduce nouă parolă. La apăsarea butonului de <b>Submit</b>, utilizatorul va fi redirecționat
+                            către pagină de autentificare, acesta primind un email. </li>
 
-                        <li style="list-style: none" class="pictures"><img src="screenshots/forget.JPG" alt="login" width=800 height="400">
+                        <li style="list-style: none" class="pictures"><img src="screenshot/forget.png" alt="login" width=800 height="400">
+                    </ul>
+                </li>
+                <li style="list-style: none">
+                    <ul>
+                        <li> Utilizatorul după ce a dat de <b>Submit</b> va primi un email cu resetarea parolei și acesta este nevoit să pună o parolă nouă pentru contul său.</li>
+
+                        <li style="list-style: none" class="pictures"><img src="screenshot/email.png" alt="login" width=900 height="200">
                     </ul>
                 </li>
 
-                <li id="home-page"><b> Pagina de Home</b></li>
+                <li id="home-page"><b> Pagina de Acasă</b></li>
                 <li style="list-style: none">
                     <ul>
-                        <li>Pagina are rolul de prezenta cei mai apreciati actori si cele mai apreciate filme respectiv si diferite stiri.</li>
-                        <li style="list-style: none" class="pictures"><img src="screenshots/home.JPG" alt="overview" width=800>
+                        <li>Pagina are rolul de a prezenta cei mai apreciați actori și cele mai apreciate filme precum și alte topicuri de actori personalizate în funcție de genurile selectate de utilizatorii autentificați.</li>
+                        <li style="list-style: none" class="pictures"><img src="screenshot/home_au2.png" alt="overview" width=800>
+                        <li style="list-style: none" class="pictures"><img src="screenshot/home_augenre.png" alt="overview" width=800>
+                        </li>
+                    </ul>
+                </li>
+                <li style="list-style: none">
+                    <ul>
+                        <li>Pentru userii neautentificați pagina de acasă nu poate primi actori și filme ce îi interesează precum și căutarea altor actori este evitată. Aceștia se vor rezuma la o interfață statică a aplicației</li>
+                        <li style="list-style: none" class="pictures"><img src="screenshot/home_un.png" alt="overview" width=800>
                         </li>
                     </ul>
                 </li>
@@ -327,9 +354,8 @@
                 <li id="favorites"><b> Pagina de Favorite</b></li>
                 <li style="list-style: none">
                     <ul>
-                        <li>Pagina are rolul de prezenta cei mai apreciati actori si cele mai apreciate filme respectiv si diferite stiri.</li>
-                        <li style="list-style: none" class="pictures"><img src="screenshots/favourites1_pc.JPG" alt="overview" width=800>
-                        <li style="list-style: none" class="pictures"><img src="screenshots/favourites2_pc.JPG" alt="overview" width=800>
+                        <li>Pagina de favorite este disponibilă doar utilizatorilor autentificați și va prezenta toți actorii ce au fost selectați favoriți.</li>
+                        <li style="list-style: none" class="pictures"><img src="screenshot/favorites.png" alt="overview" width=800>
                         </li>
                     </ul>
                 </li>
@@ -338,8 +364,8 @@
                 <li id="help"><b>Pagina de ajutor</b></li>
                 <li style="list-style: none">
                     <ul>
-                        <li>Pagina are rolul de a prezenta câteva sfaturi pentru a putea beneficia de o experienta completa pe site si ajutor in timp real daca sunt probleme. </li>
-                        <li style="list-style: none" class="pictures"><img src="screenshots/help.JPG" alt="overview" width=800>
+                        <li>Help este pagina în care utilizatorii pot adresa un email adminului spre rezolvarea unor probleme tehnice ori a unor probleme cu interacțiunea interfeței.</li>
+                        <li style="list-style: none" class="pictures"><img src="screenshot/help.png" alt="overview" width=800>
 
                         </li>
                     </ul>
@@ -349,36 +375,41 @@
                 <li style="list-style: none">
                     <ul>
                         <li>Pagina prezintă informații despre un anumit actor.</li>
-                        <li>Utilizatorul <b>autentificat</b> își va vedea o pagina destinata unui actor in care are acces
-                            la anumite stiri si poate vedea diferite filme dupa criteriile sale sau toate filmele in care
-                            joaca acest actor. Desigur pe acesta pagina sunt date despre cariera artistului.
+                        <li>Utilizatorul <b>autentificat</b> își va vedea o pagină destinată unui actor în care are acces
+                            la anumite știri și poate vedea diferite filme după criteriile sale sau toate filmele în care
+                            joacă acest actor. Desigur pe aceasta pagină sunt date despre cariera artistului.
                         </li>
+                        <li>Mai mult decât atât, utilizatorul poate dispune de statisticile acestuia și le poate descărca în diferite extensii precum WebP, CSV, SVG și poate accesa știrile din surse externe precum News Google sau Bing.</li>
 
-                        <li>Mai mult, utilizatorul va avea la dispoziție un buton <b>Logout</b> prin care poate ieși din cont.
-                        </li>
+                        <li><img src="screenshot/profile1.png" alt="overview" width=800 ></li>
+                        <li><img src="screenshot/profile2.png" alt="overview" width=800 ></li>
+                        <li><img src="screenshot/profile3.png" alt="overview" width=800 ></li>
+                        <li><img src="screenshot/profile4.png" alt="overview" width=800 ></li>
+                        <li><img src="screenshot/profile5.png" alt="overview" width=800 ></li>
 
-                        <li><img src="screenshots/actor.JPG" alt="overview" width=800 ></li>
-
+                        <li>La accesul resursei externe a unei știri utilizatorul poate vedea și RSS Feed-ul acestuia.</li>
+                        <li><img src="screenshot/news.png" alt="overview" width=800 ></li>
+                        <li><img src="screenshot/rss.png" alt="overview" width=800 ></li>
                     </ul>
                 </li>
 
-                <li id="news"><b>Pagina News</b></li>
+                <li id="news"><b>Pagina Notificări</b></li>
                 <li style="list-style: none">
                     <ul>
-                        <li>Pagina prezintă stiri de actualitate despre actori favoriti ai utilizatoului.
+                        <li>Pagina prezintă notificările expuse de administratorul aplicației.
                         </li>
+                        <li>Acestea vor expune atât data în care a fost creată această notificare cât și titlul, conținutul și o imagine ilustrativă a postării acesteia</li>
 
-                        <li><img src="screenshots/news_pc.JPG" alt="overview" width=800 ></li>
-
+                        <li><img src="screenshot/notification.png" alt="overview" width=800 ></li>
                     </ul>
                 </li>
 
                 <li id="about"><b>Pagina About</b></li>
                 <li style="list-style: none">
                     <ul>
-                        <li>Pagina afiseaza informatii referitoare despre aplicatia web.</li>
+                        <li>Pagina de about reprezintă un rezumat al aplicației realizate cât și indicațiile necesare de navigare pentru o bună interacțiune a utilizatorului.</li>
 
-                        <li><img src="screenshots/about.JPG" alt="overview" width=800 ></li>
+                        <li><img src="screenshot/about.png" alt="overview" width=800 ></li>
 
                     </ul>
                 </li>
@@ -400,113 +431,161 @@
                     </ul>
                 </li>
 
-            <section id="hardware-interface">
+                <section id="hardware-interface">
 
-                <h4>3.2 Interfața Hardware</h4>
-                <p>
-
-                    Acest produs nu necesită interfețe hardware, funcționând pe orice platformă (calculatoare, laptopuri,
-                    telefoane etc.), care are instalată un browser.
-                </p>
-            </section>
-
-            <section id="software-interface">
-                <h4>3.3 Interfața Software</h4>
-                <p>
-                    Cerințele minime de software includ un browser funcțional, compatibil cu HTML5 și cu JavaScript.
-                <h5>Postgres Database</h5>
-                Aceasta reprezintă baza de date în care stocăm informații despre fiecare utilizator, intrebarile, chestionarele si
-                raspunsurile la acestea.
-
-            </section>
-
-            <section id="communication-interface">
-                <h4>3.4 Interfața de comunicare</h4>
-                <p>
-                    Aplicația necesită o conexiune la internet. Standardul de comunicare care va fi utilizat este HTTP.
-                </p>
-            </section>
-
-            <section id="system-features">
-                <h3>4. Caracteristici ale sistemului</h3>
-                <section id="management">
-                    <h4>4.1 Gestionarea contului</h4>
-
-                    <h5 id="management-1">4.1.1 Descriere și generalități</h5>
-                    Un utilizator se poate înregistra alegându-și un nume de utilizator, un email, o parola, numele si prenumele.
-                    Acesta se poate
-                    autentifica având nevoie doar de numele de utilizator și de parolă.
-                    <h5 id="management-2">4.1.2 Actualizarea informațiilor</h5>
-                    <ul>
-                        <li>
-                            În momentul în care un utilizator nou este creat, credențialele acestuia sunt introduse în baza de
-                            date. De asemenea, când utilizatorul decide să-și modifice credențialele, noile valori sunt și ele
-                            actualizate în baza de date.
-                        </li>
-                    </ul>
-                    <h5 id="management-3">4.1.3 Condiții de funcționare</h5>
-                    <ul>
-                        <li>
-                            Pentru a-și modifica credențialele utilizatorul, trebuie să fie autentificat.
-                        </li>
-                        <li>
-                            Pentru a se autentifica, utilizatorul are nevoie de un cont care este înregistrat în baza de date.
-                        </li>
-                    </ul>
-
-                </section>
-
-                <section id="logout">
-                    <h4>4.4 Secțiunea de Logout</h4>
-                    <h5 id="logout-1">4.4.1 Descriere și generalități</h5>
-                    Secțiunea de <b>Logout</b> are rolul de a deconecta utilizatorul de pe cont și îl redirecționează către
-                    pagina acasă.
-
-                    <h5 id="logout-2">4.4.2 Actualizare informațiilor</h5>
-                    <ul>
-                        <li>
-                            Tokenul de autentificare este eliminat, prin intermediul JWT.
-                        </li>
-                    </ul>
-
-                    <h5 id="logout-3">4.4.3 Condiții de funcționare</h5>
-                    <ul>
-                        <li>
-                            Utilizatorul trebuie să fie autentificat.
-                        </li>
-
-                    </ul>
-                </section>
-
-            <section id="non-functional">
-                <h3>5. Funcționalități pentru protecție și securitate</h3>
-
-                <section id="safety">
-                    <h4>5.1 Protecția datelor</h4>
+                    <h4>3.2 Interfața Hardware</h4>
                     <p>
-                        Aplicația va asigura confidențialitatea datelor prin intermediul unei criptări.
+
+                        Acest produs nu necesită interfețe hardware, funcționând pe orice platformă (calculatoare, laptopuri,
+                        telefoane etc.), care are instalat un browser.
                     </p>
                 </section>
 
-                <section id="security">
-                    <h4>5.2 Securizarea datelor</h4>
+                <section id="software-interface">
+                    <h4>3.3 Interfața Software</h4>
                     <p>
-                        Autorizarea utilizatorilor se face pe baza standardului JWT. Utilizatorii au acces doar la informații legate
-                        de progresul in cadrul site-ului, celelalte informații fiind ascunse. Token-ul folosit pentru autorizare este
-                        stocat intr-un cookie de tip HTTP-only, lucru care previne atacurile de tip XSS. Mai mult, toate datele sunt introduse
-                        in baza de date prin intermediul unor <b>prepared statements</b>, care asigura prevenirea SQL Injection.
+                        Cerințele minime de software includ un browser funcțional, compatibil cu HTML5 și cu JavaScript.
+                    <h5>Postgres Database</h5>
+                    Aceasta reprezintă baza de date în care stocăm informații despre fiecare utilizator, informațiile redate de utilizatori din pagina <b>Help</b>, premiile fiecărui actor din baza de date și
+                    tokenii necesari pentru fiecare utilizator / actor.
+                </section>
+
+                <section id="communication-interface">
+                    <h4>3.4 Interfața de comunicare</h4>
+                    <p>
+                        Aplicația necesită o conexiune la internet. Standardul de comunicare care va fi utilizat este HTTP.
                     </p>
                 </section>
-                <section id="software-attributes">
-                    <h4>5.3 Calitățile Software</h4>
-                    <ul>
-                        <li>Eficienta in executarea operatiunilor</li>
-                        <li>Ușurință în utilizare</li>
-                        <li>Flexibilitate</li>
-                    </ul>
+
+                <section id="system-features">
+                    <h3>4. Caracteristici ale sistemului</h3>
+                    <section id="management">
+                        <h4>4.1 Gestionarea contului</h4>
+
+                        <h5 id="management-1">4.1.1 Descriere și generalități</h5>
+                        Un utilizator se poate înregistra alegându-și un nume de utilizator, un email, o parolă.
+                        Acesta se poate
+                        autentifica având nevoie doar de numele de utilizator și de parolă.
+                        Odată ce a fost autentificat el poate avea acces la toate funcționalitățile aplicației.
+                        <h5 id="management-2">4.1.2 Actualizarea informațiilor</h5>
+                        <ul>
+                            <li>
+                                În momentul în care un utilizator nou este creat, credențialele acestuia sunt introduse în baza de
+                                date. De asemenea, când utilizatorul decide să-și modifice credențialele, noile valori sunt și ele
+                                actualizate în baza de date.
+                            </li>
+                        </ul>
+                        <h5 id="management-3">4.1.3 Condiții de funcționare</h5>
+                        <ul>
+                            <li>
+                                Pentru a-și modifica credențialele utilizatorul, trebuie să fie autentificat.
+                            </li>
+                            <li>
+                                Pentru a se autentifica, utilizatorul are nevoie de un cont care este înregistrat în baza de date.
+                            </li>
+                        </ul>
+
+                    </section>
+
+                    <section id="logout">
+                        <h4>4.4 Secțiunea de Logout</h4>
+                        <h5 id="logout-1">4.4.1 Descriere și generalități</h5>
+                        Secțiunea de <b>Logout</b> are rolul de a deconecta utilizatorul de pe cont și îl redirecționează către
+                        pagina <b>Login</b>.
+
+                        <h5 id="logout-2">4.4.2 Actualizare informațiilor</h5>
+                        <ul>
+                            <li>
+                                Tokenul de autentificare este eliminat, prin intermediul JWT.
+                            </li>
+                        </ul>
+
+                        <h5 id="logout-3">4.4.3 Condiții de funcționare</h5>
+                        <ul>
+                            <li>
+                                Utilizatorul trebuie să fie autentificat.
+                            </li>
+
+                        </ul>
+                    </section>
+
+                    <section id="admin-page">
+                        <h4>4.4 Secțiunea de Admin</h4>
+                        <h5 id="admin-1">4.4.1 Descriere și generalități</h5>
+                        Secțiunea de <b>Admin</b> are rolul de a asigura bunul management al aplicației. Administratorii pot avea acces la toată baza de date a utilizatorilor și pot astfel să modifice bunul demers al acesteia.
+                        Administratorul poate crea atât notificări ce vor apărea la toți utilizatorii cât și useri noi pentru testare.
+                        Acesta dispune și de opțiunea de importare a unui CSV care va modifica toată baza de date.
+
+                        <h5 id="admin-2">4.4.2 Actualizare informațiilor</h5>
+                        <ul>
+                            <li>
+                                Tokenul de autentificare este eliminat, prin intermediul JWT.
+                            </li>
+                        </ul>
+
+                        <h5 id="admin-3">4.4.3 Condiții de funcționare</h5>
+                        <ul>
+                            <li>
+                                Utilizatorul trebuie să fie autentificat și să aibă rolul de <b>Admin</b> în baza de date.
+                            </li>
+
+                        </ul>
+                    </section>
+
+                    <section id="alte">
+                        <h4>4.4 Secțiunea de Funcționalități</h4>
+                        <h5 id="alte-1">4.4.1 Descriere și generalități</h5>
+                        Userii autentificați pot avea acces deplin la toate funcționalitățile aplicației. Acestora li se vor permite să acceseze informații despre actori precum: numele, premiile, filmele, știrile cât și statisticile în format de tip Chart.
+                        Pentru fiecare știre din cadrul actorilor se va genera un RSS Feed.
+                        Userilor li se vor permite să își adauge actori preferați în <b>Favorites</b> și pot accesa informații relevante de la <b>Admin</b> în cadrul paginii <b>Notifications</b>.
+                        <h5 id="alte-2">4.4.2 Actualizare informațiilor</h5>
+                        <ul>
+                            <li>
+                                Tokenul de autentificare este eliminat, prin intermediul JWT.
+
+                            </li>
+                        </ul>
+
+                        <h5 id="alte-3">4.4.3 Condiții de funcționare</h5>
+                        <ul>
+                            <li>
+                                Utilizatorul trebuie să fie autentificat.
+                            </li>
+
+                        </ul>
+                    </section>
+
+
+
+                    <section id="non-functional">
+                        <h3>5. Funcționalități pentru protecție și securitate</h3>
+
+                        <section id="safety">
+                            <h4>5.1 Protecția datelor</h4>
+                            <p>
+                                Aplicația va asigura confidențialitatea datelor prin intermediul unei criptări.
+                            </p>
+                        </section>
+
+                        <section id="security">
+                            <h4>5.2 Securizarea datelor</h4>
+                            <p>
+                                Autorizarea utilizatorilor se face pe baza standardului JWT. Utilizatorii au acces doar la informații legate
+                                de progresul în cadrul site-ului, celelalte informații fiind ascunse. Token-ul folosit pentru autorizare este
+                                stocat într-un cookie de tip HTTP-only, lucru care previne atacurile de tip XSS. Mai mult, toate datele sunt introduse
+                                în baza de date prin intermediul unor <b>prepared statements</b>, care asigură prevenirea SQL Injection.
+                            </p>
+                        </section>
+                        <section id="software-attributes">
+                            <h4>5.3 Calitățile Software</h4>
+                            <ul>
+                                <li>Eficiență în executarea operațiunilor</li>
+                                <li>Ușurință în utilizare</li>
+                                <li>Flexibilitate</li>
+                            </ul>
+                        </section>
+                    </section>
                 </section>
-            </section>
-        </section>
             </ul>
         </section>
     </section>
