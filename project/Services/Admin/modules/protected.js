@@ -33,7 +33,6 @@ async function getTokenStatus(cookies) {
         status.message = 'Valid access token';
         return status;
     } catch (error) {
-        // Attempt to validate the refresh token
         try {
             const decoded = await JWToken.validate(refreshToken);
             if (!decoded) {

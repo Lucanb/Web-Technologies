@@ -11,7 +11,7 @@ class Router
             parameters: [],
             requestBody: {},
             responses: {},
-            ...config // Spread to include any extra predefined configurations
+            ...config
         };
     }
 

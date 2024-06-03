@@ -1,12 +1,18 @@
 const fs = require("fs")
 class Router
 {
-    constructor(method, path, handler, summary = '', description = '') {
+    constructor(method, path, handler, summary = '', description = '', config = {}) {
         this.method = method;
         this.path = path;
         this.handler = handler;
         this.summary = summary;
         this.description = description;
+        this.config = {
+            parameters: [],
+            requestBody: {},
+            responses: {},
+            ...config
+        };
     }
 
     static badRequest(message){

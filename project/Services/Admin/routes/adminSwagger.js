@@ -45,7 +45,6 @@ const generateSwaggerDoc = (routerController, outputPath) => {
             requestBody: route.config.requestBody || {}
         };
 
-        // Path parameters extraction
         const pathParams = path.match(/\{([^}]+)\}/g);
         if (pathParams) {
             pathParams.forEach(param => {

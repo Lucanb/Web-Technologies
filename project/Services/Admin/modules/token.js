@@ -4,7 +4,7 @@ const config = require('../configuration/config');
 
 class JWToken{
     static async generateKey(data, settings = {}){
-        const privateKey = fs.readFileSync(config.JWT_PRIVATE_KEY); // vezi faza cu schimbul de fisiere
+        const privateKey = fs.readFileSync(config.JWT_PRIVATE_KEY);
         const token = await jwt.sign(data, privateKey, {
             algorithm: 'RS256',
             expiresIn: settings?.expiresIn || '6h',
